@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>ProApp | Task Reports</title>
+  
+    <div th:replace="~{fragments/headerJS}"></div> 
+    <script type="text/javascript" src="/js/pagejs/TaskStatus.js"></script>
+    
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" /> <!-- prev -->
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script><!-- prev -->
+    
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
+<!--   <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+  <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+  <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+  <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet" />
+  <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" /> prev
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>prev
+
+
+  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+  <script type="text/javascript" src="/js/pagejs/TaskStatus.js"></script> -->
+
+
+  <style type="text/css">
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
+
+    .loader {
+      margin: 20% auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-left: 1.1em solid #e89933;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
+
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+ 
+    .alert-line{
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #e12424;
+}
+.orDiv
+{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 9999;
+ background-color: rgba(5, 5, 5, 0.75);
+  background-repeat: repeat;
+      display: none;
+}
+.loader,.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 20% auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-left: 1.1em solid #e89933;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+.complete_job_cust_btn{
+	width:90%;
+	display:inline-block;
+	float:left;
+	margin-top:10px;
+	text-align:center;
+	background: #0057ff !important;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+label {
+    padding-top: 7px;
+}
+.form-control {
+    height: 30px !IMPORTANT;
+    margin-top: 2px !IMPORTANT;
+}
+.form-group {
+    margin-top: 2px !IMPORTANT;
+}
+.custom_style_btn{
+margin-top:10px !important;
+display:inline-block !important;
+    background: #0056ff !important;
+}
+  </style>
+  <script>
+    let nav = 2;
+  </script>
+</head>
+
+<body>
+  <div class="col-sm-12 orDiv" id="progressBarFull" style="display:none">
+
+    <div class="loader">Loading...</div>
+  </div>
+  <div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header">
+      <div th:replace="fragments/headerPM"></div>
+    </header>
+
+    <div class="content-wrapper">
+
+    <!-- <div class="col-sm-12 orDiv" id="progressBar" style="display: none;" > 
+  <div class="loader">Loading...</div>
+</div> -->
+<section> 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="box"> 
+          <div class="box-header">
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Task Status</h3>
+            <div class="box-tools pull-right">
+            	<!-- <label class="label_style">Start Date</label>	
+            	<input type="date" class="date_box">
+            	<label class="label_style">End Date</label>	
+            	<input type="date" class="date_box">
+            	<button class="btn theme_btn6">Generate Report </button> -->
+            </div>
+              <div class="clearfix"></div>
+              
+          </div>
+          <div class="box-body">
+          <div class="col-md-12"> 
+          <th class="reassign-th-wd"><input id="assignPObtn" type="button" class="cust_btn update" value="Assign PO" ></th>
+              <div class="clearfix"></div>
+   				<table class="table table-bordered table-striped table-hover table-responsive" id="taskStatusTable" >
+   				
+   				
+              <thead>
+                <tr class="orange">
+                   	<tr class="orange">
+                  <!-- <th class="table_cust_hd" colspan="6">Reassign</th> -->
+                  <!-- <th class="table_cust_hd" ><input type="button" class="cust_btn" value="Assign" data-toggle="modal" data-target="#assign" id="assignClick"></th> -->
+                  
+                </tr>
+                <!-- <th class="reassign-th-wd"><input type="button" class="cust_btn update" value="Assign PO"></th> -->
+                 <th class="reassign-th-wd"></th> 
+                  <th>Action</th>	
+                  <th>Job ID</th>
+                  <th>Project Manager Name</th>
+                  <th>PO Number-LineId</th>
+                   <th>Customer</th>
+                  <th>SI Co-ordinator</th>
+                   <th>SI Company</th>
+                  <th>Product</th>
+                  <th>Site</th>
+                  <th>Region</th>
+                  <th>ManDay Visit-Purpose</th>
+                  <th>Status</th>
+                  <th>Stages</th>
+                   <th>Allocation On</th>
+                  <th>Completed On</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+             
+			
+				<!-- <tr>
+              	 <td>JB5698</td>			
+              	  <td>JB5698</td>			
+				 <td >Vodafone</td>
+				 <td>ABC</td>
+				 <td>RTY</td>
+				 <td>Thane</td>
+				  <td>Pre Installation</td>
+				 <td><input type="button" class="table-input-btn2" value="Update"> </td>
+				</tr> -->
+				
+              </tbody >
+            </table>
+            </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+<div id="assignPOModal">
+ <div id="updateModal" class="modal fade in" role="dialog">
+  <div class="modal-dialog modal-lg"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Assign PO</h4>
+      </div>
+      <div class="modal-body" id="assignPoModal">
+        <form role="form">
+        	 <div class="full_width margin_top_15 col-md-offset-4">
+        		<input type="text" placeholder="Enter PO #" class="form-control width30 pull-left" id = "poNumber">
+            	<input type="button" class="theme_btn btn update_modal_btn" value="Find PO" id = "findPOList">
+            </div>
+            <div class="full_width margin_top_15">
+	            	<table class="table table-striped table-bordered myCustTb" >
+	            		<thead>
+	            			<tr class="orange">
+	            				<th>&nbsp;</th>
+	            				<th>PO Number</th>
+	            				<th>Line ID</th>
+	            				<th>Region</th>
+	            				<th>Qty</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody id="myPoTbody">
+	            <!-- 			<tr>
+	            				<td class="txt-center"><input type="radio" name="status" class="status_radio" checked></td>
+	            				<td>PO001</td>
+	            				<td>PO500</td>
+	            				<td>Sion</td>
+	            				<td>50</td>
+	            			</tr>
+	            			<tr>
+	            				<td><input type="radio" name="status" class="status_radio"></td>
+	            				<td>PO001</td>
+	            				<td>PO500</td>
+	            				<td>Sion</td>
+	            				<td>50</td>
+	            			</tr>
+	            			<tr>
+	            				<td><input type="radio" name="status" class="status_radio"></td>
+	            				<td>PO001</td>
+	            				<td>PO500</td>
+	            				<td>Sion</td>
+	            				<td>50</td>
+	            			</tr>
+	            			<tr>
+	            				<td><input type="radio" name="status" class="status_radio"></td>
+	            				<td>PO001</td>
+	            				<td>PO500</td>
+	            				<td>Sion</td>
+	            				<td>50</td>
+	            			</tr>  -->
+	            		</tbody>
+	            	</table>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-4 col-sm-offset-4 pull-left margin-top15">
+          <button class="btn btn-block cust-btn" type="button"  id="updatePoJob">Update</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--Content--> 
+<div id="add_remark" class="modal fade in" role="dialog">
+  <div class="modal-dialog modal-lg"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Reopen Job</h4>
+      </div>
+      <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select SI Co-ordinator : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	             <select class="form-control" id = "subContractorListadd">
+	              	<option>- Select SI Co-ordinator-</option>
+	              	<!-- <option>SI 1</option>
+	              	<option>SI 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+            
+          <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Task : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <dl class="dropdown multi-selectbox"> 
+					    <dt>
+					    <a href="#">
+					      <span class="hida"> - Select Task -</span>  
+					      <p class="multiSel"></p>  
+					    </a>
+					    </dt>
+					    <dd>
+					        <div class="mutliSelect">
+					           <ul id = "taskListadd">
+					                <!-- <li>
+					                    <input type="checkbox" value="Installation" class="multiselect_checkbox">Installation</li>
+					                --> 
+					            </ul> 
+					        </div>
+					    </dd>
+					</dl>
+	            </div>
+            </div>
+            
+    <div class="modal-footer">
+        <div class="col-sm-4 col-sm-offset-4 pull-left margin-top35">
+          <button class="btn btn-block cust-btn" type="submit" id="saveReopenJob">Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="alertJob" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Alert!!!</h4>
+      </div>
+      <p class="alert-line">Please select a JOB to assign a PO.</p>
+    </div>
+  </div>
+</div>
+
+<div id="alertPOJob" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Alert!!!</h4>
+      </div>
+      <p class="alert-line">Please enter a valid PO </p>
+    </div>
+  </div>
+</div>
+
+<div id="alertMultiSelectJob" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Alert!!!</h4>
+      </div>
+      <p class="alert-line">Please select one JOB at a time to assign a PO.</p>
+    </div>
+  </div>
+</div>
+
+ <script type="text/javascript">
+	$(document).ready(function() {
+    $('#taskStatusTable').DataTable( {
+        responsive: true
+    } );
+} );
+</script>
+<script>
+$(".dropdown dt a").on('click', function() {
+	  $(".dropdown dd ul").slideToggle('fast');
+	});
+
+	$(".dropdown dd ul li a").on('click', function() {
+	  $(".dropdown dd ul").hide();
+	});
+
+	function getSelectedValue(id) {
+	  return $("#" + id).find("dt a span.value").html();
+	}
+
+	$(document).bind('click', function(e) {
+	  var $clicked = $(e.target);
+	  if (!$clicked.parents().hasClass("dropdown")) $(".dropdown dd ul").hide();
+	});
+
+	$('.mutliSelect input[type="checkbox"]').on('click', function() {
+
+	  var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+	    title = $(this).val() + ",";
+
+	  if ($(this).is(':checked')) {
+	    var html = '<span title="' + title + '">' + title + '</span>';
+	    $('.multiSel').append(html);
+	    $(".hida").hide();
+	  } else {
+	    $('span[title="' + title + '"]').remove();
+	    var ret = $(".hida");
+	    $('.dropdown dt a').append(ret);
+	  }
+	});
+</script>
+
+    </div>
+    <footer class="main-footer ">
+      <div th:replace="fragments/admin_footer"></div>
+    </footer>
+    <!-- sidenav-->
+    <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
+      <p>Text Here</p>
+    </div>
+   <!-- sidenav--> 
+  
+</div>
+<!-- wrapper --> 
+<!-- sidenav--> 
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script><!-- sidenav
+
+<script>
+$(document).ready(function() {
+	  function setHeight() {
+	    windowHeight = $(window).innerHeight();
+	    $('.content-wrapper').css('min-height', windowHeight);
+	  };
+	  setHeight();
+	  
+	  $(window).resize(function() {
+	    setHeight();
+	  });
+	});
+</script>
+<!-- <script>
+$(document).ready(function() {
+	function heightDetect() {
+		$(".content-wrapper").css("height", $(window).height());	
+	};
+	heightDetect()
+	$(window).resize(function() {
+		heightDetect();
+	});
+});
+</script> -->
+<!-- ToolTip -->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- ToolTip -->
+
+</body>
+
+</html>

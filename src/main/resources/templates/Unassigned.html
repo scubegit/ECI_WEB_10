@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>ProApp | PO Reports</title>
+  
+  <div th:replace="~{fragments/headerJS}"></div> 
+  <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+    <script type="text/javascript" src="/js/pagejs/Unassigned.js"></script>
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
+  <!-- <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+  <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+  <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+  <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet" />
+  <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+  <script type="text/javascript" src="/js/pagejs/Unassigned.js"></script> -->
+
+
+  <style type="text/css">
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
+
+    .loader {
+      margin: 20% auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-left: 1.1em solid #e89933;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
+
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+ 
+   	label {
+	    padding-top: 7px;
+	}
+	.form-control {
+	    height: 30px !IMPORTANT;
+	    margin-top: 2px !IMPORTANT;
+	}
+	.form-group {
+	    margin-top: 2px !IMPORTANT;
+	}
+  </style>
+  <script>
+    let nav = 5;
+  </script>
+</head>
+
+<body>
+  <div class="col-sm-12 orDiv" id="progressBarFull" style="display:none">
+
+    <div class="loader">Loading...</div>
+  </div>
+  <div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header">
+      <div th:replace="fragments/headerPM"></div>
+    </header>
+
+    <div class="content-wrapper">
+
+    <section> 
+  <!--container-fluid-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <!--box-->
+        <div class="box"> 
+          <!--box-header-->
+          <div class="box-header">
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Unassigned</h3>
+            <!-- <div class="box-tools pull-right">
+               <button class="btn theme_btn2"><i class="fa fa-filter" aria-hidden="true"></i> Region</button>
+               <button class="btn theme_btn2"><i class="fa fa-filter" aria-hidden="true"></i> Customer</button>
+              </div> -->
+              <div class="clearfix"></div>
+          </div>
+          <!--box-header--> 
+        
+          <!--box-body-->
+          <div class="box-body">
+          <div class="col-md-12"> 
+            <table class="table table-bordered table-striped table-hover table-responsive border_none" id="unassignedTable1">
+              <thead>
+                <tr class="orange">
+                  <th class="table_cust_hd" colspan="6">Reassign</th>
+                  <th class="table_cust_hd" ><input type="button" class="cust_btn" value="Assign" data-toggle="modal" data-target="#assign" id="assignClick"></th>
+                </tr>
+                <tr class="orange">
+                  <th class="reassign-th-wd"></th> 	
+                  <th>Job ID</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Stage</th>
+                  <th>Site</th>
+                  <th class="table_cust_col">Remark</th>
+                  
+                </tr>
+                <!--  <tr>
+					<td class="text-center"><input type="button" class="cust_btn" value="Assign" data-toggle="modal" data-target="#assign" id="assignClick"></td>
+	              	<td>-</td>			
+					<td >-</td>
+					<td>-</td>
+					 <td>-</td>
+					 <td>- </td>
+					 <td>-</td>
+				  </tr> -->
+			
+				 
+              </tbody >
+            </table>
+            <div class="cust-block"></div>
+            <table class="table table-bordered table-striped table-hover table-responsive border_none" id="approvaltbl">
+              <thead>
+                <tr class="orange">
+                   <th class="table_cust_hd" colspan="4">For Approvals</th>
+                   
+                   <th class="table_cust_hd"><input type="button" class="cust_btn" value="Seek Approval" id="seekApproval" data-toggle="modal" data-target="#seekmsg"></th> 	
+                
+                </tr>
+                <tr class="orange">
+                  <th class="reassign-th-wd"></th> 	
+                  	
+                  <th>Job ID</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Site</th>
+                </tr>
+                 <!-- <tr>
+					<td class="text-center"><input type="button" class="cust_btn" value="Seek Approval" id="seekApproval"></td>
+	              	<td>-</td>			
+					<td>-</td>
+					<td>-</td>
+					<td>-</td>
+				  </tr> -->
+                
+              </thead>
+              <tbody>
+              	 
+				 <!-- <tr>
+					<td class="text-center"><input type="checkbox"></td>
+	              	<td>JB536</td>			
+					<td >Idea</td>
+					<td>GHJ</td>
+					 <td>Thane</td>
+				  </tr>
+				  <tr> -->
+              </tbody >
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+
+<div id="assign" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Assign</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select SI Co-ordinator : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	             <select class="form-control" id = "subContractorListadd">
+	              	<option>- Select SI Co-ordinator-</option>
+	              	<!-- <option>SI 1</option>
+	              	<option>SI 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-4 col-sm-offset-4 pull-left margin-top35">
+          <button class="btn btn-block cust-btn" type="submit" id = "assignSI">Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="showmesg" class="modal fade in" role="dialog">
+  <div class="modal-dialog width300"> 
+    <!-- Modal content-->
+    <div class="modal-content cust-bg-color">
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3 class="update-remark-txt">Remark Updated</h3>
+	            
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+         <div class="col-sm-4 col-md-offset-4">
+          <button class="btn btn-block cust-btn22" data-dismiss="modal" type="submit">OK</button>
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="seekmsg" class="modal fade in" role="dialog">
+  <div class="modal-dialog width300"> 
+    <!-- Modal content-->
+    <div class="modal-content cust-bg-color">
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3 class="update-remark-txt">Sent for Approval</h3>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+         <div class="col-sm-6 col-md-offset-3">
+          <button class="btn btn-block cust-btn22" data-dismiss="modal" type="submit">OK</button>
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<!--  <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script> -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#approvaltbl').DataTable( {
+			 responsive: true
+    }); 
+     $('#unassignedTable1').DataTable( {
+    	 responsive: true
+    }); 
+} );
+</script> 
+<!--  <script>
+	$(document).ready( function () {
+	  var table = $('#approvaltbl').DataTable({
+		  "pageLength": 5
+	  });
+	});
+</script> -->
+
+
+    </div>
+    <footer class="main-footer ">
+      <div th:replace="fragments/admin_footer"></div>
+    </footer>
+    <!-- sidenav-->
+    <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
+      <p>Text Here</p>
+    </div>
+   <!-- sidenav--> 
+  
+</div>
+<!-- wrapper --> 
+<!-- sidenav--> 
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script><!-- sidenav
+
+<script>
+$(document).ready(function() {
+	  function setHeight() {
+	    windowHeight = $(window).innerHeight();
+	    $('.content-wrapper').css('min-height', windowHeight);
+	  };
+	  setHeight();
+	  
+	  $(window).resize(function() {
+	    setHeight();
+	  });
+	});
+</script>
+<!-- <script>
+$(document).ready(function() {
+	function heightDetect() {
+		$(".content-wrapper").css("height", $(window).height());	
+	};
+	heightDetect()
+	$(window).resize(function() {
+		heightDetect();
+	});
+});
+</script> -->
+<!-- ToolTip -->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- ToolTip -->
+
+</body>
+
+</html>

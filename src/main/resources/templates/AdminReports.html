@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>ProApp | Admin Reports</title>
+
+
+<div th:replace="~{fragments/headerJS}"></div>  
+<script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+<script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+<script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+<script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+<script type="text/javascript" src="/js/jquery/chosen.jquery.min.js"></script>
+<link th:href="@{/css/chosen.css}" rel="stylesheet" />
+
+<!-- <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+<script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+<script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+<script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+<script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+<script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+<script type="text/javascript" src="/js/jquery/chosen.jquery.min.js"></script>
+
+<link th:href="@{/css/animate.css}" rel="stylesheet" />
+<link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+<script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+<link th:href="@{/css/chosen.css}" rel="stylesheet" /> -->
+
+
+<style>
+body {
+	padding: 1em;
+}
+</style>
+
+<script>
+	let nav = 2;
+</script>
+</head>
+
+
+<body>
+	<div th:replace="fragments/admin_navbar"></div>
+	<div class="content-wrapper">
+		<div class="wrapperCollasp">
+			<section>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-aqua">
+								<div class="inner">
+									<h3>PO Report</h3>
+									<p>Report</p>
+								</div>
+								<a onClick="CallMe('POReports')" id="" class="small-box-footer">More
+									info <i class="fa fa-arrow-circle-right"></i>
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-green">
+								<div class="inner">
+									<h3>Approved Task</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#approveTask"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>WIP / Pending</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#wipPending"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>Complete Job</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#jobCompleted"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+								<!-- <a class="small-box-footer" onClick="CallMe('CompleteJob')">More info <i class="fa fa-arrow-circle-right"></i></a> -->
+							</div>
+						</div>
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>Ad-hoc Report</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#AdhocReport"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>QC-Survey</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#QcSurvey"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-sm-4">
+							<div class="small-box bg-yellow">
+								<div class="inner">
+									<h3>Quality Report</h3>
+									<p>Report</p>
+								</div>
+								<a data-toggle="modal" data-target="#qualityReportModal"
+									class="small-box-footer">More info <i
+									class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div id="approveTask" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select SI
+										Company: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="subContractorListapr">
+										<option>- Select SI-</option>
+										<!-- <option>SI 1</option>
+		              	<option>SI 2</option>
+ -->
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Date
+										Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateFrm">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateTo">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="reportErr" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+
+							<button class="btn btn-block cust-btn" type="submit"
+								id="approveTaskSubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="AdhocReport" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select
+										Customer: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="custList">
+										<option>- Select SI-</option>
+										<!-- <option>SI 1</option>
+		              	<option>SI 2</option>
+ -->
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select
+										Product: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="prodList">
+										<option>- Select SI-</option>
+										<!-- <option>SI 1</option>
+		              	<option>SI 2</option>
+ -->
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Date
+										Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateFrmad">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateToad">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="reportErr2" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+							<button onClick="CallMe('AdHocReport')"
+								class="btn btn-block cust-btn" type="submit"
+								id="AdHocReportSubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="wipPending" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select SI
+										Company: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="subContractorList">
+										<option>- Select SI-</option>
+										<!-- <option>SI 1</option>
+		              	<option>SI 2</option>
+ -->
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Date
+										Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateFrmw">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateTow">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="reportErr" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+							<button onClick="CallMe('WipPending')"
+								class="btn btn-block cust-btn" type="submit"
+								id="wippendingSubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div id="jobCompleted" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<!--         <div class="col-sm-12 margin_top_15">
+            	 <div class="col-sm-4">
+		            <label class="control-label cust_label2">Select SI Company: <span class="fa fa-asterisk"></span></label>
+		         </div>
+		          <div class="col-sm-8">
+		              <select class="form-control" id = "subContractorList">
+		              	<option>- Select SI-</option>
+	             
+ 				 </select>
+	            </div>
+            </div> -->
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Date
+										Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateFrmj">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateToj">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="reportErr11" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+							<button onClick="CallMe('CompleteJob')"
+								class="btn btn-block cust-btn" type="submit"
+								id="jobCompleteSubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<div id="completeJobs" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<!--    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Select Date Range</h4>
+      </div>
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin_top_15">
+            	 <div class="col-sm-4">
+		            <label class="control-label cust_label2">Select SI: <span class="fa fa-asterisk"></span></label>
+		         </div>
+		          <div class="col-sm-8">
+		              <select class="form-control" id = "subContractorListjob">
+		              	<option>- Select SI-</option>
+		              	<option>SI 1</option>
+		              	<option>SI 2</option>
+		             
+ 				 </select>
+	            </div>
+            </div>
+            
+            <div class="col-sm-12 margin_top_15">
+            	 <div class="col-sm-4">
+	            	<label class="control-label cust_label2">Select Date Range: <span class="fa fa-asterisk"></span></label>
+	            </div>
+	              <div class="col-sm-4">
+		              <input type="date" class="form-control" id="dateFrmc">
+		           </div>
+		           <div class="col-sm-4">
+		              <input type="date" class="form-control" id="dateToc">
+		           </div>
+            </div>
+             <div class="col-md-offset-3 col-md-8">
+	         <div id="reportErrc" class="Err" ></div>
+	          <div class="clearfix"></div>
+          </div>
+            
+            
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+          <button onClick="CallMe('CompleteJob')" class="btn btn-block cust-btn" type="submit" id="wippendingSubmit">Submit</button>
+        </div>
+    </div>
+    </div> -->
+			</div>
+		</div>
+
+		<div id="QcSurvey" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select
+										Customer: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="custListQc">
+										<option>- Select Customer-</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Date
+										Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateFrmQc">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="dateToQc">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="reportErrQc" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+
+							<button class="btn btn-block cust-btn" type="submit"
+								id="QcSurveySubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="qualityReportModal" class="modal fade in" role="dialog">
+			<div class="modal-dialog">
+				Modal content
+				<div class="modal-content">
+					<div class="modal-header cust-hd">
+						<button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+						<h4 class="modal-title">Select Date Range</h4>
+					</div>
+					<div class="modal-body bodypadd0">
+						<form role="form" class="" name="myform">
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select
+										Customer : <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select id="customerListQR" data-placeholder="Select Customer"
+										class="customerListQR_select" multiple style="width: 350px;"
+										tabindex="4">
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select SI
+										Company: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select id="vendorSICompanyListQR"
+										data-placeholder="Select SI Company"
+										class="vendorSICompanyListQR_select" multiple
+										style="width: 350px;" tabindex="4">
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select Region
+										: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select id="regionListQR" data-placeholder="Select Region"
+										class="regionListQR_select" multiple style="width: 350px;"
+										tabindex="4">
+									</select>
+								</div>
+							</div>
+
+							<div class="col-sm-12 margin_top_15">
+								<div class="col-sm-4">
+									<label class="control-label cust_label2">Select
+										Category For Date Range: <span class="fa fa-asterisk"></span>
+									</label>
+								</div>
+								<div class="col-sm-8">
+									<select class="form-control" id="categoryListQR">
+										<option>-- Select Date Category --</option>
+										<option>By Installation Date</option>
+										<option>By Created Date</option>
+									</select>
+								</div>
+								<br>
+								<br>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="startDateReport">
+								</div>
+								<div class="col-sm-4">
+									<input type="date" class="form-control" id="endDateReport">
+								</div>
+							</div>
+							<div class="col-md-offset-3 col-md-8">
+								<div id="qualityReportError" class="Err"></div>
+								<div class="clearfix"></div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div class="col-md-4 col-md-offset-4 pull-left margin_top_15">
+
+							<button class="btn btn-block cust-btn" type="submit"
+								id="QualityReportSubmit">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div th:replace="fragments/admin_footer"></div>
+</body>
+</html>

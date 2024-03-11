@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>ProApp | Admin Management</title>
+
+<div th:replace="~{fragments/headerJS}"></div>  
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<script>
+	let nav = 1;
+</script>
+</head>
+
+<!-- <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="js/jquery.rowspanizer.js"></script>
+
+<script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/header.js"></script>
+<script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+<script type="text/javascript" src="/js/pagejs/changePswd.js"></script>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<link th:href="@{/css/style.css}" rel="stylesheet"/>
+<link th:href="@{/css/animate.css}" rel="stylesheet"/>
+<link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet"/>
+ -->
+
+<body>
+<div th:replace="fragments/admin_navbar"></div>
+ <div class="content-wrapper" >
+<div class="wrapperCollasp" >
+  <section> 
+    <div class="container-fluid">
+    	<div class="row">
+		<div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>Product</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('ProductMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>Task</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('TaskMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+         <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>Region</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('RegionMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+         <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>Customer</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('CustomerMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+       <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>Purchase Order</h3>
+              <p>Master</p>
+            </div>
+            <a href="PurchaseOrderMaster" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+        <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>User</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('UserMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+         <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>Product Test Mapping</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('Atp_TestProduct')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+         <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>ATP Test</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('NewAtpTest')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+         <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>SI Company</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('SICompany')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div> 
+       <!--   <div class="col-lg-3 col-sm-4">
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>Role</h3>
+              <p>Master</p>
+            </div>
+            <a onClick="CallMe('RoleMaster')"  id="" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>  -->
+ 		</div>
+      </div>
+    </section>
+   </div>
+   </div>
+       <div th:replace="fragments/admin_footer"></div>
+    
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>ProApp | PO Reports</title>
+  
+      <div th:replace="~{fragments/headerJS}"></div> 
+    <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+
+
+<!--   <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+  <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+  <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+  <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet" />
+  <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+ -->
+
+<style type="text/css">
+#completeJoblist_wrapper{
+overflow:scroll;
+}
+
+
+ .orDiv
+{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 9;
+ background-color: rgba(5, 5, 5, 0.75);
+  background-repeat: repeat;
+      display: none;
+}
+.loader,.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 20% auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-left: 1.1em solid #e89933;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+.complete_job_cust_btn{
+	width:90%;
+	display:inline-block;
+	float:left;
+	margin-top:10px;
+	text-align:center;
+	background: #0057ff !important;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>
+<script>
+	let nav = 2;
+</script>
+
+</head>
+
+<body>
+  <div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header">
+      <div th:replace="fragments/admin_navbar"></div>
+    </header>
+
+    <div class="content-wrapper">
+
+<div class="col-sm-12 orDiv" id="progressBar" style="display: none;" > 
+  <div class="loader">Loading...</div>
+</div>
+<section> 
+  <div class="container-fluid"  >
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="box"> 
+          <div class="box-header">
+            <h3 class="box-title pull-left"><i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> Complete Job</h3>
+            
+            <div class="clearfix"></div>
+          </div>
+          <div class="box-body">
+            <div class="col-md-12"> 
+            <table id="completeJoblist" class="table table-bordered table-striped table-hover table-responsive" >
+              <thead>
+                <tr class="orange"> 
+                    <th>Job Number</th>
+                    <th>PO Number</th>
+                    <th>Line Id</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Region</th>
+                    <th>PM</th>
+                    <th>SI</th>
+                    <th>Company Name</th>
+                     <th>Site</th>
+                    <th>Location</th>
+                     <th>ManDay Visit-Purpose</th>
+                    <th>Stages</th>
+                    <th>Allocation On</th>
+                    <th>Completion On</th>                    
+                    <th>Remark</th>
+                  <!--   <th>Status</th> --> 
+                     <th>Action</th>
+                </tr>
+                
+              </thead>
+              <tbody>
+            	<tr>
+              	<!-- 	<td>ECI001</td>
+              		<td>Vodafone</td>
+              		<td>Thane</td>
+              		<td>Station Road</td>
+              		<td>Carvin Ltd.</td>
+              		<td>This is remark line</td>
+              		<td>WIP</td>
+              	</tr>
+               -->
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div id="showdetails" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Complete Job Details</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+            <div class="full_width margin-top15">
+	            <div class="cust-border-style"><h3 class="tableh3"></h3></div>
+            </div>
+            <div class="full_width">
+	            <!-- <div class="wd_tr_ct60"> -->
+	            	<table class="table table-striped table-bordered myCustTb" id ="completeJobata">
+	            		<thead>
+	            			<tr class="orange">
+	            				<th>Task Name</th>
+	            				<th>Task Completed Date</th>
+	            				
+	            			</tr>
+	            		</thead>
+	            		<tbody >
+	            		</tbody>
+	            	</table>
+	           <!--  </div> -->
+            </div>
+	        
+        </form>
+    </div>
+    <div class="modal-footer">
+    	<div class="col-md-4 col-md-offset-4">
+          <button class="btn btn-block cust-btn margin-top15" data-dismiss="modal">Ok</button>
+         
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+  
+</section>
+<!--Content--> 
+
+
+    </div>
+    <footer class="main-footer ">
+      <div th:replace="fragments/admin_footer"></div>
+    </footer>
+    
+  <!-- sidenav-->
+  <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
+    <p>Text Here</p>
+  </div>
+  <!-- sidenav--> 
+  
+</div>
+<!-- wrapper --> 
+<!-- sidenav--> 
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script><!-- sidenav
+
+<!-- ToolTip -->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- ToolTip -->
+
+</body>
+
+</html>

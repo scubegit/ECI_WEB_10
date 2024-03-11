@@ -1,0 +1,894 @@
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+  <head>
+    <meta charset="ISO-8859-1">
+    <title>ProApp | PO Reports</title>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
+    <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+    <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+    <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+    <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+    <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+    <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+    <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+    <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+    <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+    <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+    <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet" />
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+    <script type="text/javascript" src="/js/pagejs/productMaster.js"></script>
+    <script type="text/javascript" src="/js/pagejs/POReport.js"></script>
+
+
+    <style type="text/css">
+      .loader,
+      .loader:after {
+        border-radius: 50%;
+        width: 10em;
+        height: 10em;
+      }
+
+      .loader {
+        margin: 20% auto;
+        font-size: 10px;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+        border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+        border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+        border-left: 1.1em solid #e89933;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation: load8 1.1s infinite linear;
+        animation: load8 1.1s infinite linear;
+      }
+
+      @-webkit-keyframes load8 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes load8 {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+  
+     #purchaseOrderList_wrapper{
+overflow: scroll; 
+}
+.deleteRecord{
+margin-top: 4px;
+}
+
+#inserttbl{
+overflow: auto;
+    height: 250px !important;
+}
+#remtbl{
+overflow: auto;
+    height: 250px !important;
+}
+.orDiv {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 9999;
+    background-color: rgba(5, 5, 5, 0.75);
+    background-repeat: repeat;
+}
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+.loader, .loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+.loader {
+    margin: 20% auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+    border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+    border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+    border-left: 1.1em solid #e89933;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+0% {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+100% {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+}
+@keyframes load8 {
+0% {
+-webkit-transform: rotate(0deg);
+transform: rotate(0deg);
+}
+100% {
+-webkit-transform: rotate(360deg);
+transform: rotate(360deg);
+}
+}
+label {
+    padding-top: 7px;
+}
+.form-control {
+    height: 30px !IMPORTANT;
+    margin-top: 2px !IMPORTANT;
+}
+.form-group {
+    margin-top: 2px !IMPORTANT;
+}
+.headtag1{
+text-align: center;
+    background: #97b1ff;
+   
+}
+.headtag{
+text-align: center;
+    background: #ef8b8b;
+     margin-top: 4%;
+}
+.modbox{
+    width: max-content;
+}
+    </style>
+    <script>
+      let nav = 4;
+    </script>
+  </head>
+
+  <body>
+    <div class="col-sm-12 orDiv" id="progressBarFull" style="display:none">
+
+      <div class="loader">Loading...</div>
+    </div>
+    <div class="wrapper" style="height: auto; min-height: 100%;">
+      <header class="main-header">
+        <div th:replace="fragments/headerPM"></div>
+      </header>
+
+      <div class="content-wrapper">
+
+       <div class="col-sm-12 orDiv" id="progressBar" style="display:none" > 
+  
+  <div class="loader">Loading...</div>
+</div>
+<section> 
+  <!--container-fluid-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <!--box-->
+        <div class="box"> 
+          <!--box-header-->
+          <div class="box-header">
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Installation</h3>
+            <div class="box-tools pull-right">
+             <a data-auto-download href="/ProApp/SampleExcel/InstallationSampleFile.xlsx" > 
+             <!-- <a href="../ProApp/SampleExcel/sampleNew.xlsx" download>  -->  
+              <button class="btn theme_btn" type="button"> Sample Excel</button> 
+              </a>
+               <button class="btn theme_btn" data-toggle="modal" data-target="#new_installation" id = "addnewAction">New Installation </button>
+               <button class="btn theme_btn" data-toggle="modal" id="bulkinstall" data-target="#import_excel">Bulk Installation</button>
+               <!-- <button class="btn theme_btn" data-toggle="modal" id="bulkinstall" data-target="#import_excel">Vodaphone Bulk Installation</button>  -->            <!--   <button class="btn theme_btn" id = "generatePdfAction">Generate PDF</button> -->
+             <!--   <button class="btn theme_btn" id = "geN">Generate PDF test</button>
+                <button class="btn theme_btn" id = "geN1">Generate PDF Jesper</button> -->
+               <!-- <button class="btn theme_btn2"><i class="fa fa-filter" aria-hidden="true"></i> SI</button>
+               <button class="btn theme_btn2"><i class="fa fa-filter" aria-hidden="true"></i> Region</button>
+               <button class="btn theme_btn2"><i class="fa fa-filter" aria-hidden="true"></i> Customer</button> -->
+              </div>
+              <div class="clearfix"></div>
+          </div>
+          <!--box-header--> 
+        
+          <!--box-body-->
+          <div class="box-body">
+          <div class="col-md-12"> 
+            <table class="table table-bordered table-striped table-hover table-responsive" id="purchaseOrderList" >
+              <thead>
+                <tr class="orange">
+                  <th>Job ID</th>
+                  <th>Customer</th>
+                  <th>SI Co-ordinator</th>
+                  <th>SI Company</th>
+                  <th>Product</th>
+                  <th>Site</th>
+                  <th>Location</th> 
+                  <th>TE</th>
+                  <th>Status</th>
+                  <th>Stage Completed</th> 
+                  <th>Allocation On</th>
+<!--                   <th>Completed On</th>
+ -->                  <th class="table_cust_col">Remark</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+       
+		<!-- 
+	
+            
+				 <tr>
+              	<td>JB536</td>			
+				<td >Idea</td>
+				<td>GHJ</td>
+				 <td>BNM</td>
+				 <td>Vashi</td>
+				 <td>Integration</td>
+				 <td>WIP</td>
+				 <td>
+				 	<input type="text" class="table-input-item">
+				 	<input type="button" class="table-input-btn" value="Update">
+				 </td>
+				 <td><input type="button" class="table-input-cl" value="Cancel"></td>
+				</tr>
+				 -->
+				
+				
+              </tbody >
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+
+<div id="new_installation" class="modal fade in" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">New Installation</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Customer : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <select class="form-control" id="customerListadd">
+	              	<!-- <option>- Select Customer -</option>
+	              	<option>Client 1</option>
+	              	<option>Client 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Product : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <select class="form-control" id = "productList">
+	              	 <!-- <option>- Select Product - </option>  -->
+	              	<!-- <option>Product 1</option>
+	              	<option>Product 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Sub Contractor : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <select class="form-control" id = "subContractorListadd">
+	              	<!-- <option>- Select Sub Contractor -</option>
+	              	<option>Sub Contractor 1</option>
+	              	<option>Sub Contractor 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+           <!--  <div class="col-sm-12 margin-top15 ">
+	            <label for="" class="col-sm-4 control-label cust_label">Enter Quantity : </label> -->
+	            <!-- <div class="col-sm-8 my_form"> -->
+	             	<input type="hidden" class="form-control" placeholder="Enter the Quantity" id= "qty" >
+	            <!-- </div> -->
+           <!--  </div> -->
+              <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter Site  : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter the Site"  id= "site">
+	            </div>
+            </div> 
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Enter Location : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter the Location"  id= "loc">
+	            </div>
+            </div>
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Region : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <select class="form-control" id = "regionList">
+	              	 <option>-- Select Region --</option>
+	              	<!--<option>Region 1</option>
+	              	<option>Region 2</option>  -->
+	              </select>
+	            </div>
+            </div>
+             <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-4 control-label cust_label">Select Task : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <dl class="dropdown multi-selectbox"> 
+					    <dt>
+					    <a href="#">
+					      <span class="hida"> - Select Task -</span>  
+					      <p class="multiSel"></p>  
+					    </a>
+					    </dt>
+					    <dd>
+					        <div class="mutliSelect">
+					           <ul id = "taskListadd">
+					                <!-- <li>
+					                    <input type="checkbox" value="Installation" class="multiselect_checkbox">Installation</li>
+					                --> 
+					            </ul> 
+					        </div>
+					    </dd>
+					</dl>
+	            </div>
+            </div>
+            
+            <div id = "siteloc"></div>  
+            
+            <!--  Plan Release date -->
+            
+            <div id = "dateFrmadReleaseDtdv"></div>  
+            
+             <div id = "rinfNamedv"></div>  
+             <div id = "planIddv"></div>  
+              <div id = "IRnumberdv"></div>  
+              <div id = "dateFrmad1Dtdv"></div>  
+               <div id = "SRnumberdv"></div>  
+               <div id = "Circlenamedv"></div>  
+            
+           <!--  <div class="col-sm-12 margin_top_15"> <div class="col-sm-4"><label class="control-label cust_label2">Select Plan Release date: <span class="fa fa-asterisk"></span></label></div><div class="col-sm-4"> <input type="date" class="form-control" id="dateFrmad">
+		           </div>
+            </div> -->
+            <!--  Ring name -->
+             <!-- <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter Ring name : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter Ring name"  id= "rinfName">
+	            </div>
+            </div>  -->
+            
+             <!-- <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter Plan Id : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter Plan Id"  id= "planId">
+	            </div>
+            </div>  -->
+            
+           <!--  <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter IR number : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter IR number"  id= "IRnumber">
+	            </div>
+            </div>  -->
+            <!--  RFI date -->
+            
+             <!-- <div class="col-sm-12 margin_top_15">
+            	 <div class="col-sm-4">
+	            	<label class="control-label cust_label2">Select RFI date: <span class="fa fa-asterisk"></span></label>
+	            </div>
+	              <div class="col-sm-4">
+		              <input type="date" class="form-control" id="dateFrmad1">
+		           </div>
+            </div> -->
+            
+           <!--  <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter SR number : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter SR number"  id= "SRnumber">
+	            </div>
+            </div>  -->
+             <!-- <div class="col-sm-12 margin-top15 "  >
+	            <label for="" class="col-sm-4 control-label cust_label">Enter  Circle name : </label>
+	            <div class="col-sm-8 my_form">
+	             	<input type="text" class="form-control" placeholder="Enter  Circle Name"  id= "Circlename">
+	            </div>
+            </div>  -->
+            
+            
+          
+        </form>
+        
+        
+             <div id="pmErrAdd" class="Err padd_top_15" ></div>
+          <div class="clearfix"></div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-4 col-sm-offset-4 pull-left margin-top35">
+          <button class="btn btn-block cust-btn" type="submit"  id="addPMdetails" >Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="import_excel" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Bulk Installation</h4>
+      </div>
+      <div class="modal-body bodypadd0">
+        <!-- <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3>Import your data from excel file</h3>
+	            <label class="control-label cust_label2">Upload Excel File: <span class="fa fa-asterisk"></span></label>
+	            <div class="my_form upload_form">
+	              <input type="file" class="upload_excel_btn">
+	            </div>
+            </div>
+        </form> -->
+        <!--  <form action=Instllationupload method="post" enctype="multipart/form-data" onsubmit="return Validate(this);" >  -->
+
+             <div class="col-sm-12">
+            	
+            	<h3>Import your data from excel file</h3>
+            	
+            	<div style="display: none;"></div>
+            	
+	            <label class="control-label cust_label2">Upload Excel File: <span class="fa fa-asterisk"></span></label>
+	            
+	            <div class="my_form upload_form">
+	             
+	              <!-- <input type="file" id="myFileread"   name="file" class="upload_excel_btn"  onchange="ValidateSingleInput(this);"/> -->
+	            
+	            <input type="file" name="file"  class="GroupFileClassMEx"  id="fileGroupIdMEx"  onchange="ValidateSingleInput(this);"/>
+	          	  
+	          	<!-- <button class="btn btn-block cust-btn"   type="submit" id="#" value="upload"/>Submit</button> -->
+	             <!--  <input type="submit" id="uploadpo" value="upload"/> -->
+	              <!-- 
+	              <div class="col-md-4 col-md-offset-4 pull-left">
+        		  <button class="btn btn-block cust-btn"  type="submit" value="upload">Submit</button>
+     			   </div> -->
+	              
+	              <p id="demo"></p>
+	            </div>
+            </div>
+     <!--    </form>   -->
+    </div>
+    <div class="modal-footer">
+        <!-- <div class="col-sm-4 col-sm-offset-4 pull-left">
+          <button class="btn btn-block cust-btn" type="submit" value="upload"/>Submit</button>
+        </div> -->
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="showmesg" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3 class="update-remark-txt">Remark Updated</h3>
+	            
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+         <div class="col-sm-4 col-md-offset-4">
+          <button class="btn btn-block cust-btn22" data-dismiss="modal" type="submit">OK</button>
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="add_remark" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Add Remark</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-3 control-label cust_label">Add Your Remark : <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-9 my_form">
+	             	<textarea class="form-control remark_txt" rows="5"  placeholder="Enter your Remark" id = "RejRemark"></textarea>
+	            </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-3 col-sm-offset-3 pull-left margin-top35">
+          <button class="btn btn-block cust-btn" type="submit" id = "saveRejRemark">Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id=delete_rec class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Delete Job</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label for="" class="col-sm-13 control-label ">Are you sure you want to delete this job! <span class="fa fa-asterisk"></span></label>
+	            <!-- <div class="col-sm-9 my_form">
+	             	<textarea class="form-control remark_txt" rows="5"  placeholder="Enter your Remark" id = "RejRemark"></textarea>
+	            </div> -->
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-6 col-sm-offset-3 pull-left margin-top35">
+          <button class="btn btn-block cust-btn" type="submit" id = "delRecBtn">Yes</button>
+                    <button class="btn btn-block cust-btn" type="submit" id = "noDel">No</button>
+          
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+ <div id="showmesgfrPO" class="modal fade in" role="dialog">
+  <div class="modal-dialog width300"> 
+    <!-- Modal content-->
+    <div class="modal-content cust-bg-color">
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3 class="update-remark-txt">PO Not Found</h3>
+	            
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+         <div class="col-sm-4 col-md-offset-4">
+          <button class="btn btn-block cust-btn22" data-dismiss="modal" type="submit">OK</button>
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+ <div class="modal fade" id="dataview" role="dialog">
+    <div class="modal-dialog modal-lg modbox">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title headtag1"> Successfully Saved Installation </h4>
+         
+        </div>
+        <div class="modal-body">
+        <div id="remtbl">
+     <table class="table table-bordered table-striped table-hover table-responsive" id="TestTbl" >
+            <thead>
+                 <tr class="orange">
+                  <th>Job ID</th>
+                  <th>Customer</th>
+                  <th>SI </th>
+                  <th>Quantity</th>
+                  <th>Site</th>
+                  <th>Location</th> 
+                  <th>RegionId</th>
+                  <th>Current Stage</th>
+                  <th>CurrentStatus</th> 
+                  <th class="table_cust_col">POLineId</th>
+                  <th>Site_To</th>
+                </tr>
+              </thead>
+              <tbody>
+    </tbody >
+  </table> 
+  </div>
+    <h4 class="modal-title headtag"> Not  Saved Installation </h4>
+    <div id="inserttbl">
+      <table class="table table-bordered table-striped table-hover table-responsive" id="insertdatatbl" >
+        
+              <thead>
+                <tr class="orange">
+                  <th>Job ID</th>
+                  <th>Customer</th>
+                  <th>SI </th>             
+                  <th>Quantity</th>
+                  <th>Site</th>
+                  <th>Location</th> 
+                  <th>RegionId</th>
+                  <th>Current Stage</th>
+                  <th>CurrentStatus</th> 
+                  <th class="table_cust_col">POLineId</th>
+                  <th>Site_To</th>
+                </tr>
+              </thead>
+              <tbody>			
+              </tbody >
+            </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+ 
+ 
+ <SCRIPT>
+	$(document).on("click", "#geN", function(e){
+		var dataVal;
+		
+				console.log("--------click on generatePdfAction-------");
+				console.log("--------click on generatePdfAction-------",url);
+				
+				$.ajax({
+					
+					type: 'GET',
+					url : url+"generatePdfAction1",  //from API update data
+					//data : JSON.stringify(dataVal),
+					//contentType: "application/json",
+		    
+					success: function(result) {
+		    	
+					console.log("Update--Information cancelRecord==="+result);
+					
+					if(result.result==true){
+						
+						getList();  
+						
+					}else if(result.result==false){
+						
+						window.location.href = "sessionOut";
+						
+					}
+					//$("#editPopupScreen").modal('hide');
+					}
+				});
+		
+	});
+ </SCRIPT>
+  <SCRIPT>
+	$(document).on("click", "#geN1", function(e){
+		var dataVal;
+		
+				console.log("--------click on generatePdfAction-------");
+				console.log("--------click on generatePdfAction-------",url);
+				
+				$.ajax({
+					
+					type: 'GET',
+					url : url+"generatePdfAction2",  //from API update data
+					//data : JSON.stringify(dataVal),
+					//contentType: "application/json",
+		    
+					success: function(result) {
+		    	
+					console.log("Update--Information cancelRecord==="+result);
+					
+					if(result.result==true){
+						
+						getList();  
+						
+					}else if(result.result==false){
+						
+						window.location.href = "sessionOut";
+						
+					}
+					//$("#editPopupScreen").modal('hide');
+					}
+				});
+		
+	});
+ </SCRIPT>
+ 
+ 
+ 
+ 
+ 
+ 
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('#purchaseOrderTable').DataTable( {
+        responsive: true
+    } );
+} );
+</script>
+
+<!-- Multiselect -->
+<script>
+$(".dropdown dt a").on('click', function() {
+	  $(".dropdown dd ul").slideToggle('fast');
+	});
+
+	$(".dropdown dd ul li a").on('click', function() {
+	  $(".dropdown dd ul").hide();
+	});
+
+	function getSelectedValue(id) {
+	  return $("#" + id).find("dt a span.value").html();
+	}
+
+	$(document).bind('click', function(e) {
+	  var $clicked = $(e.target);
+	  if (!$clicked.parents().hasClass("dropdown")) $(".dropdown dd ul").hide();
+	});
+
+	$('.mutliSelect input[type="checkbox"]').on('click', function() {
+
+	  var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+	    title = $(this).val() + ",";
+
+	  if ($(this).is(':checked')) {
+	    var html = '<span title="' + title + '">' + title + '</span>';
+	    $('.multiSel').append(html);
+	    $(".hida").hide();
+	  } else {
+	    $('span[title="' + title + '"]').remove();
+	    var ret = $(".hida");
+	    $('.dropdown dt a').append(ret);
+	  }
+	});
+</script>
+ <script>
+
+ var _validFileExtensions = [".xlsx"];    
+ function ValidateSingleInput(oInput) {
+     if (oInput.type == "file") {
+         var sFileName = oInput.value;
+          if (sFileName.length > 0) {
+             var blnValid = false;
+             for (var j = 0; j < _validFileExtensions.length; j++) {
+                 var sCurExtension = _validFileExtensions[j];
+                 if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                     blnValid = true;
+                     break;
+                 }
+             }
+              
+             if (!blnValid) {
+                 alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                 oInput.value = "";
+                 return false;
+             }
+         }
+     }
+     return true;
+ }
+ </script>
+
+      </div>
+      <footer class="main-footer ">
+        <div th:replace="fragments/admin_footer"></div>
+      </footer>
+      <!-- sidenav-->
+      <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
+        <p>Text Here</p>
+      </div>
+    <!-- sidenav--> 
+    
+  </div>
+  <!-- wrapper --> 
+  <!-- sidenav--> 
+  <script>
+  function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+  }
+
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+  }
+  </script><!-- sidenav
+
+  <script>
+  $(document).ready(function() {
+      function setHeight() {
+        windowHeight = $(window).innerHeight();
+        $('.content-wrapper').css('min-height', windowHeight);
+      };
+      setHeight();
+      
+      $(window).resize(function() {
+        setHeight();
+      });
+    });
+  </script>
+  <!-- <script>
+  $(document).ready(function() {
+    function heightDetect() {
+      $(".content-wrapper").css("height", $(window).height());	
+    };
+    heightDetect()
+    $(window).resize(function() {
+      heightDetect();
+    });
+  });
+  </script> -->
+  <!-- ToolTip -->
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+    });
+  </script>
+  <!-- ToolTip -->
+
+  </body>
+
+  </html>

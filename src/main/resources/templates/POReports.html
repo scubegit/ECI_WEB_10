@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>ProApp | PO Reports</title>
+
+<div th:replace="~{fragments/headerJS}"></div>  
+<script type="text/javascript" src="/js/pagejs/productMaster.js"></script>
+<script type="text/javascript" src="/js/pagejs/POReport.js"></script>
+
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+<script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+<script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+<script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+<script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+<script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+<script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+<link th:href="@{/css/animate.css}" rel="stylesheet" />
+<link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+<link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+<script type="text/javascript" src="/js/pagejs/productMaster.js"></script>
+<script type="text/javascript" src="/js/pagejs/POReport.js"></script>
+
+
+
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+ -->
+ 
+<style type="text/css">
+ .orDiv
+{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 9;
+  background-color: rgba(5, 5, 5, 0.75);
+  background-repeat: repeat;
+      display: none;
+}
+.loader,.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 20% auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+  border-left: 1.1em solid #e89933;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+#chartdiv {
+  width: 100%;
+  max-height: 600px;
+  height: 100vh;
+}
+#chartdiv1 {
+  width: 100%;
+  max-height: 600px;
+  height: 100vh;
+}
+</style>
+<script>
+	let nav = 2;
+</script>
+</head>
+
+<body>
+<div th:replace="fragments/admin_navbar"></div>
+ <div class="content-wrapper" >
+<div class="col-sm-12 orDiv" >
+</div>
+<section> 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="box"> 
+          <div class="box-header">
+            <h3 class="box-title pull-left"><i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> PO Reports - 2018</h3>
+            <div class="clearfix"></div>
+          </div>
+          <div class="box-body">
+          <div class="col-md-12"> 
+              <ul class="nav nav-tabs cust-nav-tabs">
+			       <li class="active"><a data-toggle="tab" href="#po">PO</a></li>
+			       <li><a data-toggle="tab" href="#closedPO">Closed PO</a></li>
+			  </ul>
+
+			  <div class="tab-content cust-tab-content">
+			    <div id="po" class="tab-pane fade in active margin_top_15">
+			    <div class="panel-group" id="accordion" >
+			    
+					   
+					   
+					   	 <div class="panel panel-default" id = "poReportData">
+					     	 <!-- <div class="panel-heading pointer_cursor"  data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+					       	 <h4 class="panel-title">
+					          <a>Thane</a>
+					        </h4>
+					      </div>
+					      <div id="collapse1" class="panel-collapse collapse in">
+					        <div class="panel-body">
+					          <div class="col-md-6">
+							 </div>
+							 <div class="col-md-12">
+							<div>  
+			<table class="table table-bordered table-striped table-hover table-responsive" id="poKittyList" >
+            	  <thead>
+                 <tr class="orange">
+                   <th>PO Number</th>
+                   <th>Line Id</th>
+                   <th>PO date</th>
+                   <th>Customer</th>
+                   <th>Product</th>
+                   <th>RegionName</th>
+                   <th>Catalog code</th>
+                   <th>Decription</th>
+                   <th>Balance Qty.</th>
+                   <th>SI Accepted</th>
+                   <th>Task TO Start</th>
+                   <th>WIP</th> 
+                   <th>Unassigned</th> 
+                 
+              	</thead>
+            	 	</table></div>
+            	 	     </div>
+            	 	     <div class="col-md-12">
+            	 	     </div>
+							</div>
+					      </div> -->
+					    </div>
+					   
+					   
+					   
+					   
+<!-- 					    <div class="panel panel-default">
+					      <div class="panel-heading pointer_cursor" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+					        <h4 class="panel-title">
+					          <a>Airoli</a>
+					        </h4>
+					      </div>
+					      <div id="collapse2" class="panel-collapse collapse">
+					        <div class="panel-body">
+			<table class="table table-bordered table-striped table-hover table-responsive" id="poKittyList" >
+              <thead>
+                 <tr class="orange">
+                   <th>PO Number</th>
+                   <th>Line Id</th>
+                   <th>PO date</th>
+                   <th>Customer</th>
+                   <th>Product</th>
+                   <th>RegionName</th>
+                   <th>Catalog code</th>
+                   <th>Decription</th>
+                   <th>Balance Qty.</th>
+                   <th>SI Accepted</th>
+                   <th>Task TO Start</th>
+                   <th>WIP</th> 
+                   <th>Unassigned</th> 
+                 
+                </tr>
+                <tr>
+           		<td>PO00099</td>	
+              	<td>30-09-18</td>			
+				<td>Mtnl</td>
+				<td>P3780</td>
+				<td>This is description.</td>
+				<td>JKL</td>
+				<td>West</td>
+				<td>5500</td>
+				<td>Insufficient line sample text.</td>
+				<td>JKL</td>
+				<td>West</td>
+				<td>5500</td>
+				<td>Insufficient line sample text.</td>
+				</tr> 
+              </thead>
+              <tbody>
+          
+              </tbody >
+            </table>
+							</div>
+					      </div>
+					    </div> -->
+					    
+					  
+					  
+					  
+					   <!--  <div class="panel panel-default">
+					      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+					        <h4 class="panel-title">
+					          <a>Sion</a>
+					        </h4>
+					      </div>
+					      <div id="collapse3" class="panel-collapse collapse">
+					        <div class="panel-body">
+					                  
+							</div>
+					      </div>
+					    </div>
+					     -->
+					    
+					    
+					    
+					  </div> 
+			    
+	
+			    </div>
+			   
+		   <div id="closedPO" class="tab-pane fade margin_top_15">
+			       <div class="panel-group" id="accordion1">
+					    <div class="panel panel-default" id = "closedpoReportData">
+					      
+					      
+					<!--        <div class="panel-heading pointer_cursor" data-toggle="collapse" data-parent="#accordion1" href="#collapse12">
+					        <h4 class="panel-title">
+					          <a>Airoli</a>
+					        </h4>
+					      </div>
+					      <div id="collapse12" class="panel-collapse collapse">
+					        <div class="panel-body">
+					        
+					        
+					         <div class="col-md-12">
+											
+												<table class="table table-striped table-responsive table-bordered">
+													<thead>
+														<tr>
+															<th>Customer</th>
+															<th>Circle</th>
+															<th>PO</th>
+															<th>Line no.</th>
+															<th>Qty</th>
+															<th>Job Id</th>
+															<th>Sitename</th>
+															<th>Eqpt Type</th>
+															<th>Installation date</th>
+															<th>Installation comment</th>
+															<th>Comm Date</th>
+															<th>Comm Comment</th>
+															<th>AT Date</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Airtel</td>
+															<td>Mumbai</td>
+															<td>PO001</td>
+															<td>L0986</td>
+															<td>5</td>
+															<td>JB098</td>
+															<td>Thane</td>
+															<td>ABC</td>
+															<td>22-05-2019</td>
+															<td>This is comment line</td>
+															<td>22-05-2019</td>
+															<td>This is comment line</td>
+															<td>22-05-2019</td>
+														</tr>
+														
+													</tbody>
+												</table>
+									      </div>
+					        
+					        
+					        
+					        
+					        
+							</div>
+					      </div>
+					       -->
+					      
+					    </div>
+					      
+					    <!--   
+		 			      <div class="panel-heading pointer_cursor"  data-toggle="collapse" data-parent="#accordion1" href="#collapse11">
+					        <h4 class="panel-title">
+					          <a>Thane</a>
+					        </h4>
+					      </div>
+					      <div id="collapse11" class="panel-collapse collapse in">
+					        <div class="panel-body">
+					        		 
+									     
+							</div>
+					      </div> 
+					      
+					       -->
+					      
+					    </div>
+					    
+					    
+					    
+					    
+					    <!-- <div class="panel panel-default">
+					      <div class="panel-heading pointer_cursor" data-toggle="collapse" data-parent="#accordion1" href="#collapse12">
+					        <h4 class="panel-title">
+					          <a>Airoli</a>
+					        </h4>
+					      </div>
+					      <div id="collapse12" class="panel-collapse collapse">
+					        <div class="panel-body">
+					        
+							</div>
+					      </div>
+					    </div> -->
+					    
+					    
+					    
+					   <!--  <div class="panel panel-default">
+					      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion1" href="#collapse13">
+					        <h4 class="panel-title">
+					          <a>Sion</a>
+					        </h4>
+					      </div>
+					      <div id="collapse13" class="panel-collapse collapse">
+					        <div class="panel-body">
+					        
+							</div>
+					      </div>
+					    </div> -->
+					  </div> 
+			      
+			    </div>
+			    
+			    
+			    
+			    
+			    
+			    
+			  </div>
+			  </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+
+<!--Add-->
+<div id="add_prd" class="modal fade in" role="dialog" aria-hidden="false" style="display: none;">
+  <div class="modal-dialog" style="width:700px;"> 
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Add Product</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+        <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Product Name : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            <input type="text" class="form-control" name="productPartNoAdd" id="productPartNoAdd" placeholder="Enter Product Name" autofocus="" required="" autocomplete="off">
+	          </div>
+          </div>
+          <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Description : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            <input type="text" class="form-control" name="productDescAdd" id="productDescAdd" placeholder="Enter Product Description" autofocus="" required="" autocomplete="off">
+	          </div>
+          </div>
+          <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Select Customer Name : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            	<select class="form-control" id="customerListadd"></select>
+	          </div>
+          </div>
+          <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Category Code : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            	<input type="text" class="form-control" name="productHsCodeAdd" id="productHsCodeAdd" placeholder="Enter Category Code" autofocus="" required="" autocomplete="off">
+	          </div>
+          </div>
+          <div id="productErrAdd" class="Err" ></div>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-2 pull-left">
+          <button class="btn cust-btn btn-block" id="saveProductAdd" type="submit">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Add--> 
+
+<!--Edit-->
+<div id="editPopupScreen" class="modal fade in" role="dialog" aria-hidden="false" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span class="fa fa-times"></span> </button>
+        <h4 class="modal-title">Edit Product </h4>
+      </div>
+      <div class="modal-body" id="">
+      	<div class="col-sm-12 margin-top15">
+	        <label for="" class="col-sm-4 control-label cust_label">Product Name : <span class="fa fa-asterisk"></span></label>
+	        <div class="col-sm-8 my_form">
+	          	<input type="text" class="form-control" name="productPartNoEdit" id="productPartNoEdit" placeholder="Enter Product Name" autofocus="" required="">
+	        </div>
+        </div>
+        <div class="col-sm-12 margin-top15">
+	        <label for="" class="col-sm-4 control-label cust_label">Description : <span class="fa fa-asterisk"></span></label>
+	        <div class="col-sm-8 my_form">
+	          <input type="text" class="form-control" name="productDescEdit" id="productDescEdit" placeholder="Enter the Description" autofocus="" required="">
+	        </div>
+        </div>
+        <div class="col-sm-12 margin-top15">
+	        <label for="" class="col-sm-4 control-label cust_label">Category Code : <span class="fa fa-asterisk"></span></label>
+	        <div class="col-sm-8 my_form">
+	          <input type="text" class="form-control" name="productCatEdit" id="productCatEdit" placeholder="Enter the Category Code" autofocus="" required="">
+	        </div>
+        </div>
+        <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Select Customer Name : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            <select class="form-control" id="customerListEdt">
+	            </select>
+	          </div>
+          </div>
+        <div id="productErrEdit" class="Err" ></div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-2 pull-left">
+          <button class="btn cust-btn btn-block" id="saveProductEdit" type="submit">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Edit--> 
+
+<script>
+/**
+ * ---------------------------------------
+ * This demo was created using amCharts 4.
+ * 
+ * For more information visit:
+ * https://www.amcharts.com/
+ * 
+ * Documentation is available at:
+ * https://www.amcharts.com/docs/v4/
+ * ---------------------------------------
+ */
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+/**
+ * Define data for each year
+ */
+var chartData = {
+  "2018": [
+    { "sector": "Open", "size": 6.6 },
+    { "sector": "Pending", "size": 0.6 },
+    { "sector": "WIP", "size": 23.2 },
+    { "sector": "Closed", "size": 2.2 }
+    ]
+  
+};
+
+// Create chart instance
+var chart = am4core.create("chartdiv", am4charts.PieChart);
+
+// Add data
+chart.data = [
+	{ "sector": "Open", "size": 6.6 },
+    { "sector": "Pending", "size": 0.6 },
+    { "sector": "WIP", "size": 23.2 },
+    { "sector": "Closed", "size": 2.2 }
+];
+
+// Add label
+chart.innerRadius = 100;
+var label = chart.seriesContainer.createChild(am4core.Label);
+label.text = "2018";
+label.horizontalCenter = "middle";
+label.verticalCenter = "middle";
+label.fontSize = 50;
+
+// Add and configure Series
+var pieSeries = chart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "size";
+pieSeries.dataFields.category = "sector";
+
+//custom color
+pieSeries.colors.list = [
+  am4core.color("#75AE2C"),
+  am4core.color("#574F43"),
+  am4core.color("#008158"),
+  am4core.color("#CB1B1A"),
+];
+
+//Add a legend
+chart.legend = new am4charts.Legend();
+
+// Animate chart data
+ var currentYear = 2018;
+function getCurrentData() {
+  label.text = currentYear;
+  var data = chartData[currentYear];
+  currentYear++;
+  if (currentYear > 2014)
+    currentYear = 2018;
+  return data;
+} 
+function loop() {
+  //chart.allLabels[0].text = currentYear;
+  var data = getCurrentData();
+  for(var i = 0; i < data.length; i++) {
+    chart.data[i].size = data[i].size;
+  }
+  chart.invalidateRawData();
+  chart.setTimeout( loop, 4000 );
+}
+
+loop(); 
+
+chart.exporting.menu = new am4core.ExportMenu();
+</script>
+
+<script>
+/**
+ * ---------------------------------------
+ * This demo was created using amCharts 4.
+ * 
+ * For more information visit:
+ * https://www.amcharts.com/
+ * 
+ * Documentation is available at:
+ * https://www.amcharts.com/docs/v4/
+ * ---------------------------------------
+ */
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+/**
+ * Define data for each year
+ */
+var chartData = {
+  "2018": [
+	  { "sector": "Open", "size": 7.6 },
+	    { "sector": "Pending", "size": 3.6 },
+	    { "sector": "WIP", "size": 13.2 },
+	    { "sector": "Closed", "size": 4.2 }
+    ]
+  
+};
+
+// Create chart instance
+var chart = am4core.create("chartdiv1", am4charts.PieChart);
+
+// Add data
+chart.data = [
+	{ "sector": "Open", "size": 7.6 },
+    { "sector": "Pending", "size": 3.6 },
+    { "sector": "WIP", "size": 13.2 },
+    { "sector": "Closed", "size": 4.2 }
+];
+
+// Add label
+chart.innerRadius = 100;
+var label = chart.seriesContainer.createChild(am4core.Label);
+label.text = "2018";
+label.horizontalCenter = "middle";
+label.verticalCenter = "middle";
+label.fontSize = 50;
+
+// Add and configure Series
+var pieSeries = chart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "size";
+pieSeries.dataFields.category = "sector";
+
+//custom color
+pieSeries.colors.list = [
+  am4core.color("#75AE2C"),
+  am4core.color("#574F43"),
+  am4core.color("#008158"),
+  am4core.color("#CB1B1A"),
+];
+
+// Animate chart data
+ var currentYear = 2018;
+function getCurrentData() {
+  label.text = currentYear;
+  var data = chartData[currentYear];
+  currentYear++;
+  if (currentYear > 2014)
+    currentYear = 2018;
+  return data;
+} 
+function loop() {
+  //chart.allLabels[0].text = currentYear;
+  var data = getCurrentData();
+  for(var i = 0; i < data.length; i++) {
+    chart.data[i].size = data[i].size;
+  }
+  chart.invalidateRawData();
+  chart.setTimeout( loop, 4000 );
+}
+
+loop(); 
+
+chart.exporting.menu = new am4core.ExportMenu();
+</script>
+ 
+   </div>
+       <div th:replace="fragments/admin_footer"></div>
+</body>
+</html>

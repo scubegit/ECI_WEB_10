@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>ProApp | Summary</title>
+  
+  
+       <div th:replace="~{fragments/headerJS}"></div> 
+    <script type="text/javascript" src="/js/pagejs/Summary.js"></script>
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
+<!--   <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+  <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+  <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+  <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
+  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet" />
+  <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
+
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+  <script type="text/javascript" src="/js/pagejs/Summary.js"></script>
+ -->
+
+
+  <style type="text/css">
+    .loader,
+    .loader:after {
+      border-radius: 50%;
+      width: 10em;
+      height: 10em;
+    }
+
+    .loader {
+      margin: 20% auto;
+      font-size: 10px;
+      position: relative;
+      text-indent: -9999em;
+      border-top: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-right: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-bottom: 1.1em solid rgba(131, 171, 199, 0.75);
+      border-left: 1.1em solid #e89933;
+      -webkit-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-animation: load8 1.1s infinite linear;
+      animation: load8 1.1s infinite linear;
+    }
+
+    @-webkit-keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes load8 {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+ 
+    label {
+    padding-top: 7px;
+}
+.form-control {
+    height: 30px !IMPORTANT;
+    margin-top: 2px !IMPORTANT;
+}
+.form-group {
+    margin-top: 2px !IMPORTANT;
+}
+.modal_height_fixed{
+    height: 600px;
+    overflow: auto;
+}
+  </style>
+<script>
+	let nav = 1;
+</script>
+</head>
+
+<body>
+  <div class="col-sm-12 orDiv" id="progressBarFull" style="display:none">
+
+    <div class="loader">Loading...</div>
+  </div>
+  <div class="wrapper" style="height: auto; min-height: 100%;">
+    <header class="main-header">
+      <div th:replace="fragments/headerPM"></div>
+    </header>
+
+    <div class="content-wrapper">
+
+      <section> 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="box"> 
+          <div class="box-header">
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Summary</h3>
+            <div class="box-tools pull-right">
+               <!-- <button class="btn theme_btn3"><i class="fa fa-filter" aria-hidden="true"></i> Customer</button> -->
+              </div>
+              <div class="clearfix"></div>
+          </div>
+          <div class="box-body">
+          <div class="col-md-12" id = "summaryData"> 
+          
+   				<!-- <div class="col-md-4">
+   				
+   					<div class="block-hdr" id = "regData">
+   						<h2>Thane</h2>
+   					</div>
+   					<div class="block-cont-wrap">
+   						<div class="panel-group" id="accordion">
+   						
+					    <div class="panel panel-default">
+					    
+					      <div class="panel-heading"  data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+					        <h4 class="panel-title">
+					          <a>SI 1</a>
+					        </h4>
+					      </div>
+					      
+					      <div id="collapse1" class="panel-collapse collapse in">
+					        <div class="panel-body">
+								<div class="full-wd">
+									<div class="wd33">
+										<p>Assigned</p>
+									</div>
+									<div class="wd33">
+										<p>WIP</p>
+									</div>
+									<div class="wd33">
+										<p>Task to start</p>
+									</div>
+					      	  </div>
+							   <div class="full-wd">
+									<div class="wd33">
+										<p>15</p>
+									</div>
+									<div class="wd33">
+										<p>6</p>
+									</div>
+									<div class="wd33">
+										<p>9</p>
+									</div>
+								</div>
+							</div>
+					      </div>
+					    </div>
+					    
+					    
+					    <div class="panel panel-default">
+					      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+					        <h4 class="panel-title">
+					          <a>SI 2</a>
+					        </h4>
+					      </div>
+					      <div id="collapse2" class="panel-collapse collapse">
+					        <div class="panel-body">
+					        	<div class="full-wd">
+									<div class="wd33">
+										<p>Assigned</p>
+									</div>
+									<div class="wd33">
+										<p>WIP</p>
+									</div>
+									<div class="wd33">
+										<p>Task to start</p>
+									</div>
+					      	  </div>
+							   <div class="full-wd">
+									<div class="wd33">
+										<p>15</p>
+									</div>
+									<div class="wd33">
+										<p>6</p>
+									</div>
+									<div class="wd33">
+										<p>9</p>
+									</div>
+								</div>
+							</div>
+					      </div>
+					    </div>
+					    <div class="panel panel-default">
+					      <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+					        <h4 class="panel-title">
+					          <a>SI 3</a>
+					        </h4>
+					      </div>
+					      <div id="collapse3" class="panel-collapse collapse">
+					        <div class="panel-body">
+								<div class="full-wd">
+									<div class="wd33">
+										<p>Assigned</p>
+									</div>
+									<div class="wd33">
+										<p>WIP</p>
+									</div>
+									<div class="wd33">
+										<p>Task to start</p>
+									</div>
+					      	  </div>
+							   <div class="full-wd">
+									<div class="wd33">
+										<p>15</p>
+									</div>
+									<div class="wd33">
+										<p>6</p>
+									</div>
+									<div class="wd33">
+										<p>9</p>
+									</div>
+								</div>
+							</div>
+					      </div>
+					    </div>
+					 </div> 
+   					</div>
+   				</div>     
+     
+   			    
+            </div> -->
+            <!--  <div class="col-md-12"> 
+  
+     
+   				<div class="col-md-4">
+   					<div class="block-hdr">
+   						<h2>Turbe</h2>
+   					</div>
+   					<div class="block-cont-wrap">
+   						<div class="panel-group" id="accordion6">
+					    <div class="panel panel-default">
+					    
+					      <div class="panel-heading"  data-toggle="collapse" data-parent="#accordion6" href="#collapse16">
+					        <h4 class="panel-title">
+					          <a>SI 1</a>
+					        </h4>
+					      </div>
+					      <div id="collapse16" class="panel-collapse collapse in">
+					        <div class="panel-body">
+								<div class="full-wd">
+									<div class="wd33">
+										<p>Assigned</p>
+									</div>
+									<div class="wd33">
+										<p>WIP</p>
+									</div>
+									<div class="wd33">
+										<p>Task to start</p>
+									</div>
+					      	  </div>
+							   <div class="full-wd">
+									<div class="wd33">
+										<p>15</p>
+									</div>
+									<div class="wd33">
+										<p>6</p>
+									</div>
+									<div class="wd33">
+										<p>9</p>
+									</div>
+								</div>
+							</div>
+					      </div>
+					      
+					    </div>
+					   
+					   
+   				</div>       
+            </div>
+          </div>
+        </div>   -->
+        
+        
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+
+<div id="wipModal" class="modal fade in" role="dialog" aria-hidden="false" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span class="fa fa-times"></span> </button>
+        <h4 class="modal-title">WIP</h4>
+      </div>
+      <div class="modal-body" id="">
+      <div class="full_width modal_height_fixed">
+	            	<table class="table table-striped table-bordered myCustTb">
+	            		<thead>
+	            			<tr class="orange">
+	            				<th>Job Id</th>
+	            				<th>TE Name</th>
+	            				<th>TE Assigned On-Date</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody id ="wipData">
+	            			 <!-- <tr>
+	            				<td>JB023</td>
+	            				<td>Airtel</td>
+	            				<td>ZXS</td>
+	            				<td>FGH</td>
+	            				<td>Acceptance</td>
+	            				<td>Visit</td>
+	            				<td>12-07-2018</td>
+	            			</tr> -->
+	            			
+	            		</tbody>
+	            	</table>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <!--  <div class="col-md-4 col-md-offset-4 pull-left">
+          <button class="btn cust-btn btn-block"type="submit">OK</button>
+        </div>  -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--task to start modal  -->
+<div id="taskStrtModal" class="modal fade in" role="dialog" aria-hidden="false" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span class="fa fa-times"></span> </button>
+        <h4 class="modal-title">Task to Start</h4>
+      </div>
+      <div class="modal-body" id="">
+      <div class="full_width modal_height_fixed">
+	            	<table class="table table-striped table-bordered myCustTb">
+	            		<thead>
+	            			<tr class="orange">
+	            				<th>Job Id</th>
+	            				<th>TE Name</th>
+	            				<th>TE Assigned On-Date</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody id ="taskStrtData">
+	            	            			
+	            		</tbody>
+	            	</table>
+            </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+ <!--unassigned modal  -->
+<div id="unassModal" class="modal fade in" role="dialog" aria-hidden="false" style="display: none;" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span class="fa fa-times"></span> </button>
+        <h4 class="modal-title">Assigned</h4>
+      </div>
+      <div class="modal-body" id="">
+      <div class="full_width modal_height_fixed">
+	            	<table class="table table-striped table-bordered myCustTb">
+	            		<thead>
+	            			<tr class="orange">
+	            				<th>Job Id</th>
+	            				<th>TE Name</th>
+	            				<th>TE Assigned On-Date</th>
+	            			</tr>
+	            		</thead>
+	            		<tbody id ="unassData">
+	            	            			
+	            		</tbody>
+	            	</table>
+            </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+    </div>
+    <footer class="main-footer ">
+      <div th:replace="fragments/admin_footer"></div>
+    </footer>
+    <!-- sidenav-->
+    <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
+      <p>Text Here</p>
+    </div>
+   <!-- sidenav--> 
+  
+</div>
+<!-- wrapper --> 
+<!-- sidenav--> 
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script><!-- sidenav
+
+<script>
+$(document).ready(function() {
+	  function setHeight() {
+	    windowHeight = $(window).innerHeight();
+	    $('.content-wrapper').css('min-height', windowHeight);
+	  };
+	  setHeight();
+	  
+	  $(window).resize(function() {
+	    setHeight();
+	  });
+	});
+</script>
+<!-- <script>
+$(document).ready(function() {
+	function heightDetect() {
+		$(".content-wrapper").css("height", $(window).height());	
+	};
+	heightDetect()
+	$(window).resize(function() {
+		heightDetect();
+	});
+});
+</script> -->
+<!-- ToolTip -->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- ToolTip -->
+
+</body>
+
+</html>

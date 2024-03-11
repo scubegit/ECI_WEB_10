@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>ProApp | User Master</title>
+
+<div th:replace="~{fragments/headerJS}"></div>  
+<link href="<%=request.getContextPath()%>/css/jquery.multiselect.css">
+ <script src="<%=request.getContextPath()%>/js/jquery/jquery.multiselect.js"></script>
+<script type="text/javascript" src="/js/pagejs/userMaster.js"></script>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/adminjs/adminLogInJS.js"></script>
+
+
+<script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="/js/buttons.flash.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
+<script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
+<script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
+<script type="text/javascript" src="/js/buttons.print.min.js"></script>
+<script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
+<script type="text/javascript" src="/js/pagejs/userMaster.js"></script>
+
+
+
+
+<link th:href="@{/css/animate.css}" rel="stylesheet"/>
+<link th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/adminCss/animate.css}" rel="stylesheet"/>
+<link th:href="@{/css/style.css}" rel="stylesheet"/> -->
+<style>
+label {
+    padding-top: 7px;
+}
+.form-control {
+    height: 30px !IMPORTANT;
+    margin-top: 2px !IMPORTANT;
+}
+.form-group {
+    margin-top: 2px !IMPORTANT;
+}
+table th:nth-child(3), td:nth-child(3) {
+  display: none;
+}
+
+.multiselect {
+    width:20em;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    overflow:auto;
+}
+ 
+.multiselect label {
+    display:block;
+}
+ 
+.multiselect-on {
+    color:#ffffff;
+    background-color:#000099;
+}
+
+
+.multiselect-container>li>a>label {
+  padding: 4px 20px 3px 20px;
+}
+</style>
+<script>
+	let nav = 1;
+</script>
+</head>
+
+
+<body>
+<div th:replace="fragments/admin_navbar"></div>
+ <div class="content-wrapper" >
+
+ <section> 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12"> 
+        <div class="box"> 
+          <div class="box-header">
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> User Master</h3>
+            <div class="box-tools pull-right">
+              <button class="btn theme_btn" id="addUser"  data-toggle="modal" data-target="#add_user">Add User</button>
+              </div>
+              <div class="clearfix"></div>
+          </div>
+          <div class="box-body">
+          <div class="col-md-12"> 
+            <table class="table table-bordered table-striped table-hover table-responsive" id="userMasterList" >
+              <thead>
+                <tr class="orange">
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Region</th>
+                  <th>Company Name</th>
+                  <th>Role</th>
+                  <th>Vendor</th>
+                  <th>UserName</th>
+                  <th>Edit</th>
+                  <th>Action</th>
+                  <th>Reset Password</th>
+                </tr>
+              </thead>
+              <tbody>
+              <!-- <tr>
+              	<td>Rahul Singh</td>
+				<td >East</td>
+				<td >SI</td>
+				<td>SI Supervisor</td>
+				 <td>+91 9867553466</td>
+				 <td>rahul@gmail.com</td>
+				 <td><span class="fa fa-edit sordrEdit"></span></td>
+				 <td><label class="switch">
+					<input class="switch-input" type="checkbox" />
+					<span class="switch-label" data-on="Active" data-off="Inactive"></span>
+					<span class="switch-handle"></span>
+					</label></td>
+				</tr> -->
+				
+				
+              </tbody >
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Content--> 
+
+<div id="editPopupScreen"  class="modal fade in" role="dialog">
+  <div class="modal-dialog" style="width:700px"> 
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Update User</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-4 control-label cust_label">User Name: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <input type="text" class="form-control" name="userNameEdt" id="userNameEdt" placeholder="Enter the Name of User">
+	            </div>
+            </div>
+            
+             <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-4 control-label cust_label">Address: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <input type="text" class="form-control" name="addrEdt" id="addrEdt" placeholder="Enter the Address of User">
+	            </div>
+            </div>
+               <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-4 control-label cust_label">Phone Number: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <input type="text" class="form-control" name="phNumberEdt" id="phNumberEdt" placeholder="Enter the Name of User">
+	            </div>
+            </div>
+            
+            <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-4 control-label cust_label">Email: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-8 my_form">
+	              <input type="text" class="form-control" name="userEmailEdt" id="userEmailEdt" placeholder="Enter the Name of User">
+	            </div>
+            </div>
+            <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Select Type : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            	<select class="form-control" id="typeListEdt" >
+	            	 <!-- <option value="0">  - Select Type - </option>onchange="changeFuncEdtforeci()" -->
+   					 	            	</select>
+	            	
+	          </div>
+          </div>
+          
+          <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-4 control-label cust_label">Role Name:<span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            	<select class="form-control" id="roleListEdt"></select>
+	            	
+	          </div>
+          </div>
+            
+          <div class="col-sm-12 margin-top15 margin-bottom30" id= "regHideEdt">
+	          <label for="" class="col-sm-4 control-label cust_label">Select Region : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-8 my_form">
+	            	<dl class="dropdown"> 
+					    <dt>
+					    <a href="#">
+					      <span class="hida"> - Select Region -</span>    
+					      <p class="multiSel"></p>  
+					    </a>
+					    </dt>
+					    <dd>
+					        <div class="mutliSelect">
+					           <ul id = "regionListEdt">
+					               <!--   <li>
+					                    <input type="checkbox" value="thane" class="multiselect_checkbox">Thane</li>
+					                <li>
+					                    <input type="checkbox" value="kurla" class="multiselect_checkbox">Kurla</li>
+					                <li>
+					                    <input type="checkbox" value="mulund" class="multiselect_checkbox">Mulund</li>
+					                <li>
+					                    <input type="checkbox" value="sion" class="multiselect_checkbox">Sion</li>
+					                <li>
+					                    <input type="checkbox" value="vashi" class="multiselect_checkbox">Vashi</li>
+					                <li>
+					                    <input type="checkbox" value="turbe" class="multiselect_checkbox">Turbe</li>-->
+					            </ul> 
+					        </div>
+					    </dd>
+					</dl>
+	          </div>
+            </div>
+             <div id="siDiv1"></div>
+             <div id="custNameDivEdt"></div>
+            
+         <div class="col-md-offset-4 col-md-8">
+	         <div id="usrErrEdt" class="Err" ></div>
+	          <div class="clearfix"></div>
+          </div>
+         
+         
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-md-4 col-md-offset-4 pull-left">
+          <button class="btn btn-block cust-btn" id="updateUserdetails"  type="submit">Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="add_user" class="modal fade in" role="dialog">
+  <div class="modal-dialog" style="width:700px"> 
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Add User</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-3 control-label cust_label">User Name: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-9 my_form">
+	              <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter the Name of User">
+	            </div>
+            </div>
+            
+             <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-3 control-label cust_label">Address: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-9 my_form">
+	              <input type="text" class="form-control" name="addr" id="addr" placeholder="Enter the Address of User">
+	            </div>
+            </div>
+            
+               <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-3 control-label cust_label">Phone: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-9 my_form">
+	              <input type="text" class="form-control" name="phNumber" id="phNumber" placeholder="Enter the Phone Number of User">
+	            </div>
+            </div>
+            
+            <div class="col-sm-12 margin-top15">
+	            <label class="col-sm-3 control-label cust_label">Email: <span class="fa fa-asterisk"></span></label>
+	            <div class="col-sm-9 my_form">
+	              <input type="text" class="form-control" name="userEmail" id="userEmail" placeholder="Enter the Email of User">
+	            </div>
+            </div>
+            <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-3 control-label cust_label">Select Type : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-9 my_form">
+	            	<select class="form-control" id="typeListad" onchange="changeFunc();" > <!-- onchange="changeFunc();" -->
+	            	<option>  --- Select Type --- </option> 
+   					<!--  <option value="1">SI </option>
+   					 <option value="2">ECI </option> -->
+	            	</select>
+	          </div>
+          </div>
+          
+          <div class="col-sm-12 margin-top15">
+	          <label for="" class="col-sm-3 control-label cust_label">RoLe Name:<span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-9 my_form">
+	            	<select class="form-control" id="roleListad">
+	            	<option >  -- Select Role --- </option> </select>
+	          </div>
+          </div>
+          
+           
+          
+          <div class="col-sm-12 margin-top15 margin-bottom30" id = "regHide">
+	          <label for="" class="col-sm-3 control-label cust_label">Select Region : <span class="fa fa-asterisk"></span></label>
+	          <div class="col-sm-9 my_form">
+	            	<dl class="dropdown"> 
+					    <dt>
+					    <a href="#">
+					      <span class="hida"> --- Select Region ---</span>    
+					      <p class="multiSel"></p>  
+					    </a>
+					    </dt>
+					    <dd>
+					        <div class="mutliSelect" id="mutliSelectVal">
+					          <ul id = "regionListadd"> 
+					                <!-- <li>
+					                    <input type="checkbox" value="1" class="multiselect_checkbox">Sion</li>
+					                <li>
+					                    <input type="checkbox" value="vashi" class="multiselect_checkbox">Vashi</li>
+					                <li>
+					                    <input type="checkbox" value="turbe" class="multiselect_checkbox">Turbe</li> -->
+					            </ul> 
+					        </div>
+					    </dd>
+					</dl>
+	          </div>
+          </div>
+           <div id="siDiv"></div>
+          
+          <div id="custNameDiv"></div>
+                   
+          <div class="col-md-offset-3 col-md-8">
+	         <div id="usrErrAdd" class="Err" ></div>
+	          <div class="clearfix"></div>
+          </div>
+            
+        </form>
+    </div>
+    </br></br>
+    <div class="modal-footer">
+        <div class="col-md-4 col-md-offset-3 pull-left">
+          <button class="btn btn-block cust-btn" id="addUserdetails"  type="submit">Submit</button>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="showmesgusr" class="modal fade in" role="dialog">
+  <div class="modal-dialog width300"> 
+    <!-- Modal content-->
+    <div class="modal-content cust-bg-color">
+      <div class="modal-body bodypadd0">
+        <form role="form"  class="" name="myform">
+            <div class="col-sm-12">
+            	<h3 class="update-remark-txt">Password Updated</h3>
+	            
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+         <div class="col-sm-4 col-md-offset-4">
+          <button class="btn btn-block cust-btn22" data-dismiss="modal" type="submit">OK</button>
+        </div> 
+    </div>
+    </div>
+  </div>
+</div>
+ 
+ 
+ <script type="text/javascript">
+	$(document).ready(function() {
+    $('#userMasterTable').DataTable( {
+        responsive: true
+    } );
+} );
+</script> 
+
+<!-- Multiselect -->
+<script>
+$(".dropdown dt a").on('click', function() {
+	  $(".dropdown dd ul").slideToggle('fast');
+	});
+
+	$(".dropdown dd ul li a").on('click', function() {
+	  $(".dropdown dd ul").hide();
+	});
+
+	function getSelectedValue(id) {
+	  return $("#" + id).find("dt a span.value").html();
+	}
+
+	$(document).bind('click', function(e) {
+	  var $clicked = $(e.target);
+	  if (!$clicked.parents().hasClass("dropdown")) $(".dropdown dd ul").hide();
+	});
+
+	$('.mutliSelect input[type="checkbox"]').on('click', function() {
+
+	  var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+	    title = $(this).val() + ",";
+
+	  if ($(this).is(':checked')) {
+	    var html = '<span title="' + title + '">' + title + '</span>';
+	    $('.multiSel').append(html);
+	    $(".hida").hide();
+	  } else {
+	    $('span[title="' + title + '"]').remove();
+	    var ret = $(".hida");
+	    $('.dropdown dt a').append(ret);
+	  }
+	});
+</script>
+   </div>
+       <div th:replace="fragments/admin_footer"></div>
+         <!-- sidenav--> 
+  
+</div>
+<!-- wrapper --> 
+<!-- sidenav--> 
+<script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script><!-- sidenav
+
+<!-- ToolTip -->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- ToolTip -->
+</body>
+</html>
