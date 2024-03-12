@@ -1240,45 +1240,111 @@ function generatecatCodeListCustWise(divid,customerId,prodId){
 		  
 //-------------------------------------------------------------------------------------------check excel currenty uploading status
 	var flag=false;
-	$(document).on("click", "#impbtn", function()
-			
-			{		
-		$('#fileGroupIdMEx').val('');
-		 $.ajax({
+	$(document).on("change", "#fileGroupIdMEx", function() {		
+		
+		var formData = new FormData();
+    	var fileInput = $('#fileGroupIdMEx')[0].files[0];
+
+	    // Check if a file is selected
+	    if (fileInput) {
+	        formData.append('bulkExcelFile', fileInput);
+	
+	        $.ajax({
+	            type: 'POST',
+	            url: "http://localhost:8081/Eci/uploadBulkExcel/importBulkExcel",
+	            data: formData,
+	            contentType: false,
+	            processData: false,
+	            success: function (data) {
+	                console.table(data);
+					$('#progressBar').hide();
+					$('#dataview').modal('show');
+					
+					console.table("Excel PO Rem :----- ", data.result);
+	               	console.table("Excel PO ID :----- ", data.result2);
+					
+					getExcelPOSavedList(data.result2);
+					
+					getExcelPORemainingList(data.result);
+	               	
+	               	
+	               	
+	            },
+	            error: function (error) {
+	                console.error("Error uploading file:", error);
+	            }
+	        });
+	    } else {
+	        console.log("No file selected");
+	    }
+		
+	});
+	
+	
+	// Get Excel PO Saved List Function
+	function getExcelPOSavedList(data) {
+		
+		$('#TestTbl').DataTable({
+				dom: 'Blfrtip',   
+				buttons: ['excel', 'print'],
+				destroy: true,
+		    	data: data,
+		    	"initComplete": function(settings, json) {
 				
-				type: 'POST',
-			    url: "CheckExcelStatus",  
-			    data : "",
-			    success: function(data) {
-	
-			    	console.log(data+"flag");
-			    	
-			    	var CtrObj = $.parseJSON(data);
-			    	console.log(CtrObj);
-			    	console.log(CtrObj.flag);
-			    	flag=CtrObj.flag;
-			    	}
-		 		});	   
-			});
-	
-	
-	
-	
-	
-	
-	
-	
-	
+				},
+		    	columns: [
+		    		{ "data"	: 	"PO_NumberIN" },
+		    		{ "data"	: 	"PO_DateIN" },
+		    		{ "data"	: 	"PO_EndDateIN" },
+		    		{ "data"	: 	"CustomerIdIN" },
+		    		{ "data"	: 	"LineIdIN" },
+		    		{ "data"	: 	"CatalogIdIN" },
+		    		{ "data"	: 	"DescriptionIN" },
+		    		{ "data"	: 	"ProductIdIN" },
+		    		{ "data"	: 	"RegionIdIN" },
+		    		{ "data"	: 	"PO_QtyIN" },
+		    		{ "data"	: 	"Balace_QtyIN" },
+		    		{ "data"	: 	"StatusIN" },
+		    	],
+		    	"columnDefs":[	
+				              
+				],
+		});
+		
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+		// Get Excel PO Saved List Function
+	function getExcelPORemainingList(data) {
+		
+		$('#insertdatatbl').DataTable({
+				dom: 'Blfrtip',   
+				buttons: ['excel', 'print'],
+				destroy: true,
+		    	data: data,
+		    	"initComplete": function(settings, json) {
+				
+				},
+		    	columns: [
+		    		{ "data"	: 	"PO_Number" },
+		    		{ "data"	: 	"PO_Date" },
+		    		{ "data"	: 	"PO_EndDate" },
+		    		{ "data"	: 	"CustomerId" },
+		    		{ "data"	: 	"LineId" },
+		    		{ "data"	: 	"CatalogId" },
+		    		{ "data"	: 	"Description" },
+		    		{ "data"	: 	"ProductId" },
+		    		{ "data"	: 	"RegionId" },
+		    		{ "data"	: 	"PO_Qty" },
+		    		{ "data"	: 	"Balace_Qty" },
+		    		{ "data"	: 	"Status" },
+		    	],
+		    	"columnDefs":[	
+				              
+				],
+		});
+		
+	}
 	
 	$(document).on("click", "#savePurchaseData", function(e){
 		

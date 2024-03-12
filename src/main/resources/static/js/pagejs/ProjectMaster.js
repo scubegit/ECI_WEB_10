@@ -1006,7 +1006,7 @@
 			}else{
 				$('#import_excel').modal('hide');
 				$("#progressBar").show();
-				readURLUP(this,"#fileGroupIdMEx");    
+				//readURLUP(this,"#fileGroupIdMEx");    
 			}
 			});
 		
@@ -1132,7 +1132,7 @@
 								  },
 			    				 
 			    				 columns: [
-			    					 { "data": "JobId" },
+			    					{ "data": "JobId" },
 			    				    { "data": "CustomerIdIN" },
 			    		            { "data": "SIIN" },			    		        
 			    		            { "data": "QuantityIN" },
@@ -1181,28 +1181,111 @@
 		}
 //excel upload code end
 		
+var flag=false;
+$(document).on('change', '#bulkInstallExcelUpload', function() {		
+//$('#fileGroupIdMEx').val('');
+	var formData = new FormData();
+    var fileInput = $('#bulkInstallExcelUpload')[0].files[0];
+    
+    let userID = localStorage.getItem('userId');
+    
+    console.table("User ID :--- ", userID)
+
+	// Check if a file is selected
+	if (fileInput) {
+	    formData.append('bulkInstallationFile', fileInput);
+	    formData.append('userID', userID);
 		
-		var flag=false;
-		$(document).on("click", "#bulkinstall", function()
-				
-				{		
-			$('#fileGroupIdMEx').val('');
-			 $.ajax({
+		
+		
+	    $.ajax({
+	       type: 'POST',
+	       url: "http://localhost:8081/Eci/uploadBulkExcel/uploadBulkInstallationExcel",
+	       data: formData,
+	       contentType: false,
+	       processData: false,
+	       success: function (data) {
+	           	console.table(data);
+			 	
+			 	$('#progressBar').hide();
+				$('#dataview').modal('show');
 					
-					type: 'POST',
-				    url: "CheckExcelStatusInst",  
-				    data : "",
-				    success: function(data) {
+				console.table("Excel PO Rem :----- ", data.result);
+	            console.table("Excel PO ID :----- ", data.result2);
+					
+				getSavedBulkInstallationExcelList(data.result2);
+					
+				getBulkInstallationRemainingList(data.result);
+	       },
+	       error: function (error) {
+	            console.error("Error uploading file:", error);
+	       }
+	    });
+	}else {
+	    console.log("No file selected");
+	} 
+});
 		
-				    	console.log(data+"flag");
-				    	
-				    	var CtrObj = $.parseJSON(data);
-				    	console.log(CtrObj);
-				    	console.log(CtrObj.flag);
-				    	flag=CtrObj.flag;
-				    	}
-			 		});	   
-				});
+
+// Get Excel PO Saved List Function
+function getSavedBulkInstallationExcelList(data) {
 		
+	$('#TestTbl').DataTable({
+		dom: 'Blfrtip',   
+		buttons: ['excel', 'print'],
+		destroy: true,
+		data: data,
+		"initComplete": function(settings, json) {
+				
+		},
+		columns: [
+		    { "data"	: 	"JobId" },
+			{ "data"	: 	"CustomerIdIN" },
+			{ "data"	: 	"SIIN" },			    		        
+			{ "data"	: 	"QuantityIN" },
+			{ "data"	: 	"SiteIN" },
+			{ "data"	: 	"LocationIN" },
+			{ "data"	: 	"RegionIdIN" },
+			{ "data"	: 	"CurrentStageIN" },
+			{ "data"	: 	"CurrentStatusIN" },
+			{ "data"	: 	"POLineIdIN" },
+			{ "data"	: 	"Site_ToIN" },
+		 ],
+		 "columnDefs":[	
+				              
+		],
+	});
 		
+}
+	
+	
+// Get Excel PO Saved List Function
+function getBulkInstallationRemainingList(data) {
 		
+	$('#insertdatatbl').DataTable({
+		dom: 'Blfrtip',   
+		buttons: ['excel', 'print'],
+		destroy: true,
+		data: data,
+		"initComplete": function(settings, json) {
+				
+		},
+		columns: [
+				{ "data"	: 	"JobId" },
+			    { "data"	: 	"CustomerId" },
+			   	{ "data"	: 	"SI" },			    		           
+			    { "data"	: 	"Quantity" },
+			   	{ "data"	: 	"Site" },
+			 	{ "data"	: 	"Location" },
+			    { "data"	: 	"RegionId" },
+			 	{ "data"	: 	"CurrentStage" },
+				{ "data"	: 	"CurrentStatus" },
+				{ "data"	: 	"POLineId" },
+			    { "data"	: 	"Site_To" },
+		],
+		"columnDefs":[	
+				              
+		],
+	});
+		
+}		

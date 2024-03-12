@@ -6,6 +6,8 @@
 		$(document).ready(function(){
 			
 			
+			/*alert("testing again");*/
+			
 			// var siId = GetURLParameter('siId');
 			 var dateFrom = GetURLParameter('dateFrom');
 			 var dateTo = GetURLParameter('dateTo');
@@ -49,6 +51,9 @@
 //get  list
 		function getList(dataVal){
 	
+	
+			/*	alert("testing again111")
+*/
 			var i = 0;
 					console.log("------approvaldataList----------");
 	
@@ -71,6 +76,10 @@
 					tableData.destroy();
        
 					$('#approvaldataList.tbody').empty();
+					
+							//			$('#approvedTasksList.tbody').empty();
+
+					
 		
 					var editIcon = function ( data, type, row ) {
 				 
@@ -98,7 +107,13 @@
 					return data;
 					};
 					i++;
-					var table = $('#approvaldataList').DataTable( {
+				
+				
+				var table = $('#approvaldataList').DataTable( {
+				
+			//						var table = $('#approvedTasksList').DataTable( {
+
+				
 				
 					dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
@@ -178,6 +193,8 @@
 		
 $(document).on("click", "#GetApprovedTask", function(e){
 			
+			
+		/*	alert("calling hyperlink");*/
 			
 			console.log("--------click on GetApprovedTask-------");
 			

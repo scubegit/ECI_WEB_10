@@ -257,7 +257,7 @@ function getQualityReportList(dataValue){
 				"initComplete": function(settings, json) {
 				   //   $('.dataTables_scrollBody thead tr').css({ display: 'none' }); 
 			    },
-				/*buttons: [
+				buttons: [
 					{
 						extend: 'excelHtml5',
 		                exportOptions: {
@@ -283,7 +283,7 @@ function getQualityReportList(dataValue){
 		                }
 		                
 					}
-				],*/
+				],
 				
 				destroy: true,
 				data: data.result,

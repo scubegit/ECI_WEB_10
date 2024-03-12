@@ -57,6 +57,11 @@ public class StudentController {
     }
     
     @GetMapping("/PurchaseOrderMaster")
+    public String purchaseOrderMaster(Model model) {
+        return "PurchaseOrder";
+    }
+    
+    @GetMapping("/PurchaseOrder")
     public String purchaseOrder(Model model) {
         return "PurchaseOrder";
     }
@@ -172,7 +177,15 @@ public class StudentController {
     
     @GetMapping("/ApproveHPM")
     public String approveHPM(Model model) {
+    	System.out.println("testing");
         return "ApproveHPM";
+    }
+    
+    @GetMapping("/GetApprovedTask")
+    public String hpmApprovedTask(Model model) {
+    	System.out.println("testing222222");
+
+        return "HpmApprovedTask";
     }
     
     

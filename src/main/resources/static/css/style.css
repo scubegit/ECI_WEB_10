@@ -2847,3 +2847,13 @@ body {
     -webkit-animation-name: zoomIn;
     animation-name: zoomIn;
 }
+
+.cust-btn-style {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.action-a{
+    display: block;
+    width: 130px;
+}

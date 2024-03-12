@@ -38,7 +38,7 @@
 						
 					return '  <td><input type="button" class="table-input-btn cust-btn-style" value="View Details" data-toggle="modal" data-target="#showdetails" id="showdetailsbtn" idval="'+data.id+'">'+
 					'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
-		    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a></td>';						
+		    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn action-a" download>Download ATP </a></td>';						
 
 					
 //					'<input type="button" class="table-input-btn cust-btn-style" value="Download ATP" ></td>';

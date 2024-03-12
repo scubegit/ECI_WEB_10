@@ -5,13 +5,18 @@
 	
 		$(document).ready(function(){
 			
-			getList();
+			/*	alert("testing111");*/
+
+			
+			getListAA();
 			
 		});
 
 	
 //get  list
-		function getList(){
+		function getListAA(){
+	
+	/*alert("testing");*/
 	
 			var i = 0;
 					console.log("------approvaldataList----------");
@@ -24,8 +29,13 @@
 					//console.log("--getProductList----JobId----------",data.result[0].id);
 					
 					tableData.destroy();
+					
+										console.log("111");
+
        
 					$('#approvaldataList.tbody').empty();
+					
+					console.log("111");
 		
 					var editIcon = function ( data, type, row ) {
 				 
@@ -41,6 +51,7 @@
 			        return data;
 					};
 			    
+			    console.log("333");
 					
 					var deleteIcon = function ( data, type, row ) {
 					
@@ -52,16 +63,22 @@
 					
 					return data;
 					};
+					
+					console.log("444");
+					
 					i++;
 					var table = $('#approvaldataList').DataTable( {
 				
-					dom: 'Blfrtip',   
+				//	dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
 				 	 destroy: true,
     				 data: data.result,
     				 "initComplete": function(settings, json) {
 					  },
-    				 
+    			
+			//   scrollCollapse: true,
+				
+	            width: '100%',
     				 columns: [
     				    { "data": "JobId" },
     				    { "data": "CustomerName" },
@@ -75,7 +92,7 @@
     		            { "data": deleteIcon },
     				 
     				 ],
-    				 "columnDefs": 
+    				 /*"columnDefs": 
 					 [	
 		               {
 		                    "targets": [ 4 ],
@@ -86,8 +103,12 @@
 		                    "orderable": false
 		                }
 		            ],
-    				 "order": [[0, 'desc']],
+    				 "order": [[0, 'desc']],*/
 		    } );
+		    
+		    
+		    console.log("5555");
+		    
 			
 	});
 	}
@@ -131,7 +152,7 @@
     	
 			console.log("Update--seekApproval result==="+result);
 			
-			getList();  
+			getListAA();  
 
 			}
 		});
