@@ -1,39 +1,23 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<html>
 
 <head>
   <meta charset="ISO-8859-1">
-  <title>ProApp | Approve HPM</title>
-  
-    <!--   <div th:replace="~{fragments/headerJS}"></div> 
-        <script type="text/javascript" src="/js/pagejs/ApprovalHPM.js"></script> -->
+  <title>ProApp | Approved HPM</title>
 
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
-
 <!--   <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
-  
-  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
-    <link th:href="@{/css/style.css}" rel="stylesheet" />  
-    
-     <script type="text/javascript" th:src="@{/js/dataTables.responsive.min.js}"></script>
-      <script type="text/javascript" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-      <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
-  
 
- 
-  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
-  <script type="text/javascript" src="/js/pagejs/header.js"></script>
-  
- 
+  <script type="text/javascript" src="/js/pagejs/ApprovedTasks.js"></script>
+  <script type="text/javascript" src="/js/pagejs/WipPending.js"></script>
+  <script type="text/javascript" src="/js/pagejs/AdHocReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/CompleteJob.js"></script>
+  <script type="text/javascript" src="/js/pagejs/QcSurveyReport.js"></script>
+  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+
   <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
   <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
   <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
@@ -41,28 +25,30 @@
   <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
   <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
   <script type="text/javascript" src="/js/buttons.print.min.js"></script>
-  
+  <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
 
+  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
-
-
-      <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
-   -->    
-   
-         <div th:replace="~{fragments/headerJS}"></div> 
-         
-  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
-<!--     <script type="text/javascript" src="/js/pagejs/ApprovalHPM.js"></script> -->
-  <script type="text/javascript" src="/js/pagejs/ApprovalHPM.js"></script>
-
-<!--   <link th:href="@{/css/animate.css}" rel="stylesheet" />
+  <link th:href="@{/css/animate.css}" rel="stylesheet" />
   <link th:href="@{/css/animate.min.css}" rel="stylesheet" />
-  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" /> -->
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery.dataTables.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.bootstrap.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
 
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
 
-<style>
+  <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script> -->
+  
+           <div th:replace="~{fragments/headerJS}"></div> 
+  <script type="text/javascript" src="/js/pagejs/HpmApprovedTask.js"></script>
+  
+  
+ <style>
 label {
     padding-top: 7px;
 }
@@ -75,19 +61,27 @@ label {
 }
 </style>
 <script>
-	let nav = 1;
+	let nav = 2;
 </script>
+
 </head>
 
 <body>
   <div class="wrapper" style="height: auto; min-height: 100%;">
     <header class="main-header">
-      <div th:replace="~{fragments/headerHPM}"></div>
+    
+    
+    
+    <!--   <div th:replace="~{fragments/headerHPM}"></div> -->
+      
+            <div th:replace="~{fragments/headerHPM}"></div>
+      
+      
     </header>
 
     <div class="content-wrapper">
 
-  <section> 
+<section> 
   <!--container-fluid-->
   <div class="container-fluid">
     <div class="row">
@@ -96,7 +90,7 @@ label {
         <div class="box"> 
           <!--box-header-->
           <div class="box-header">
-            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Approve HPM</h3>
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Approved Installations</h3>
             <!-- <div class="box-tools pull-right">
                <button class="btn theme_btn" data-toggle="modal" data-target="#new_installation" id = "addnewAction">New Installation </button>
                <button class="btn theme_btn" data-toggle="modal" data-target="#bulk_installation">Bulk Installation</button>
@@ -116,14 +110,16 @@ label {
                 <tr class="orange">
                   <th>Job ID</th>
                   <th>Customer</th>
+                  <th>PM</th>
                   <th>SI Co-ordinator</th>
                   <th>Product</th>
+                  <th>Region</th>
                   <th>Site</th>
                   <th>Location</th> 
                   <th>Status</th>
                 <!--   <th>Stages</th>  -->
                  <!--  <th class="table_cust_col">Remark</th> -->
-                  <th>Action</th>
+                  <th>Approval Date</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,7 +160,7 @@ label {
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header cust-hd">
-        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <button type="button" class="close" data-dismiss="modal">×</button>
         <h4 class="modal-title">New Installation</h4>
       </div>
       <div class="modal-body">
@@ -272,7 +268,7 @@ label {
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header cust-hd">
-        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <button type="button" class="close" data-dismiss="modal">×</button>
         <h4 class="modal-title">Bulk Installation</h4>
       </div>
       <div class="modal-body bodypadd0">
@@ -341,9 +337,14 @@ $(".dropdown dt a").on('click', function() {
 
     </div>
     <footer class="main-footer ">
-      <div th:replace="~{fragments/admin_footer}"></div>
+<!--       <div th:replace="~{fragments/admin_footer}"></div>
+ -->      
+                  <div th:replace="~{fragments/admin_footer}"></div>
+      
+      
     </footer>
-      <!-- sidenav-->
+    
+  <!-- sidenav-->
   <div id="mySidenav" class="sidenav"> <a href="javascript:void(0)" class="closebtn" onClick="closeNav()">&times;</a>
     <p>Text Here</p>
   </div>
@@ -362,13 +363,14 @@ function closeNav() {
 }
 </script><!-- sidenav
 
-
+<!-- ToolTip -->
 <script>
 	$(document).ready(function(){
 		$('[data-toggle="tooltip"]').tooltip(); 
 	});
 </script>
 <!-- ToolTip -->
+
 </body>
 
 </html>

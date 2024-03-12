@@ -5,8 +5,10 @@
 <title>ProApp | User Master</title>
 
 <div th:replace="~{fragments/headerJS}"></div>  
-<link href="<%=request.getContextPath()%>/css/jquery.multiselect.css">
- <script src="<%=request.getContextPath()%>/js/jquery/jquery.multiselect.js"></script>
+<!-- <link href="<%=request.getContextPath()%>/css/jquery.multiselect.css"> -->
+  <link th:href="@{/css/jquery.multiselect.css}" rel="stylesheet"/>
+<!--  <script src="<%=request.getContextPath()%>/js/jquery/jquery.multiselect.js"></script> -->
+ <script type="text/javascript" src="/js/jquery/jquery.multiselect.js"></script>
 <script type="text/javascript" src="/js/pagejs/userMaster.js"></script>
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -90,7 +92,7 @@ table th:nth-child(3), td:nth-child(3) {
 
 
 <body>
-<div th:replace="fragments/admin_navbar"></div>
+<div th:replace="~{fragments/admin_navbar}"></div>
  <div class="content-wrapper" >
 
  <section> 
@@ -427,7 +429,7 @@ $(".dropdown dt a").on('click', function() {
 	});
 </script>
    </div>
-       <div th:replace="fragments/admin_footer"></div>
+       <div th:replace="~{fragments/admin_footer}"></div>
          <!-- sidenav--> 
   
 </div>
