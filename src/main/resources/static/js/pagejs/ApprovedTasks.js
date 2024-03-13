@@ -92,7 +92,7 @@ function generateSubContractorListApr(){
 
 $(document).on("click", "#approveTaskSubmit", function(e){
 	
-	alert("11");
+	/*alert("11");*/
 			console.log("--------click on approveTaskSubmit-------",$("#subContractorListapr").val());
 			
 		//	if(ValidationForSelectBox("#reportErr","SI Name ",$('#subContractorListapr')))
