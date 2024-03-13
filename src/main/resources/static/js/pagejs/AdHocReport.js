@@ -57,7 +57,7 @@
 
 			$('#custList').empty();
 			
-			$.get(url+"getCustomers/", function( data ) { //from API list
+			$.get(url+"getCustomers", function( data ) { //from API list
 				
 			console.log("---------------data.result----------",data.result);
 			
