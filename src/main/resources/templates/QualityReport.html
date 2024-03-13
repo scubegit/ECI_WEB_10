@@ -6,13 +6,13 @@
   <title>ProApp | Admin Quality Report</title>
 
 <!-- <div th:replace="~{fragments/headerJS}"></div>  
-  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script> -->
+  <script type="text/javascript" th:src="@{/js/pagejs/qualityReport.js"></script> -->
 
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script> -->
-<!--    <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
-   <script type="text/javascript" src="js/jquery/jquery.dataTables.min.js"></script>
+<!--    <script type="text/javascript" th:src="@{js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{js/bootstrap/bootstrap.min.js"></script>
+   <script type="text/javascript" th:src="@{js/jquery/jquery.dataTables.min.js"></script>
 
   <link th:href="@{/css/BootStrap/bootstrap.min.css}" rel="stylesheet" />
   <link th:href="@{/css/dataTables.bootstrap.min.css}" rel="stylesheet" />
@@ -26,28 +26,28 @@
 
     <script type="text/javascript" th:src="@{/js/dataTables.responsive.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
-    <script type="text/javascript" src="/js/jquery.rowspanizer.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.rowspanizer.js"></script>
     
       <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
-  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
-  <script type="text/javascript" src="/js/pagejs/header.js"></script> 
+  <script type="text/javascript" th:src="@{/js/pagejs/common_Rep.js"></script>
+  <script type="text/javascript" th:src="@{/js/pagejs/header.js"></script> 
 
-  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
-  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
-  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
-  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/buttons.print.min.js"></script>
  
-  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script> 
-  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/validatePage.js"></script> 
+  <script type="text/javascript" th:src="@{/js/pagejs/qualityReport.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-  <script type="text/javascript" src="/js/jquery/chosen.jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/jquery/chosen.jquery.min.js"></script>
   <link th:href="@{/css/chosen.css}" rel="stylesheet" />   -->
 
 <!-- +++new block -->
@@ -91,8 +91,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/buttons.dataTables.min.css}"> 
     
 
-<script type="text/javascript" src="/js/adminJs/validatePage.js"></script>
-<script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
+<script type="text/javascript" th:src="@{/js/adminJs/validatePage.js"></script>
+<script type="text/javascript" th:src="@{/js/pagejs/common_Rep.js"></script>
 
 
 
@@ -101,12 +101,12 @@
 
    <div th:replace="~{fragments/headerJS}"></div> 
    
-<script type="text/javascript" src="/js/adminJs/validatePage.js"></script> 
-  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+<script type="text/javascript" th:src="@{/js/adminJs/validatePage.js}"></script> 
+  <script type="text/javascript" th:src="@{/js/pagejs/qualityReport.js}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-  <script type="text/javascript" src="/js/jquery/chosen.jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/jquery/chosen.jquery.min.js}"></script>
   <link th:href="@{/css/chosen.css}" rel="stylesheet" />  
 
    
@@ -132,23 +132,23 @@
 <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-  <script type="text/javascript" src="/js/pagejs/common_Rep.js"></script>
-  <script type="text/javascript" src="/js/pagejs/header.js"></script>
+  <script type="text/javascript" th:src="@{/js/pagejs/common_Rep.js"></script>
+  <script type="text/javascript" th:src="@{/js/pagejs/header.js"></script>
 
-  <script type="text/javascript" src="/js/dataTables.buttons.min.js"></script>
-  <script type="text/javascript" src="/js/buttons.flash.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/pdfmake.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/jszip.min.js"></script>
-  <script type="text/javascript" src="/js/adminJs/vfs_fonts.js"></script>
-  <script type="text/javascript" src="/js/adminJs/buttons.html5.min.js"></script>
-  <script type="text/javascript" src="/js/buttons.print.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/pdfmake.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/jszip.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/vfs_fonts.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/buttons.html5.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/buttons.print.min.js"></script>
 
-  <script type="text/javascript" src="/js/adminJs/validatePage.js"></script> 
-  <script type="text/javascript" src="/js/pagejs/qualityReport.js"></script>
+  <script type="text/javascript" th:src="@{/js/adminJs/validatePage.js"></script> 
+  <script type="text/javascript" th:src="@{/js/pagejs/qualityReport.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 
-  <script type="text/javascript" src="/js/jquery/chosen.jquery.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/jquery/chosen.jquery.min.js"></script>
   <link th:href="@{/css/chosen.css}" rel="stylesheet" />   -->
 
 <!--   ================New added============ --> 
