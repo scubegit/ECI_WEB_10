@@ -817,7 +817,7 @@
 					console.log("-----gettaskList------");
 			
 			
-					$.get(url+"getTasks/"+localStorage.getItem("userId"), function( data ) { //from API list
+					$.get(url+"getAllTaskListByIsDeletedN/"+localStorage.getItem("userId"), function( data ) { //from API list
 				
 					console.log("------------getTasks--------------",data.result);
 				
@@ -917,7 +917,22 @@
 					var table = $('#purchaseOrderList').DataTable( {
 				
 					dom: 'Blfrtip',   
-					buttons: ['excel', 'print'],
+					buttons: [{
+		                extend: 'excel',
+		                exportOptions: {
+	                        columns: [0,1,2,3,4,5,6,7,8,9,10,11,12],
+	                        format: {
+	                            body: function (data, row, column, node) {
+	                                // Check if the column contains an input field
+	                                if ($(node).find('input').length > 0) {
+	                                    return $(node).find('input').val();
+	                                }
+	                                return data;
+	                            }
+	                        }
+	                    }
+		                
+					}, 'print'],
 				 	 destroy: true,
     				 data: data.result,
     				 "initComplete": function(settings, json) {
@@ -1200,7 +1215,7 @@ $(document).on('change', '#bulkInstallExcelUpload', function() {
 		
 	    $.ajax({
 	       type: 'POST',
-	       url: "http://localhost:8081/Eci/uploadBulkExcel/uploadBulkInstallationExcel",
+	       url: url + "uploadBulkInstallationExcel",
 	       data: formData,
 	       contentType: false,
 	       processData: false,

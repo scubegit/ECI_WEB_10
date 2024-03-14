@@ -246,7 +246,7 @@
 						
 						type: 'POST',
 						//url: 'http://192.168.0.218:8080/Eci/insertTask',  //from API add new data
-					    url: url+"insertTask/",  //from API add new data
+					    url: url+"insertTask",  //from API add new data
 					    data : JSON.stringify(dataVal),
 					    contentType: "application/json",
 					    

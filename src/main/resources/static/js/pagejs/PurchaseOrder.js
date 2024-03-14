@@ -1251,7 +1251,7 @@ function generatecatCodeListCustWise(divid,customerId,prodId){
 	
 	        $.ajax({
 	            type: 'POST',
-	            url: "http://localhost:8081/Eci/uploadBulkExcel/importBulkExcel",
+	            url: url + "importBulkExcel",
 	            data: formData,
 	            contentType: false,
 	            processData: false,
