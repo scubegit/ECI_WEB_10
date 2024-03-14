@@ -36,7 +36,7 @@ body {
 }
 /* EXAMPLE 6 - Background Logo*/
 .example6 .navbar-brand {
-    background: url(/images/logo2.png);
+    background: url(../images/logo2.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
