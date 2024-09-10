@@ -261,10 +261,23 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 		            			}  
 		            		}
 						 },
-                     { "data": "CircleName" },  // <th>Circle_Name</th>
+                     { "data": null ,	// 	<th>Out_Location</th>
+				 			render:function(data,type,row) {	
+			            		var checkUrl = data.region;
+			            		if(checkUrl == null){
+									return "";
+								}else{
+									 var myArray = checkUrl.split("-");
+									 var word = myArray[1];
+									
+				            		return word;
+		            			}  
+		            		} 
+                     
+                     },  // <th>Circle_Name</th>
                      { "data": actionIcon }, // <th>Action</th>
 		            
-				 
+				
 				 ],
 				 "columnDefs": [{
 				    "targets": '_all',
