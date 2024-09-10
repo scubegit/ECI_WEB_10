@@ -139,7 +139,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 			            		console.table("Data check", data.PhotoIN);
 			            		//var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
 			            		
-			            		var indexstr=checkUrl.indexOf("ATPPhoto");
+			            		var indexstr=checkUrl.indexOf("UploadPhoto");
 								console.log("p2222222222-" ,indexstr);
 								var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
 			            		console.log("path-" ,path);		
@@ -164,7 +164,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 			*/		            	//	var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
 					            	//	return modifiedUrl;
 					            		
-					            		var indexstr=checkUrl.indexOf("ATPPhoto");
+					            		var indexstr=checkUrl.indexOf("UploadPhoto");
 										var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
 										return path;
 				            		
@@ -186,7 +186,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 					            		console.table("Data check", data.PhotoOut);
 					            		//var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
 					            		
-					            		var indexstr=checkUrl.indexOf("ATPPhoto");
+					            		var indexstr=checkUrl.indexOf("UploadPhoto");
 										console.log("p2222222222-" ,indexstr);
 										var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
 					            		console.log("path-" ,path);		
@@ -210,7 +210,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 			*/		            	//	var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
 					            	//	return modifiedUrl;
 					            		
-					            		var indexstr=checkUrl.indexOf("ATPPhoto");
+					            		var indexstr=checkUrl.indexOf("UploadPhoto");
 										var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
 										return path;
 				            		
@@ -284,7 +284,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				    "defaultContent": ""
 					},
 					//hide the second & fourth column
-			        { 'visible': false, 'targets': [2,3,4,5,6,7,8,9,14,16,27,29,31,33,34] }
+			        { 'visible': false, 'targets': [2,3,4,5,7,8,9,14,16,27,29,31,33,34] }
 				
 				],
 				 "order": [[0, 'desc']],
