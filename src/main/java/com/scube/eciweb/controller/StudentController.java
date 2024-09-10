@@ -141,6 +141,20 @@ public class StudentController {
         return "Summary";
     }
     
+ /*   @GetMapping("/SISummary")
+    public String SIsummary(Model model) {
+        return "SISummary";
+    }
+    
+    @GetMapping("/SITaskStatus")
+    public String SITaskStatus(Model model) {
+        return "SITaskStatus";
+    }
+    
+    @GetMapping("/SIApprovals")
+    public String SIApprovals(Model model) {
+        return "SIApprovals";
+    }*/
 
     @GetMapping("/TaskStatus")
     public String taskStatus(Model model) {
@@ -172,6 +186,10 @@ public class StudentController {
         return "ApprovedTasksForPM";
     }
 
+    @GetMapping("/ReportTasks")
+    public String ReportTasks(Model model) {
+        return "ReportTasksForPM";
+    }
     
 	/* HPM login screens */
     
