@@ -10,8 +10,8 @@ var PFlag1 = "";
 //var url="http://125.99.153.126:8085/Eci/Eci/";
 //var url1="http://125.99.153.126:8085/Eci/Eci/";
 
-var url = "http://192.168.0.208:8082/Eci/";
-var url1 = "http://192.168.0.208:8082/Eci/";
+var url = "http://192.168.29.25:8081/Eci/Eci/";
+var url1 = "http://192.168.29.25:8081/Eci/Eci/";
 
 
 // Test Server URL
@@ -117,25 +117,26 @@ $(document).ready(function() {
 								
 								if(data.role=="Admin")
 								{
-									
 									url="MenuPage";
 								}
 								if(data.role=="PM")
 								{									
-									url="Summary";								}
+									url="Summary";								
+								}
+								if(data.role=="SI Co-Ordinator")
+								{									
+									url="SISummary";								
+								}
 								if(data.role=="HPM")
 								{
-									
 									url="ApproveHPM";
 								}
 								if(data.role=="Customer")
 								{
-									
 									url="CustomerHReports";
 								}
 								if(data.role=="Quality")
 								{
-									
 									url="QualityReports";
 								}
 								

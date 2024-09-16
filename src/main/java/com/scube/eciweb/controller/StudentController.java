@@ -141,7 +141,7 @@ public class StudentController {
         return "Summary";
     }
     
- /*   @GetMapping("/SISummary")
+    @GetMapping("/SISummary")
     public String SIsummary(Model model) {
         return "SISummary";
     }
@@ -154,7 +154,7 @@ public class StudentController {
     @GetMapping("/SIApprovals")
     public String SIApprovals(Model model) {
         return "SIApprovals";
-    }*/
+    }
 
     @GetMapping("/TaskStatus")
     public String taskStatus(Model model) {

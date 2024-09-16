@@ -83,7 +83,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				 ,{
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,27,29,31,33,34]
+  //                      columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,23,25,26,27,28,29,30,31,32,33,34]
                     }
                 }],
 			 	 destroy: true,
@@ -96,60 +96,59 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				  },
 				 
 				 columns: [
-
-					
-					 	 { "data": "ProductName" }, //  <th>ProductName</th>
 						 { "data": "JobId" },		// 	<th>JOBID</th>
 						 { "data": "Site" },		//	 <th>Site ID </th>
 						 { "data": "Location" },		//	<th>Location </th>
+					 	 { "data": "ProductName" }, //  <th>ProductName</th>
 						 { "data": "CustomerName" },		//	<th>CustomerName </th>
 						 { "data": "pm_name" },		//	<th>PM_name </th>
-						 { "data": "jobid_Status" }, // <th>JOBID Status </th>
-					 	 { "data": "Stages" }, //	<th>JOBID Stage </th>
+	
 						 { "data": "Plan_Id" }, //	<th>Plan_Id </th>
 						 { "data": "Ring_name" }, //	<th>Ring_name </th>						 
 					 	 { "data": "Release_Date" },	// <th>Plan_Release_Date	</th>
 					 	 { "data": "region" }, //<th>region	</th>
 					 	 { "data": "company" }, // <th>company	</th>
 					 	 { "data": "TE_Name" }, //<th>TE Name	</th>
-					 	 { "data": "CreatedDate" }, // <th>CreatedDate	</th>
-					 	 { "data": "InRemark" },	// <th>InRemark </th>
-					 	 { "data": "date" }, // <th>date </th>
-						 { "data": "TimeIn" },	// <th>TimeIn	</th>
-						 { "data": "TimeOut" },	 // <th>TimeOut	</th>
-					 	 { "data": "OutRemark" },	 // <th>OutRemark	</th>
-						 { "data": "Visit" },	 // <th>Visit Type	</th>
-					 	 { "data": "Activity" },  // <th>Activity	</th>	
-					 	 { "data": "Issue" },	// <th>Issue	</th>
-						 { "data": "activity_status" }, // <th>Activity Status</th>	
-						 { "data": "VisitCount" },	// <th>VisitCount	</th>
-					 	 { "data": "jobcompletiondate" },	// <th>jobcompletiondate	</th>
+					 	 { "data": "CreatedDate", 
+							 	 	 render: function (data, type, row) {
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		        		}
+					 	 }, // <th>CreatedDate	</th>
+					 	 { "data": "date", 
+							 	 	 render: function (data, type, row) {
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY');
+		        		} }, // <th>date </th>
+						 { "data": "TimeIn", 
+							 	 	 render: function (data, type, row) {
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		        		} },	// <th>TimeIn	</th>
+						 { "data": "InRemark" },	// <th>InRemark </th>
 						 { "data": null,					// <th>PhotoIN	</th>
 						 	render:function(data,type,row) {	
-		            		var checkUrl = data.PhotoIN;
-		            		console.table("checkURL :--- " + checkUrl);
-		            		if(checkUrl == null){
-									return "";
-								}else{
-	//		            		var modifiedUrl = checkUrl.replace("D:\\project\\git project\\spring_boot\\ECI\\ECI-API_10/webapps", 
-	//		            				"https://proapp.co.in");
-			            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
-			            				
-			            		data.PhotoIN = modifiedUrl;
-			            		console.table("Data check", data.PhotoIN);
-			            		//var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
-			            		
-			            		var indexstr=checkUrl.indexOf("UploadPhoto");
-								console.log("p2222222222-" ,indexstr);
-								var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
-			            		console.log("path-" ,path);		
-			            		
-			            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo4</a>';
-			            		var action ='<a class="btn01" href='+path+' target="_blank">PhotoIN</a>';
-			            		
-			            		return action;
-		            		}
-		            	}  
+			            		var checkUrl = data.PhotoIN;
+			            		console.table("checkURL :--- " + checkUrl);
+			            		if(checkUrl == null){
+										return "";
+									}else{
+		//		            		var modifiedUrl = checkUrl.replace("D:\\project\\git project\\spring_boot\\ECI\\ECI-API_10/webapps", 
+		//		            				"https://proapp.co.in");
+				            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+				            				
+				            		data.PhotoIN = modifiedUrl;
+				            		console.table("Data check", data.PhotoIN);
+				            		//var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
+				            		
+				            		var indexstr=checkUrl.indexOf("UploadPhoto");
+									console.log("p2222222222-" ,indexstr);
+									var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+				            		console.log("path-" ,path);		
+				            		
+				            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo4</a>';
+				            		var action ='<a class="btn01" href='+path+' target="_blank">PhotoIN</a>';
+				            		
+				            		return action;
+			            		}
+		            		}  
 						 },
 						  { "data": null,		//  <th>Photo_IN</th>
 				            	render:function(data,type,row) {
@@ -171,7 +170,36 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				            		}
 				            	}   
 				            },
-				             { "data": null, 			// 					<th>PhotoOut</th>
+				            { "data": null,		// <th>InLocation</th>
+						 	render:function(data,type,row) {	
+			            		var checkUrl = data.InLocation;
+			            		if(checkUrl == null){
+									return "";
+								}else{
+				            		var action ='<a class="btn01" href='+checkUrl+' target="_blank">InLocation</a>';
+				            		
+				            		return action;
+		            			}  
+		            		}
+						 },	
+						 { "data": null, 	//  <th>In_Location</th>
+						 	render:function(data,type,row) {	
+			            		var checkUrl = data.InLocation;
+			            		if(checkUrl == null){
+									return "";
+								}else{
+				            		return checkUrl;
+		            			}  
+		            		}
+						 },
+						 
+						 { "data": "TimeOut", 
+							 	 	 render: function (data, type, row) {
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		        			}
+		        		 },	 // <th>TimeOut	</th>
+					 	 { "data": "OutRemark" },	 // <th>OutRemark	</th>
+					 	 { "data": null, 			// 					<th>PhotoOut</th>
 							 	render:function(data,type,row) {	
 				            		var checkUrl = data.PhotoOut;
 				            		if(checkUrl == null){
@@ -217,28 +245,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				            		}
 				            	}   
 				            },
-						 { "data": null,		// <th>InLocation</th>
-						 	render:function(data,type,row) {	
-			            		var checkUrl = data.InLocation;
-			            		if(checkUrl == null){
-									return "";
-								}else{
-				            		var action ='<a class="btn01" href='+checkUrl+' target="_blank">InLocation</a>';
-				            		
-				            		return action;
-		            			}  
-		            		}
-						 },	
-						 { "data": null, 	//  <th>In_Location</th>
-						 	render:function(data,type,row) {	
-			            		var checkUrl = data.InLocation;
-			            		if(checkUrl == null){
-									return "";
-								}else{
-				            		return checkUrl;
-		            			}  
-		            		}
-						 },
+						 
 						 { "data": null,	// <th>OutLocation</th>
 				 			render:function(data,type,row) {	
 			            		var checkUrl = data.OutLocation;
@@ -261,7 +268,17 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 		            			}  
 		            		}
 						 },
-                     { "data": null ,	// 	<th>Out_Location</th>
+						 
+						 { "data": "Visit" },	 // <th>Visit Type	</th>
+					 	 { "data": "Activity" },  // <th>Activity	</th>	
+					 	 { "data": "Issue" },	// <th>Issue	</th>
+						 { "data": "activity_status" }, // <th>Activity Status</th>	
+						 { "data": "VisitCount" },	// <th>VisitCount	</th>
+						 { "data": "jobid_Status" }, // <th>JOBID Status </th>
+					 	 { "data": "Stages" }, //	<th>JOBID Stage </th>	
+					 	 { "data": "jobcompletiondate" },	// <th>jobcompletiondate	</th>
+						 
+                 /*    { "data": null ,	
 				 			render:function(data,type,row) {	
 			            		var checkUrl = data.region;
 			            		if(checkUrl == null){
@@ -275,6 +292,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 		            		} 
                      
                      },  // <th>Circle_Name</th>
+                     */
                      { "data": actionIcon }, // <th>Action</th>
 		            
 				
@@ -284,7 +302,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				    "defaultContent": ""
 					},
 					//hide the second & fourth column
-			        { 'visible': false, 'targets': [2,3,4,5,7,8,9,14,16,27,29,31,33,34] }
+			       { 'visible': false, 'targets': [4,5,6,7,8 ,12,13,17,19,23,25,32] }
 				
 				],
 				 "order": [[0, 'desc']],
