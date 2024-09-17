@@ -52,6 +52,10 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				console.log("======data=======",data)
 				console.log("======data.VisitAction=======",data.VisitAction)
 				
+				if(localStorage.getItem("role")=="PM"){
+																	
+								
+				
 				if(data.VisitAction == null) {
 					
 					/*return '<td> <input type="button" class="btn btn-primary btn-block Open" value="Open" ua_id="'+test+'" >'
@@ -71,6 +75,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 					}if(data.VisitAction == "Reject") {
 						return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
 					}
+				}
 				}
 			};
 					

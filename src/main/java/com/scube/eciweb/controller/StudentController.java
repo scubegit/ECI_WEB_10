@@ -191,6 +191,11 @@ public class StudentController {
         return "ReportTasksForPM";
     }
     
+    @GetMapping("/SIReportTasks")
+    public String SIReportTasks(Model model) {
+        return "ReportTasksForSI";
+    }
+    
 	/* HPM login screens */
     
     @GetMapping("/ApproveHPM")
