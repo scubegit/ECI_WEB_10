@@ -35,9 +35,13 @@ var app_global_path1="E:\\Tomcat 10/webapps";
 		
 
 function getlist(dateFrm,dateTo){
+	
+	
 
 if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 		if(NotAllowedNullVal("#reportErr","To date ",$('#dateTo'))){
+
+$('#progressBarFull').show();
 
 		 $.get(url+"getInOutTasks/"+localStorage.getItem("userId")+"/"+dateTo+"/"+dateFrm, function( data ) {
 		
@@ -52,20 +56,22 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 				console.log("======data=======",data)
 				console.log("======data.VisitAction=======",data.VisitAction)
 				
-				if(localStorage.getItem("role")=="PM"){
+				
 																	
 								
 				
 				if(data.VisitAction == null) {
 					
-					/*return '<td> <input type="button" class="btn btn-primary btn-block Open" value="Open" ua_id="'+test+'" >'
-						+ '<input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
-						+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'
-						+'</td>';
-						*/
-					return '<td> <input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
-						+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'
-						+'</td>';					
+					if(localStorage.getItem("role")=="PM"){
+						/*return '<td> <input type="button" class="btn btn-primary btn-block Open" value="Open" ua_id="'+test+'" >'
+							+ '<input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
+							+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'
+							+'</td>';
+							*/
+						return '<td> <input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
+							+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'
+							+'</td>';		
+						}			
 				}else{
 					//if(data.VisitAction == "Open") {
 					//	return '<td> <span class="label label-primary">'+data.VisitAction+'</span> </td>';
@@ -76,7 +82,7 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 						return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
 					}
 				}
-				}
+				$('#progressBarFull').hide();
 			};
 					
 			tableData = $('#approvedTasksList').DataTable( {
