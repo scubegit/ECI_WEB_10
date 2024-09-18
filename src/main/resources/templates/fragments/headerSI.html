@@ -10,14 +10,14 @@
     </div>
     <div id="" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-left visible-lg"> 
-        <li id="nav1" class="navLinkLI"><a href="Summary" class="nav_menu_links">Summary</a></li>
-        <li id="nav2" class="navLinkLI"><a href="TaskStatus" class="nav_menu_links">Task Status</a></li>
-        <li id="nav3" class="navLinkLI"><a href="POKitty" class="nav_menu_links">PO Kitty</a></li>
+        <li id="nav1" class="navLinkLI"><a href="SISummary" class="nav_menu_links">Summary</a></li>
+        <li id="nav2" class="navLinkLI"><a href="SITaskStatus" class="nav_menu_links">Task Status</a></li>
+        <!-- <li id="nav3" class="navLinkLI"><a href="POKitty" class="nav_menu_links">PO Kitty</a></li>
         <li id="nav4" class="navLinkLI"><a href="Installations" class="nav_menu_links">Installation</a></li>
-        <li id="nav5" class="navLinkLI"><a href="Unassigned" class="nav_menu_links">Unassigned</a></li>
-        <li id="nav6" class="navLinkLI"><a href="PendingApprovals" class="nav_menu_links">Pending Approvals</a></li>
-        <li id="nav7" class="navLinkLI"><a href="ApprovedTasks" class="nav_menu_links">Approved Tasks</a></li> 
-		<li id="nav8" class="navLinkLI"><a href="ReportTasks" class="nav_menu_links">TE Visit Report</a></li> 
+        <li id="nav5" class="navLinkLI"><a href="Unassigned" class="nav_menu_links">Unassigned</a></li>-->
+        <li id="nav3" class="navLinkLI"><a href="SIApprovals" class="nav_menu_links"> Approvals</a></li>
+         <!--<li id="nav7" class="navLinkLI"><a href="ApprovedTasks" class="nav_menu_links">Approved Tasks</a></li> -->
+		<li id="nav4" class="navLinkLI"><a href="SIReportTasks" class="nav_menu_links">TE Visit Report</a></li>
          
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -84,6 +84,9 @@
 <script>
 $(document).ready(function(){
 	var navMenuLinks = $('.navLinkLI');
+	
+	console.log("=====nav=====",nav);
+	
 	for(i=1; i<=navMenuLinks.length; i++){
 		if(i == nav){
 			$('#nav' + i).addClass('active1');
