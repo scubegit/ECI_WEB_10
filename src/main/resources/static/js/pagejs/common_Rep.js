@@ -4,9 +4,13 @@
 $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 });*/
 
-var url="http://192.168.0.208:8082/Eci/";
-var url1="http://192.168.0.208:8082/Eci/";
+var url = "http://192.168.0.100:8081/Eci/Eci/";
+var url1 = "http://192.168.0.100:8081/Eci/Eci/";
 
+
+var app_global_path="E:\\Tomcat 10/webapps";
+var app_global_url="http://proapp.rbbn.com"
+var app_global_path1="E:\\Tomcat 10/webapps";
 
 //var url="http://192.168.42.149:8080/Eci/";
 //var url1="http://192.168.42.149:8080/Eci/";
