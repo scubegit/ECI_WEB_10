@@ -188,7 +188,7 @@
 					$.ajax({
 					
 							type: 'PUT',
-							url: url+"updateSI/",  //from API update data
+							url: url+"updateSI",  //from API update data
 							//url: 'http://192.168.0.218:8080/Eci/updateTask',  //from API update data
 							data : JSON.stringify(dataVal),
 							contentType: "application/json",
@@ -247,7 +247,7 @@
 						
 						type: 'POST',
 						//url: 'http://192.168.0.218:8080/Eci/insertTask',  //from API add new data
-					    url: url+"insertSICompany/",  //from API add new data
+					    url: url+"insertSICompany",  //from API add new data
 					    data : JSON.stringify(dataVal),
 					    contentType: "application/json",
 					    

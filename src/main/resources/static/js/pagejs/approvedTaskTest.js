@@ -207,7 +207,7 @@ var circle= "";
 // Get Quality Report Data Table API
 function getQualityReportList(dataValue){
 	
-	alert("here",dataValue);
+	//alert("here",dataValue);
 	
 	var i = 0;
 	console.log("------Quality Report List----------");
@@ -331,8 +331,12 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo1;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            				
+		            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		
+		            				
 		            		data.Photo1 = modifiedUrl;
 		            		console.table("Data check", data.Photo1);
 		            		var action ='<a class="btn01" href='+data.Photo1+' target="_blank">Photo1</a>';
@@ -343,8 +347,12 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row){	
 		            		var checkUrl = data.Photo2;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+/*		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
 		            				"https://proapp.co.in");
+*/		            				
+		            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		            				
+		            				
 		            		data.Photo2 = modifiedUrl;
 		            		console.table("Data check", data.Photo2);
 		            		var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo2</a>';
@@ -355,8 +363,13 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row){	
 		            		var checkUrl = data.Photo3;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            				
+            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		
+		            				
+		            				
 		            		data.Photo3 = modifiedUrl;
 		            		console.table("Data check", data.Photo3);
 		            		var action ='<a class="btn01" href='+data.Photo3+' target="_blank">Photo3</a>';
@@ -367,8 +380,11 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {	
 		            		var checkUrl = data.Photo4;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+/*		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
 		            				"https://proapp.co.in");
+*/		            				
+           					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		
 		            		data.Photo4 = modifiedUrl;
 		            		console.table("Data check", data.Photo4);
 		            		var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
@@ -381,8 +397,11 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo1;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            		            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		
+		            				
 		            		return modifiedUrl;
 		            	}   
 		            },
@@ -391,8 +410,10 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo2;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+						 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+
 		            		return modifiedUrl;
 		            	}   
 		            },
@@ -401,8 +422,10 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo3;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            /*		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		            				
 		            		return modifiedUrl;
 		            	}   
 		            },
@@ -411,8 +434,10 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo4;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+            					 var modifiedUrl = checkUrl.replace(app_global_path,app_global_url)
+		            				
 		            		return modifiedUrl;
 		            	}   
 		            },

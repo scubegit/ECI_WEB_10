@@ -75,13 +75,16 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 // Get URL Parameters
 function GetURLParameter(sParam)
 {
+	//alert(sParam);
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++)
     {
+		//alert(i);
         var sParameterName = sURLVariables[i].split('=');
         if (sParameterName[0] == sParam)
         {
+			//alert()
             return decodeURIComponent(sParameterName[1]);
         }
     }
@@ -328,11 +331,23 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo1;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            				
+		            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            				
 		            		data.Photo1 = modifiedUrl;
 		            		console.table("Data check", data.Photo1);
-		            		var action ='<a class="btn01" href='+data.Photo1+' target="_blank">Photo1</a>';
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							console.log("p2222222222-" ,indexstr);
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+		            		console.log("path-" ,path);		
+		            		
+		            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo2</a>';
+		            		var action ='<a class="btn01" href='+path+' target="_blank">Photo1</a>';
+		            		
+		            		
 		            		return action;
 		            	}     
 		            },
@@ -340,11 +355,23 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row){	
 		            		var checkUrl = data.Photo2;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+/*		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            				
+		            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            		//D:\\Sarvesh_GitWorkSpace\\ECI\\ECI-API\\EciApi/webapps/ATPPhoto/77857_2023.11.27.16.29.56_5777857.jpg
 		            		data.Photo2 = modifiedUrl;
 		            		console.table("Data check", data.Photo2);
-		            		var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo2</a>';
+		            		
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							console.log("p2222222222-" ,indexstr);
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+		            		console.log("path-" ,path);		
+		            		
+		            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo2</a>';
+		            		var action ='<a class="btn01" href='+path+' target="_blank">Photo2</a>';
+		            		
 		            		return action;
 		            	}     
 		            },
@@ -352,11 +379,24 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row){	
 		            		var checkUrl = data.Photo3;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+		            	/*	var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            				
 		            		data.Photo3 = modifiedUrl;
 		            		console.table("Data check", data.Photo3);
-		            		var action ='<a class="btn01" href='+data.Photo3+' target="_blank">Photo3</a>';
+		            		
+		            		
+		            		//var action ='<a class="btn01" href='+data.Photo3+' target="_blank">Photo3</a>';
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							console.log("p2222222222-" ,indexstr);
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+		            		console.log("path-" ,path);		
+		            		
+		            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo2</a>';
+		            		var action ='<a class="btn01" href='+path+' target="_blank">Photo3</a>';
+		            		
+		            		
 		            		return action;
 		            	}     
 		            },
@@ -364,11 +404,22 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {	
 		            		var checkUrl = data.Photo4;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
+/*		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            		var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            				
 		            		data.Photo4 = modifiedUrl;
 		            		console.table("Data check", data.Photo4);
-		            		var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
+		            		//var action ='<a class="btn01" href='+data.Photo4+' target="_blank">Photo4</a>';
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							console.log("p2222222222-" ,indexstr);
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+		            		console.log("path-" ,path);		
+		            		
+		            		//var action ='<a class="btn01" href='+data.Photo2+' target="_blank">Photo4</a>';
+		            		var action ='<a class="btn01" href='+path+' target="_blank">Photo4</a>';
+		            		
 		            		return action;
 		            	}     
 		            },
@@ -378,9 +429,16 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo1;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+/*		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
 		            				"https://proapp.co.in");
-		            		return modifiedUrl;
+*/		            	//	var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            	//	return modifiedUrl;
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+							return path;
+		            		
+		            		
 		            	}   
 		            },
 		            { "data": null,
@@ -388,9 +446,14 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo2;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
-		            		return modifiedUrl;
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            		//var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            		//return modifiedUrl;
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+							return path;
 		            	}   
 		            },
 		            { "data": null,
@@ -398,9 +461,15 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo3;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
-		            		return modifiedUrl;
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in");*/
+		            		//var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            		//return modifiedUrl;
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+							return path;
+		            		
 		            	}   
 		            },
 		            { "data": null,
@@ -408,9 +477,15 @@ function getQualityReportList(dataValue){
 		            	render:function(data,type,row) {
 		            		var checkUrl = data.Photo4;
 		            		console.table("checkURL :--- " + checkUrl);
-		            		var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
-		            				"https://proapp.co.in");
-		            		return modifiedUrl;
+		            		/*var modifiedUrl = checkUrl.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", 
+		            				"https://proapp.co.in")*/
+		            		//var modifiedUrl = checkUrl.replace(app_global_path,app_global_url);		
+		            	//	return modifiedUrl;
+		            		
+		            		var indexstr=checkUrl.indexOf("ATPPhoto");
+							var path="https://proapp.rbbn.com/"+ checkUrl.substr(indexstr);
+							return path;
+		            		
 		            	}   
 		            },
 		            

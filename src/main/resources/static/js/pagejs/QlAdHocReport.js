@@ -515,7 +515,10 @@ $(document).on("click", "#showdetailsbtn", function(e){
 					//var str1 = str.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 
 				//	9.0/webapps", "http://101.53.136.239:4443");
 //						var str1 = str.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", "http://101.53.136.239");
-					var str1 = str.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", "https://proapp.co.in");
+					//var str1 = str.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", "https://proapp.co.in")
+
+            					 var str1 = str.replace(app_global_path,app_global_url)
+
 
 					//str1=val.TestValue;
 					
@@ -626,7 +629,8 @@ $(document).on("click", "#showdetailsbtn2", function(e){
 			var str1=str;
 			//str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "http://101.53.136.239:4443");
 			//str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "http://101.53.136.239");
-			str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "https://proapp.co.in");
+			//str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "https://proapp.co.in");
+            str1 = str1.replace(app_global_path1,app_global_url);
 
 
 			console.log("-str  str  str str str1---",str1);
@@ -730,8 +734,9 @@ $(document).on("click", "#showdetailsbtn3", function(e){
 
 		//	var str1 = str.replace("C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0/webapps", "http://101.53.136.239:4443");
 		//str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "http://101.53.136.239");
-		str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "https://proapp.co.in");
-
+		//str1 = str1.replace("C:\\\\Program Files\\\\Apache Software Foundation\\\\Tomcat 9.0/webapps", "https://proapp.co.in");
+		str1 = str1.replace(app_global_path1,app_global_url);
+		
 			console.log("-str  str  str str str1---",str1);
 			console.log("-str  str  str str str1 val.TestValue---",str );
 			
