@@ -52,7 +52,7 @@
 							console.log("========data==data=====",data);
 							
 						
-								if(data.Status == 1){
+								if((data.Status == 1)||(data.Status == 13)||(data.Status == 17)){
 									downDiv = '<td><input type="button" class="btn btn-primary rounded-pill px-3 accept" value="Accept"  incid='+data.IncId+'  > ' +
 									 ' <input type="button" class="btn btn-danger rounded-pill px-3 reject" value="Reject"  incid='+data.IncId+'  >  </td>';
 								}
