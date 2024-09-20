@@ -43,6 +43,8 @@ if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 
 $('#progressBarFull').show();
 
+	
+
 		 $.get(url+"getInOutTasks/"+localStorage.getItem("userId")+"/"+dateTo+"/"+dateFrm, function( data ) {
 		
 			tableData.destroy();
@@ -82,8 +84,10 @@ $('#progressBarFull').show();
 						return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
 					}
 				}
-				$('#progressBarFull').hide();
+			///
 			};
+		
+		$('#progressBarFull').hide();			
 					
 			tableData = $('#approvedTasksList').DataTable( {
 						
@@ -94,7 +98,7 @@ $('#progressBarFull').show();
 				 ,{
                     extend: 'excelHtml5',
                     exportOptions: {
-  //                      columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,23,25,26,27,28,29,30,31,32,33,34]
+                        columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,19,20,21,23,25,26,27,28,29,30,31,32,33,34]
                     }
                 }],
 			 	 destroy: true,
@@ -206,7 +210,14 @@ $('#progressBarFull').show();
 						 
 						 { "data": "TimeOut", 
 							 	 	 render: function (data, type, row) {
-		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		          						if(data==null) 
+										{ 
+											return "" 
+										} 
+										else
+		          						{ return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');  
+		          						}
+		        			
 		        			}
 		        		 },	 // <th>TimeOut	</th>
 					 	 { "data": "OutRemark" },	 // <th>OutRemark	</th>
