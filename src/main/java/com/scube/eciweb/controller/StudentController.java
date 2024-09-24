@@ -146,14 +146,14 @@ public class StudentController {
         return "SISummary";
     }
     
+    @GetMapping("/SIInstallation")
+    public String SIInstallation(Model model) {
+        return "SIInstallation";
+    }
+    
     @GetMapping("/SITaskStatus")
     public String SITaskStatus(Model model) {
         return "SITaskStatus";
-    }
-    
-    @GetMapping("/SIApprovals")
-    public String SIApprovals(Model model) {
-        return "SIApprovals";
     }
 
     @GetMapping("/TaskStatus")

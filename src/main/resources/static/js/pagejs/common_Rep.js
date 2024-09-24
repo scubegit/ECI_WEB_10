@@ -3,10 +3,8 @@
  *//*$(document).ready(function() {
 $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
 });*/
-
-var url = "http://192.168.0.100:8081/Eci/Eci/";
-var url1 = "http://192.168.0.100:8081/Eci/Eci/";
-
+var url = "http://192.168.29.25:8081/Eci/Eci/";
+var url1 = "http://192.168.29.25:8081/Eci/Eci/";
 
 var app_global_path="E:\\Tomcat 10/webapps";
 var app_global_url="http://proapp.rbbn.com"
