@@ -209,6 +209,9 @@ text-align: center;
     <script>
       let nav = 4;
     </script>
+	
+	
+	
   </head>
 
   <body>
@@ -311,6 +314,7 @@ text-align: center;
 <!--Content--> 
 
 <div id="new_installation" class="modal fade in" role="dialog">
+	
   <div class="modal-dialog modal-dialog-centered modal-lg"> 
     <!-- Modal content-->
     <div class="modal-content">
@@ -885,8 +889,20 @@ $(".dropdown dt a").on('click', function() {
   });
   </script> -->
   <!-- ToolTip -->
+  
+
+  
   <script>
+	
+	$('#new_installation').modal({
+		  backdrop: 'static',
+		  keyboard: false // Optional: prevents closing with Esc key
+		});
+	
     $(document).ready(function(){
+		
+				
+		
       $('[data-toggle="tooltip"]').tooltip(); 
     });
   </script>

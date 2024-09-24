@@ -6,6 +6,8 @@
 	
 		$(document).ready(function(){
 			
+		$("#new_installation").modal("hide");
+
 			getList();
 			
 			$("#customerListadd").on("change", function(e)		
