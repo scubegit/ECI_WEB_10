@@ -126,7 +126,7 @@ $('#progressBarFull').show();
 					 	 { "data": "TE_Name" }, //<th>TE Name	</th>
 					 	 { "data": "CreatedDate", 
 							 	 	 render: function (data, type, row) {
-		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:mm:ss');
 		        		}
 					 	 }, // <th>CreatedDate	</th>
 					 	 { "data": "date", 
@@ -135,7 +135,7 @@ $('#progressBarFull').show();
 		        		} }, // <th>date </th>
 						 { "data": "TimeIn", 
 							 	 	 render: function (data, type, row) {
-		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');
+		          			return moment(new Date(data).toString()).format('DD-MM-YYYY HH:mm:ss');
 		        		} },	// <th>TimeIn	</th>
 						 { "data": "InRemark" },	// <th>InRemark </th>
 						 { "data": null,					// <th>PhotoIN	</th>
@@ -215,7 +215,7 @@ $('#progressBarFull').show();
 											return "" 
 										} 
 										else
-		          						{ return moment(new Date(data).toString()).format('DD-MM-YYYY HH:MM:SS');  
+		          						{ return moment(new Date(data).toString()).format('DD-MM-YYYY HH:mm:ss');  
 		          						}
 		        			
 		        			}

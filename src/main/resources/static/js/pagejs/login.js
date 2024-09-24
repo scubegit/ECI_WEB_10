@@ -10,8 +10,9 @@ var PFlag1 = "";
 //var url="http://125.99.153.126:8085/Eci/Eci/";
 //var url1="http://125.99.153.126:8085/Eci/Eci/";
 
-var url = "http://192.168.29.25:8081/Eci/Eci/";
-var url1 = "http://192.168.29.25:8081/Eci/Eci/";
+
+var url = "http://192.168.0.100:8082/Eci/Eci/";
+var url1 = "http://192.168.0.100:8082/Eci/Eci/";
 
 
 // Test Server URL
