@@ -51,15 +51,18 @@
 							
 							console.log("========data==data=====",data);
 							
-						
-								if((data.Status == 1)||(data.Status == 13)||(data.Status == 17)){
-									downDiv = '<td><input type="button" class="btn btn-primary rounded-pill px-3 accept" value="Accept"  incid='+data.IncId+'  > ' +
-									 ' <input type="button" class="btn btn-danger rounded-pill px-3 reject" value="Reject"  incid='+data.IncId+'  >  </td>';
-								}
-								
-								if(data.Status == 2){
-									downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
-									 ' <input type="button" class="btn btn-warning rounded-pill px-3 updateTask" value="Update Task"  incid='+data.IncId+'  JobId='+data.JobId+'  >  </td>';
+							
+							// all action done by only owner SI  
+								if(data.SIid == localStorage.getItem("userId")){
+									if((data.StatusId == 1)||(data.StatusId == 13)||(data.StatusId == 17)){
+										downDiv = '<td><input type="button" class="btn btn-primary rounded-pill px-3 accept" value="Accept"  incid='+data.IncId+'  > ' +
+										 ' <input type="button" class="btn btn-danger rounded-pill px-3 reject" value="Reject"  incid='+data.IncId+'  >  </td>';
+									}
+									
+									if(data.Status == 2){
+										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
+										 ' <input type="button" class="btn btn-warning rounded-pill px-3 updateTask" value="Update Task"  incid='+data.IncId+'  JobId='+data.JobId+'  >  </td>';
+									}
 								}
 								
 								return downDiv;
@@ -70,6 +73,10 @@
 				    	{ "data": "Product" },
     		            { "data": "Site" },
     		            { "data": "Location" },
+    		            { "data": "SI" },
+    		            { "data": "TE" },
+    		            { "data": "Status" },
+    		            { "data": "Stages" },
     		         /*   { "data": "ProductName" },
     		            { "data": "Site" },
     		            { "data": "RegionName" },
