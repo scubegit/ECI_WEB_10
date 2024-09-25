@@ -21,10 +21,10 @@
 			var i = 0;
 					console.log("------approvaldataList----------");
 	
-					$.get(url+"getApprovalHPMList", function( data ) { //from API list
+					$.get(url+"getSiTaskStatusList/"+localStorage.getItem("userId"), function( data ) { //from API list
 		
 					
-					console.log("--getProductList----data----------",data);
+					console.log("--getProductList----data----------",$.parseJSON(data.data));
 					console.log("--getProductList----data.result----------",data.result);
 					//console.log("--getProductList----JobId----------",data.result[0].id);
 					
@@ -39,7 +39,7 @@
 		
 					var editIcon = function ( data, type, row ) {
 				 
-						//console.log("--getProductList---here-------",data.id);
+				console.log("--getProductList---here-------",data);
 						
 			        if ( type === 'display' ) {
 			            
@@ -55,14 +55,16 @@
 					
 					var deleteIcon = function ( data, type, row ) {
 					
+						console.log("--deleteIcon---here-------",data);
+					
 					if ( type === 'display' ) {
 					
-					var test=data.id;
+					var test=data.IncId;
 				    var res = parseInt(test)-parseInt(1);
-					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
+					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
 				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a>'+
-				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn updateRemark" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'>'+
-				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" value="Reopen" >'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.IncId+' cnt = '+i+'>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn Reopen " value="Reopen"  instId='+data.IncId+' TEId='+data.TE_Id+'>'+
 				    		'</td>';
 					       
 					}
@@ -78,7 +80,7 @@
 				//	dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
 				 	 destroy: true,
-    				 data: data.result,
+    				 data: $.parseJSON(data.data),
     				 "initComplete": function(settings, json) {
 					  },
     			
@@ -87,9 +89,9 @@
 	            width: '100%',
     				 columns: [
     				    { "data": "JobId" },
-    				    { "data": "CustomerName" },
+    				    { "data": "CustName" },
     		            { "data": "SI" },
-    		            { "data": "ProductName" },
+    		            { "data": "Product" },
     		            { "data": "Site" },
     		            { "data": "Location" },
     		            { "data": "Status" },
@@ -121,7 +123,7 @@
 //get  list
 
 		
-		$(document).on("click", "#approveStatusId", function(e){
+		$(document).on("click", ".approveStatusId", function(e){
 
 			
 			console.log("--------click on approveStatusId--------");
@@ -138,9 +140,10 @@
 			console.log("--------click on update--instId------",instId);
 
 			var dataVal = {
-				
-				"id": instId,
-				"authKey":localStorage.getItem("userId")
+				"role": localStorage.getItem("role"),
+				"incId": instId,
+				"action": 19,
+				"actionBy":localStorage.getItem("userId")
 				
 		    	}
 		
@@ -149,7 +152,7 @@
 			$.ajax({
 			
 			type: 'POST',
-			url: url+"approvalStatusId",  //from API update data
+			url: url+"PMSIApproveInstallation",  //from API update data
 			data : JSON.stringify(dataVal),
 			processData: false,
 			contentType: "application/json; charset=utf-8",
@@ -162,6 +165,62 @@
 
 			}
 		});
-					
+			
+			
+ 		
 });
 		
+		
+$(document).on("click", ".Reopen", function(e){
+
+			
+			console.log("--------click on approveStatusId--------");
+		
+		 	/*var favorite = [];
+            $.each($("input[name='approv']:checked"), function(){            
+                favorite.push($(this).val());
+            });
+           
+            console.log("--------click on update--------",favorite.join(", "));*/
+			
+			
+			instId = $(this).attr("instId");
+			console.log("--------click on update--instId------",instId);
+			var TEId = $(this).attr("TEId");
+			
+			var dataVal = {
+				"role": localStorage.getItem("role"),
+				"incId": instId,
+				"teId" : TEId,
+				"action": 5,
+				"actionBy":localStorage.getItem("userId"),
+				remark : ""
+				
+		    	}
+		
+		
+
+ 
+		
+			console.log("----seekApproval----click on dataVal-------",dataVal);
+		
+			$.ajax({
+			
+			type: 'POST',
+			url: url+"SIReOpensJob",  //from API update data
+			data : JSON.stringify(dataVal),
+			processData: false,
+			contentType: "application/json; charset=utf-8",
+    
+			success: function(result) {
+    	
+			console.log("Update--seekApproval result==="+result);
+			
+			getListAA();  
+
+			}
+		});
+			
+			
+ 		
+});
