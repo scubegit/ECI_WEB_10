@@ -57,7 +57,13 @@
 					
 					if ( type === 'display' ) {
 					
-					return '<td><input type="button" class="table-input-btn updateRemark" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> </td>';
+					var test=data.id;
+				    var res = parseInt(test)-parseInt(1);
+					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn updateRemark" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" value="Reopen" >'+
+				    		'</td>';
 					       
 					}
 					
