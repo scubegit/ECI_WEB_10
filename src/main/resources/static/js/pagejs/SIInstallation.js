@@ -53,13 +53,13 @@
 							
 							
 							// all action done by only owner SI  
-								if(data.SIid == localStorage.getItem("userId")){
+								if(data.SI_Id == localStorage.getItem("userId")){
 									if((data.StatusId == 1)||(data.StatusId == 13)||(data.StatusId == 17)){
 										downDiv = '<td><input type="button" class="btn btn-primary rounded-pill px-3 accept" value="Accept"  incid='+data.IncId+'  > ' +
 										 ' <input type="button" class="btn btn-danger rounded-pill px-3 reject" value="Reject"  incid='+data.IncId+'  >  </td>';
 									}
 									
-									if(data.Status == 2){
+									if(data.StatusId == 2){
 										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
 										 ' <input type="button" class="btn btn-warning rounded-pill px-3 updateTask" value="Update Task"  incid='+data.IncId+'  JobId='+data.JobId+'  >  </td>';
 									}
