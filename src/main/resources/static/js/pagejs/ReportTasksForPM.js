@@ -645,6 +645,17 @@ $(document).on("click", "#siUpdateTask", function(e){
 	
 	console.log("=====selected=========",$('#visitTypes option:selected').attr('vtid'));
 	
+	console.log("=====selected==activities=======",$('#activities').val());
+	
+	if(NotAllowedNullVal("#pmErrAdd","Visit Types ",$('#visitTypes')))
+	if(ValidationForSelectBox("#pmErrAdd","Visit Types",$('#visitTypes')))
+	if(NotAllowedNullVal("#pmErrAdd","Activities ",$('#activities')))
+	if(ValidationForSelectBox("#pmErrAdd","Activities",$('#activities')))
+	if(NotAllowedNullVal("#pmErrAdd","Issues",$('#issues')))
+	if(ValidationForSelectBox("#pmErrAdd","Issues",$('#issues')))
+	if(NotAllowedNullVal("#pmErrAdd","Visit Status",$('#visitStatus')))
+	if(ValidationForSelectBox("#pmErrAdd","Visit Status",$('#visitStatus'))){
+	
 	var dataVal = {
 			
 			"activity":$("#activities option:selected").text(),
@@ -669,5 +680,5 @@ $(document).on("click", "#siUpdateTask", function(e){
 				getlist($('#dateTo').val(),$('#dateFrm').val());
 			}
 		});
-	
+	}
 });
