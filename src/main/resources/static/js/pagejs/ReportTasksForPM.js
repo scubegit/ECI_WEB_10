@@ -1,8 +1,10 @@
 
 var tableData = $('#approvedTasksList').DataTable();
 	
-	
-
+var gvtid;	
+var gactivitid	;
+var gissuesid 	;
+var gvStatusid 	;
 	
 	
 	$(document).ready(function(){
@@ -62,7 +64,7 @@ $('#progressBarFull').show();
 																	
 								
 				
-				if(data.VisitAction == null) {
+				if(data.VisitAction == "New" ) {
 					
 					if(localStorage.getItem("role")=="PM"){
 						/*return '<td> <input type="button" class="btn btn-primary btn-block Open" value="Open" ua_id="'+test+'" >'
@@ -72,6 +74,7 @@ $('#progressBarFull').show();
 							*/
 						return '<td> <input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
 							+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'
+							+'<input type="button" class="btn btn-success btn-block Reopen" value="Reopen"  ua_id="'+test+'" >'
 							+'</td>';		
 						}			
 				}else{
@@ -82,7 +85,16 @@ $('#progressBarFull').show();
 						return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
 					}if(data.VisitAction == "Reject") {
 						return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
+					}if(data.VisitAction == "Reopen") {
+					
+						if(localStorage.getItem("role")=="PM"){
+							return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
+						}
+						if(localStorage.getItem("role")=="SI Co-Ordinator"){
+							return '<td> <input type="button" class="btn btn-secondary rounded-pill px-3 editReopen" value="Edit"  ua_id='+test+'  >  </td>';						
+						}
 					}
+					
 				}
 			///
 			};
@@ -403,6 +415,116 @@ $(document).on("click", ".Reject", function(e){
 	
 });
 
+$(document).on("click", ".Reopen", function(e){
+	
+	var id = $(this).attr("ua_id");
+	
+	console.log("-id id id --", id);
+	
+	swal({
+		text: "Do You Want To Reopen This Visit?",
+		buttons: [
+		 'NO',
+		  'YES'
+		
+		],
+	}).then(function (isConfirm) {
+		    if(isConfirm){
+				
+			updateVisitAction(id,"Reopen");
+	
+		}
+	})
+	
+});
+
+
+$(document).on("click", ".editReopen", function(e){
+	
+	/*	instId = $(this).attr("incid");
+	
+		var dataVal = {
+			
+			"si_Id" 	: localStorage.getItem("userId"),
+			
+		};
+	
+	
+		$.ajax({
+							
+		   type: 'POST',
+		   url: url+"getTEList",  //from API add new data
+		   data : JSON.stringify(dataVal),
+		   processData: false,
+		   contentType: "application/json",
+   
+			   success: function(result) {
+	
+	console.log("insert--Information result===",result);
+	
+				var CtrObj = $.parseJSON(result.data);
+	
+				console.log("insert--Information result===",CtrObj);
+				
+				$("#assignTEList").empty()
+				$("#assignTEList").append('<option value=0 >- Select Task Engineer-</option>');
+				
+				$.each(CtrObj, function(key,val) {
+								
+					console.log("insert--Information result===",val.TEId);
+								
+					$("#assignTEList").append('<option value='+val.TEId+'>'+val.TEName +'</option>');
+						
+				});
+					
+			}
+		});
+	
+	*/
+	
+
+	var checkInid = $(this).attr("ua_id");
+	
+	console.log("-id id id --", checkInid);
+	
+	$.get(url+"getVisitDetail/"+checkInid, function( data ) {
+		
+		console.log("-getVisitDetail result---",data);
+		console.log("-getVisitDetail result---",data.data);
+		console.log("-getVisitDetail result---",$.parseJSON(data.data));
+		var datar = $.parseJSON(data.data);
+		console.log("-getVisitDetail result---",datar[0].Activity);
+		
+		
+		var visitid 	= datar[0].Visit ;
+		 gactivitid	= datar[0].Activity ;
+		 gissuesid 	= datar[0].Issue ;
+		 gvStatusid 	= datar[0].Status ;
+		
+			getUserTaskList("getVisitTypes","#visitTypes",visitid);
+		
+		
+			
+		/*	
+			setTimeout(
+				  function() 
+				  {
+				    console.log("======getActivitiesByVisit========",visitid,"====",activitid,"====",gvtid);
+			getUserTaskList("getActivitiesByVisit","#activities",visitid,activitid);
+			getUserTaskList("getIssuesByVisit","#issues",visitid,issuesid);
+			getUserTaskList("getVisitStatusByVisit","#visitStatus",visitid,vStatusid);
+				    
+				    
+				    
+				  }, 800);
+			*/
+	});
+	
+	$("#checkInid").val(checkInid);
+	
+	$("#reOpenEditModal").modal('show');
+});
+
 
 function updateVisitAction(checkInid,visitAction){
 	
@@ -430,3 +552,133 @@ $(document).on("change", "#dateTo", function(e){
 		
 });
 
+
+$(document).on("change", "#visitTypes", function(e){
+	
+	console.log("-id id id -dateTo---");
+	
+	var  visitid = $("#visitTypes").val();
+	
+	
+			getUserTaskList("getActivitiesByVisit","#activities",visitid,"");
+			getUserTaskList("getIssuesByVisit","#issues",visitid,"");
+			getUserTaskList("getVisitStatusByVisit","#visitStatus",visitid,"");
+		
+});
+
+
+function getUserTaskList(actionUrl,divName,visitid,TaskId){
+	
+	var dataVal = {
+			
+			"id" 	: $('#visitTypes option:selected').attr('vtid'),
+			
+		};
+	
+	console.log("getUserTaskList======dataVal===",dataVal)
+	
+		$.ajax({
+		   type: 'POST',
+		   url: url+actionUrl,  //from API add new data
+		   data : JSON.stringify(dataVal),
+		   processData: false,
+		   contentType: "application/json",
+   
+			   success: function(result) {
+	
+	
+				var CtrObj = $.parseJSON(result.data);
+	
+				console.log("=============="+divName+"===="+visitid+"========"+TaskId+"====",CtrObj);
+				
+				$(divName).empty()
+				$(divName).append('<option value=0 >- Select Task Engineer-</option>');
+				
+				$.each(CtrObj, function(key,val) {
+						
+					if(actionUrl == "getVisitTypes"){
+						$(divName).append(`<option value="${val.visit_type}" vtid=${val.id} >${val.visit_type}</option>`);	
+						console.log("=============="+divName+"============"+actionUrl);
+					}			
+					if(actionUrl == "getVisitStatusByVisit"){
+						$(divName).append(`<option value="${val.status}">${val.status}</option>`);
+						console.log("=============="+divName+"============"+actionUrl);	
+					}			
+					if(actionUrl == "getIssuesByVisit"){
+						$(divName).append(`<option value="${val.issue}">${val.issue}</option>`);
+						console.log("=============="+divName+"============"+actionUrl);	
+					}			
+					if(actionUrl == "getActivitiesByVisit"){
+						$(divName).append(`<option value="${val.activity}">${val.activity}</option>`);
+						console.log("=============="+divName+"============"+actionUrl);	
+					}			
+						
+				});
+				if(actionUrl == "getVisitTypes"){
+					$(divName).val(visitid);
+					
+					console.log("=====selected=========",$('#visitTypes option:selected').attr('vtid'));
+					
+					gvtid = $('#visitTypes option:selected').attr('vtid');
+					
+					getUserTaskList("getActivitiesByVisit","#activities",visitid,gactivitid);
+					getUserTaskList("getIssuesByVisit","#issues",visitid,gissuesid);
+					getUserTaskList("getVisitStatusByVisit","#visitStatus",visitid,gvStatusid);
+					
+				}
+				if(actionUrl == "getVisitStatusByVisit"){
+					$(divName).val(TaskId);	
+				}			
+				if(actionUrl == "getIssuesByVisit"){
+					$(divName).val(TaskId);	
+				}			
+				if(actionUrl == "getActivitiesByVisit"){
+					$(divName).val(TaskId);	
+				}	
+					
+			}
+		});
+}
+
+
+$(document).on("click", "#siUpdateTask", function(e){
+	
+	console.log("=====selected=========",$('#visitTypes option:selected').attr('vtid'));
+	
+	console.log("=====selected==activities=======",$('#activities').val());
+	
+	if(NotAllowedNullVal("#pmErrAdd","Visit Types ",$('#visitTypes')))
+	if(ValidationForSelectBox("#pmErrAdd","Visit Types",$('#visitTypes')))
+	if(NotAllowedNullVal("#pmErrAdd","Activities ",$('#activities')))
+	if(ValidationForSelectBox("#pmErrAdd","Activities",$('#activities')))
+	if(NotAllowedNullVal("#pmErrAdd","Issues",$('#issues')))
+	if(ValidationForSelectBox("#pmErrAdd","Issues",$('#issues')))
+	if(NotAllowedNullVal("#pmErrAdd","Visit Status",$('#visitStatus')))
+	if(ValidationForSelectBox("#pmErrAdd","Visit Status",$('#visitStatus'))){
+	
+	var dataVal = {
+			
+			"activity":$("#activities option:selected").text(),
+			"visit":$("#visitTypes option:selected").text(),
+			"issue":$("#issues option:selected").text(),
+			"status":$("#visitStatus option:selected").text(),
+			"id":$("#checkInid").val()
+		};
+		
+		console.log(dataVal);
+	
+		$.ajax({
+		   type: 'POST',
+		   url: url+"updateReopenVisit",  //from API add new data
+		   data : JSON.stringify(dataVal),
+		   processData: false,
+		   contentType: "application/json",
+   
+			   success: function(result) {
+	
+				$("#reOpenEditModal").modal('hide');
+				getlist($('#dateTo').val(),$('#dateFrm').val());
+			}
+		});
+	}
+});
