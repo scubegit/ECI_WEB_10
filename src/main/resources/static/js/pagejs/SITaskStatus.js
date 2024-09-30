@@ -62,7 +62,7 @@
 					var test=data.IncId;
 				    var res = parseInt(test)-parseInt(1);
 					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
-				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a>'+
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.IncId+' cnt = '+i+'>'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn Reopen " value="Reopen"  instId='+data.IncId+' TEId='+data.TE_Id+'>'+
 				    		'</td>';
@@ -179,6 +179,39 @@
  		
 });
 		
+
+$(document).on("click", ".downloadATP", function(e){
+	
+	console.log("--------click on approveStatusId--------");
+		
+			instId = $(this).attr("instId");
+			
+			var dataVal = {
+				"instid": instId,
+				"siId":localStorage.getItem("userId"),
+		    	}
+		
+			console.log("----seekApproval----click on dataVal-------",dataVal);
+		
+		$.ajax({
+			
+			type: 'POST',
+			url: url+"insertAtpDownloadAction",  //from API update data
+			data : JSON.stringify(dataVal),
+			processData: false,
+			contentType: "application/json; charset=utf-8",
+    
+			success: function(result) {
+    	
+			console.log("Update--seekApproval result==="+result);
+			
+			getListAA();  
+
+			}
+		});
+
+})
+
 		
 $(document).on("click", ".Reopen", function(e){
 
