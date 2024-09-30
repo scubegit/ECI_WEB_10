@@ -159,10 +159,19 @@
     
 			success: function(result) {
     	
-			console.log("Update--seekApproval result==="+result);
+			console.log("Update--seekApproval result==="+result.result);
 			
-			getListAA();  
-
+			var outpt=result.result;
+			alert(outpt);
+			
+			if(outpt=="NoDownload")
+			{
+				alert("NO Download");
+			}
+			else
+			{
+					getListAA();  
+			}
 			}
 		});
 			
