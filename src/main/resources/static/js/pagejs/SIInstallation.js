@@ -59,9 +59,14 @@
 										 ' <input type="button" class="btn btn-danger rounded-pill px-3 reject" value="Reject"  incid='+data.IncId+'  >  </td>';
 									}
 									
-									if(data.StatusId == 2){
+									if((data.StatusId == 2)||(data.StatusId == 10)){
 										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
 										 ' <input type="button" class="btn btn-warning rounded-pill px-3 updateTask" value="Update Task"  incid='+data.IncId+'  JobId='+data.JobId+'  >  </td>';
+									}
+									
+									if((data.StatusId == 5)||(data.StatusId == 16)){
+										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="ReAssign TE"  incid='+data.IncId+'  > </td>' ;
+										  
 									}
 								}
 								
@@ -727,7 +732,7 @@ $(document).on("click", "#saveAssignTE", function(e) {
 			"teId" 		: $("#assignTEList option:selected").val(),
 		};
 
-		console.log("saveReopenJob===dataVal=== ",dataVal);
+		console.log("saveAssignTE===dataVal=== ",dataVal);
 		
 		takeAcceptRejectAction(dataVal);
 	

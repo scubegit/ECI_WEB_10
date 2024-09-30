@@ -224,3 +224,56 @@ $(document).on("click", ".Reopen", function(e){
 			
  		
 });
+
+
+
+$(document).on("click", "#generatePdfAction", function(e){
+			
+			
+			var dataVal;
+			$('#progressBarFull').show();
+
+					console.log("--------click on generatePdfAction-------");
+					console.log("--------click on generatePdfAction-------",url);
+					var id = tableData.row($(this).parent().parent()).id();
+					
+					var pdfid=$(this).attr("idval");
+					
+					var ProductName= $(this).attr("ProductName");
+					
+					var CustomerName= $(this).attr("CustomerName");
+					
+					
+					console.log(pdfid);
+					console.log(ProductName);
+					console.log(CustomerName);
+				
+					
+					$.ajax({
+						
+						type: 'GET',
+						url : url+"generatePdfAction",  //from API update data
+						//data : JSON.stringify(dataVal),
+						data : {pdfid,ProductName,CustomerName},
+						//contentType: "application/json",
+			    
+						success: function(result) {
+			    	
+						console.log("Update--Information cancelRecord==="+result);
+						$('#progressBarFull').hide();
+
+						if(result.result==true){
+							
+							getList();  
+							
+						}else if(result.result==false){
+							
+							window.location.href = "sessionOut";
+							
+						}
+						//$("#editPopupScreen").modal('hide');
+						}
+					});
+			
+		});
+		

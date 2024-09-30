@@ -32,15 +32,19 @@
 				    var actionIcon = function ( data, type, row ) {
 						$('#progressBarFull').hide();
 				    	
-				    	if(data.Status== "JobCompletes") {
+				    //	if(data.Status== "JobCompletes") {
+					   if((data.Status== "SIApproved") || (data.Status== "JobCompletes")){
 				    		var test=data.id;
 						    var res = parseInt(test)-parseInt(1);
 				    		var btn = '<td><input type="button" class="table-input-btn Update12" value="Reopen" >'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
-				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a></td>';
-				    	} else {
-				    		var btn = '';
-				    	}
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn" download>Download ATP </a>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> </td>';
+				    	} 
+				    	 else
+				    	{
+							var btn = '';
+						}
 				    	
 				        if ( type === 'display' ) {
 				        	return '<td> '+btn+'</td>';
@@ -547,4 +551,49 @@ $(document).on("click", ".update", function(e) {
 		});
 		
 		
+		$(document).on("click", ".approveStatusId", function(e){
+
+			
+			console.log("--------click on approveStatusId--------");
 		
+		 	/*var favorite = [];
+            $.each($("input[name='approv']:checked"), function(){            
+                favorite.push($(this).val());
+            });
+           
+            console.log("--------click on update--------",favorite.join(", "));*/
+			
+			
+			instId = $(this).attr("instId");
+			console.log("--------click on update--instId------",instId);
+
+			var dataVal = {
+				"role": localStorage.getItem("role"),
+				"incId": instId,
+				"action": 15,
+				"actionBy":localStorage.getItem("userId")
+				
+		    	}
+		
+			console.log("----seekApproval----click on dataVal-------",dataVal);
+		
+			$.ajax({
+			
+			type: 'POST',
+			url: url+"PMSIApproveInstallation",  //from API update data
+			data : JSON.stringify(dataVal),
+			processData: false,
+			contentType: "application/json; charset=utf-8",
+    
+			success: function(result) {
+    	
+			console.log("Update--seekApproval result==="+result);
+			
+			getList();
+
+			}
+		});
+			
+			
+ 		
+});	
