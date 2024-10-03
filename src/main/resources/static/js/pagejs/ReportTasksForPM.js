@@ -66,7 +66,7 @@ $('#progressBarFull').show();
 				
 				if(data.VisitAction == "New" ) {
 					
-					if(localStorage.getItem("role")=="PM"){
+					if((localStorage.getItem("role")=="PM")&&(data.TimeOut!=null)){
 						/*return '<td> <input type="button" class="btn btn-primary btn-block Open" value="Open" ua_id="'+test+'" >'
 							+ '<input type="button" class="btn btn-success btn-block Accept" value="Accept"  ua_id="'+test+'" >'
 							+ '<input type="button" class="btn btn-danger btn-block Reject" value="Reject"  ua_id="'+test+'" >'

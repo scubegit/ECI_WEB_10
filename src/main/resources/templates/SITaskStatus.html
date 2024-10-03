@@ -412,6 +412,38 @@ display:inline-block !important;
     </div>
   </div>
 </div>
+
+<div id="alertApproveJob" class="modal fade in" role="dialog">
+  <div class="modal-dialog"> 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header cust-hd">
+        <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
+        <h4 class="modal-title">Alert!!!</h4>
+      </div>
+      <p class="alert-line">Please create and download ATP before approving Job.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="sitaskRejectModal" tabindex="-1" aria-labelledby="taskRejectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Remark</h4>
+      </div>
+      <div class="modal-body">
+		<textarea class="form-control" id="sitaskRejectTextare" rows="3" placeholder="Add Remark"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="sitaskRejectAdd">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
  
 <script type="text/javascript">
 	$(document).ready(function() {

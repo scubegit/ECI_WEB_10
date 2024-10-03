@@ -32,15 +32,23 @@
 				    var actionIcon = function ( data, type, row ) {
 						$('#progressBarFull').hide();
 				    	
-				    //	if(data.Status== "JobCompletes") {
-					   if((data.Status== "SIApproved") || (data.Status== "JobCompletes")){
-				    		var test=data.id;
+				    	var test=data.id;
 						    var res = parseInt(test)-parseInt(1);
+				    	
+					   if (data.Status== "JobCompletes"){
+				    		
 				    		var btn = '<td><input type="button" class="table-input-btn Update12" value="Reopen" >'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
-				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP" download>Download ATP </a>'+
-				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> </td>';
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" instid="'+data.id+'"  class="table-input-btn cust-btn-style custom_style_btn downloadATP" download>Download ATP </a>'+
+				    		' </td>';
 				    	} 
+				    	else if(data.Status== "SIApproved")
+				    	{
+								var btn = '<td>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" instid="'+data.id+'" class="table-input-btn cust-btn-style custom_style_btn downloadATP" download>Download ATP </a>'+
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> </td>';
+						}
 				    	 else
 				    	{
 							var btn = '';
@@ -110,8 +118,16 @@
     		            { "data": "CompleteDt" },  
     				 ],
     				 
+    				 
+    				
+    				 
+    				 
     				 "columnDefs": 
     					 [	
+							{
+							    "targets": '_all',
+							    "defaultContent": ""
+								},
     						 {
     					           'targets': 0,
     					            'checkboxes': {
@@ -618,9 +634,22 @@ $(document).on("click", ".update", function(e) {
     
 			success: function(result) {
     	
-			console.log("Update--seekApproval result==="+result);
+			console.log("Update--seekApproval result==="+result.result);
 			
+			var outpt=result.result;
+			//alert(outpt);
+			
+			if(outpt=="NoDownload")
+			{
+				//alert("NO Download");
+				$("#alertApproveJob").modal('show');
+				
+			}
+			else
+			{
 			getList();
+			}
+			
 
 			}
 		});

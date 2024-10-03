@@ -2,6 +2,8 @@
 		console.log("-------------------Welcome to project page------------------");
 		var tableData = $('#approvaldataList').DataTable();
 		var JobId;
+		var TEId;
+		 
 	
 		$(document).ready(function(){
 			
@@ -55,21 +57,56 @@
 					
 					var deleteIcon = function ( data, type, row ) {
 					
+					
+					console.log("--deleteIcon---type-------",type);
+					
 						console.log("--deleteIcon---here-------",data);
 					
+					console.log("--deleteIcon---here-------",data.Status+"----");
+					
 					if ( type === 'display' ) {
+									
 					
 					var test=data.IncId;
 				    var res = parseInt(test)-parseInt(1);
+				    
+				    
+				    if(data.Status=="TEWorkDone")
+				    {
+						console.log("--111TEWorkDone-----");
+						
 					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
-				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+
+				    		/*'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+*/
+				    		'<a data-auto-download href="https://proapp.rbbn.com/ProApp/GeneratePDF/ATP123295.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+
+				    		
+				    		
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.IncId+' cnt = '+i+'>'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn Reopen " value="Reopen"  instId='+data.IncId+' TEId='+data.TE_Id+'>'+
 				    		'</td>';
+				    		
+				    }
+				    else if((data.Status=="JobCompletes")||(data.Status=="SIApproved"))
+				    {
+						
+						console.log("--222JobCompletes-----");
+						return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a></td>';
+				    		
+					}
+				    else
+				    {
+						console.log("--33333-----");
+					//	return ''
+						return data.status;
+					}
+				    		
+				    		
+				    		
+				    		
 					       
 					}
 					
-					return data;
+					//return data;
 					};
 					
 					console.log("444");
@@ -100,6 +137,14 @@
     		            { "data": deleteIcon },
     				 
     				 ],
+    				 
+    				 "columnDefs": [{
+				    "targets": '_all',
+				    "defaultContent": ""
+					}
+					//hide the second & fourth column
+					],
+    				 
     				 /*"columnDefs": 
 					 [	
 		               {
@@ -162,11 +207,11 @@
 			console.log("Update--seekApproval result==="+result.result);
 			
 			var outpt=result.result;
-			alert(outpt);
+			//alert(outpt);
 			
 			if(outpt=="NoDownload")
 			{
-				alert("NO Download");
+				$("#alertApproveJob").modal('show');
 			}
 			else
 			{
@@ -212,23 +257,27 @@ $(document).on("click", ".downloadATP", function(e){
 
 })
 
+
+$(document).on("click", ".Reopen", function(e) {
+			
+	instId = $(this).attr("instId");
+	TEId = $(this).attr("TEId");
+	
+	
+	$("#sitaskRejectTextare").val('');
+	
+	$("#sitaskRejectModal").modal('show');
+	
+	});	
 		
-$(document).on("click", ".Reopen", function(e){
+$(document).on("click", "#sitaskRejectAdd", function(e){
 
 			
 			console.log("--------click on approveStatusId--------");
 		
-		 	/*var favorite = [];
-            $.each($("input[name='approv']:checked"), function(){            
-                favorite.push($(this).val());
-            });
-           
-            console.log("--------click on update--------",favorite.join(", "));*/
-			
-			
-			instId = $(this).attr("instId");
+		//	instId = $(this).attr("instId");
 			console.log("--------click on update--instId------",instId);
-			var TEId = $(this).attr("TEId");
+		//	var TEId = $(this).attr("TEId");
 			
 			var dataVal = {
 				"role": localStorage.getItem("role"),
@@ -236,14 +285,9 @@ $(document).on("click", ".Reopen", function(e){
 				"teId" : TEId,
 				"action": 5,
 				"actionBy":localStorage.getItem("userId"),
-				remark : ""
+				remark : $("#sitaskRejectTextare").val()
 				
 		    	}
-		
-		
-
- 
-		
 			console.log("----seekApproval----click on dataVal-------",dataVal);
 		
 			$.ajax({
@@ -259,6 +303,8 @@ $(document).on("click", ".Reopen", function(e){
 			console.log("Update--seekApproval result==="+result);
 			
 			getListAA();  
+			
+			$("#sitaskRejectModal").modal('hide');
 
 			}
 		});
@@ -318,4 +364,7 @@ $(document).on("click", "#generatePdfAction", function(e){
 					});
 			
 		});
+		
+		
+	
 		
