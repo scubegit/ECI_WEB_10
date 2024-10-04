@@ -5,7 +5,7 @@ var gvtid;
 var gactivitid	;
 var gissuesid 	;
 var gvStatusid 	;
-	
+var custname = "";	
 	
 	$(document).ready(function(){
 
@@ -56,7 +56,7 @@ $('#progressBarFull').show();
 			var actionIcon = function ( data, type, row ) {
 				
 				var test=data.id;
-				
+				var csname=data.CustomerName;
 				console.log("======data=======",data)
 				console.log("======data.VisitAction=======",data.VisitAction)
 				
@@ -91,7 +91,7 @@ $('#progressBarFull').show();
 							return '<td> <span class="text-dark">'+data.VisitAction+'ed</span> </td>';
 						}
 						if(localStorage.getItem("role")=="SI Co-Ordinator"){
-							return '<td> <input type="button" class="btn btn-secondary rounded-pill px-3 editReopen" value="Edit"  ua_id='+test+'  >  </td>';						
+							return `<td> <input type="button" class="btn btn-secondary rounded-pill px-3 editReopen" value="Edit"  ua_id="${test}" cs_name="${csname}" >  </td>`;						
 						}
 					}
 					
@@ -482,7 +482,7 @@ $(document).on("click", ".editReopen", function(e){
 	
 	*/
 	
-
+	 custname = $(this).attr("cs_name");
 	var checkInid = $(this).attr("ua_id");
 	
 	console.log("-id id id --", checkInid);
@@ -597,8 +597,20 @@ function getUserTaskList(actionUrl,divName,visitid,TaskId){
 				$.each(CtrObj, function(key,val) {
 						
 					if(actionUrl == "getVisitTypes"){
-						$(divName).append(`<option value="${val.visit_type}" vtid=${val.id} >${val.visit_type}</option>`);	
-						console.log("=============="+divName+"============"+actionUrl);
+						
+						if(custname == "Bharti Airtel" ){
+							
+							if(val.cust_name == 1){
+								$(divName).append(`<option value="${val.visit_type}" vtid=${val.id} >${val.visit_type}</option>`);	
+								console.log("======="+custname+"========"+divName+"============"+actionUrl);
+							}
+							
+						}else{
+							$(divName).append(`<option value="${val.visit_type}" vtid=${val.id} >${val.visit_type}</option>`);	
+							console.log("=============="+divName+"============"+actionUrl);
+						}
+						
+						
 					}			
 					if(actionUrl == "getVisitStatusByVisit"){
 						$(divName).append(`<option value="${val.status}">${val.status}</option>`);
