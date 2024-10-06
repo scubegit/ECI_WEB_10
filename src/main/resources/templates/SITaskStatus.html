@@ -214,7 +214,7 @@ display:inline-block !important;
         <div class="box"> 
           <!--box-header-->
           <div class="box-header">
-            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Approve HPM</h3>
+            <h3 class="box-title pull-left"><!-- <i class="fa fa-file-text-o table-hd-icon" aria-hidden="true"></i> --> Task Status</h3>
             <!-- <div class="box-tools pull-right">
                <button class="btn theme_btn" data-toggle="modal" data-target="#new_installation" id = "addnewAction">New Installation </button>
                <button class="btn theme_btn" data-toggle="modal" data-target="#bulk_installation">Bulk Installation</button>
@@ -235,6 +235,7 @@ display:inline-block !important;
                   <th>Job ID</th>
                   <th>Customer</th>
                   <th>SI Co-ordinator</th>
+				  <th>TE</th>
                   <th>Product</th>
                   <th>Site</th>
                   <th>Location</th> 
@@ -421,7 +422,7 @@ display:inline-block !important;
         <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times"></span></button>
         <h4 class="modal-title">Alert!!!</h4>
       </div>
-      <p class="alert-line">Please create and download ATP before approving Job.</p>
+      <p class="alert-line">ATP verification required for approval/download and verify.</p>
     </div>
   </div>
 </div>
@@ -429,20 +430,29 @@ display:inline-block !important;
 <div class="modal fade" id="sitaskRejectModal" tabindex="-1" aria-labelledby="taskRejectModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+		
+		
       <div class="modal-header">
         <h4 class="modal-title">Add Remark</h4>
       </div>
       <div class="modal-body">
 		<textarea class="form-control" id="sitaskRejectTextare" rows="3" placeholder="Add Remark"></textarea>
       </div>
+	  <div class="col-md-offset-3 col-md-8">
+	           <div id="remarkErr" class="Err" ></div>
+	           <div class="clearfix"></div>
+	  	  </div>
+	  
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="sitaskRejectAdd">Add</button>
       </div>
+	  
+	  
+	  
     </div>
   </div>
 </div>
-
 
  
 <script type="text/javascript">

@@ -35,19 +35,20 @@
 				    	var test=data.id;
 						    var res = parseInt(test)-parseInt(1);
 				    	
-					   if (data.Status== "JobCompletes"){
+					   if ((data.Status== "JobCompletes")||(data.Status== "SIApprovalPending")){
 				    		
-				    		var btn = '<td><input type="button" class="table-input-btn Update12" value="Reopen" >'+
+				    		var btn = '<td>'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
 				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" instid="'+data.id+'"  class="table-input-btn cust-btn-style custom_style_btn downloadATP" download>Download ATP </a>'+
-				    		' </td>';
+				    		'<input type="button" class="table-input-btn Update12" value="Reopen" > </td>';
 				    	} 
-				    	else if(data.Status== "SIApproved")
+				    	else if(data.Status== "PMApprovalPending")
 				    	{
 								var btn = '<td>'+
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.id+'"  CustomerName="'+data.CustomerName+'" ProductName="'+data.ProductName+'">'+
 				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" instid="'+data.id+'" class="table-input-btn cust-btn-style custom_style_btn downloadATP" download>Download ATP </a>'+
-				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> </td>';
+				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.id+' cnt = '+i+'> ' +				    		
+				    		'<input type="button" class="table-input-btn Update12" value="Reopen" ></td>';
 						}
 				    	 else
 				    	{
@@ -107,6 +108,7 @@
     				    { "data": "POLineId" },
     				    { "data": "CustomerName" },
     		            { "data": "SI" },
+    		             { "data": "TE" },
     		            { "data": "Company" },
     		            { "data": "ProductName" },
     		            { "data": "Site" },

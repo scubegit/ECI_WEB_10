@@ -71,9 +71,9 @@
 				    var res = parseInt(test)-parseInt(1);
 				    
 				    
-				    if(data.Status=="TEWorkDone")
+				    if(data.Status=="SIApprovalPending")
 				    {
-						console.log("--111TEWorkDone-----");
+						console.log("--111 SIApprovalPending-----");
 						
 					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
 				    		/*'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+*/
@@ -128,6 +128,7 @@
     				    { "data": "JobId" },
     				    { "data": "CustName" },
     		            { "data": "SI" },
+    		            { "data": "TE" },
     		            { "data": "Product" },
     		            { "data": "Site" },
     		            { "data": "Location" },
@@ -263,18 +264,19 @@ $(document).on("click", ".Reopen", function(e) {
 	instId = $(this).attr("instId");
 	TEId = $(this).attr("TEId");
 	
-	
+	 $("#remarkErr").empty();
 	$("#sitaskRejectTextare").val('');
 	
 	$("#sitaskRejectModal").modal('show');
 	
 	});	
 		
-$(document).on("click", "#sitaskRejectAdd", function(e){
-
-			
+$(document).on("click", "#sitaskRejectAdd", function(e)
+{
 			console.log("--------click on approveStatusId--------");
-		
+			
+			if(NotAllowedNullVal("#remarkErr","Remark",$('#sitaskRejectTextare')))
+			{
 		//	instId = $(this).attr("instId");
 			console.log("--------click on update--instId------",instId);
 		//	var TEId = $(this).attr("TEId");
@@ -300,17 +302,30 @@ $(document).on("click", "#sitaskRejectAdd", function(e){
     
 			success: function(result) {
     	
-			console.log("Update--seekApproval result==="+result);
+				console.log("Update--seekApproval result==="+result);
+				var outpt=result.result;
+				//alert(outpt);
 			
-			getListAA();  
-			
-			$("#sitaskRejectModal").modal('hide');
+				if(outpt=="NoDownload")
+				{				
+					 $("#remarkErr").empty();
+					 $("#remarkErr").append("ATP verification required for reopen/download and verify");
+				}
+				else
+				{
+					
+						getListAA();  
+						$("#sitaskRejectModal").modal('hide');
+					
+				}
+				
+				
 
 			}
 		});
 			
 			
- 		
+ 		}
 });
 
 
