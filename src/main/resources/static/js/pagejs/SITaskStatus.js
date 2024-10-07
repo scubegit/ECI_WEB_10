@@ -114,7 +114,7 @@
 					i++;
 					var table = $('#approvaldataList').DataTable( {
 				
-				//	dom: 'Blfrtip',   
+					dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
 				 	 destroy: true,
     				 data: $.parseJSON(data.data),
