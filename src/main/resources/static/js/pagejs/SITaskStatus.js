@@ -76,8 +76,7 @@
 						console.log("--111 SIApprovalPending-----");
 						
 					return '<td><input type="button" class="table-input-btn cust-btn-style custom_style_btn" id="generatePdfAction" value="Create ATP" idval="'+data.IncId+'"  CustomerName="'+data.CustName+'" ProductName="'+data.Product+'">'+
-				    		/*'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+*/
-				    		'<a data-auto-download href="https://proapp.rbbn.com/ProApp/GeneratePDF/ATP123295.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+
+				    		'<a data-auto-download href="../ProApp/GeneratePDF/ATP'+res+'.pdf" class="table-input-btn cust-btn-style custom_style_btn downloadATP"  instId='+data.IncId+' download>Download ATP </a>'+
 				    		
 				    		
 				    		'<input type="button" class="table-input-btn cust-btn-style custom_style_btn approveStatusId" id="approveStatusId" value="Approve" instId='+data.IncId+' cnt = '+i+'>'+

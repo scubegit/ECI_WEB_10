@@ -39,6 +39,12 @@ var app_global_path1="E:\\Tomcat 10/webapps";
 function getlist(dateFrm,dateTo){
 	
 	
+	var role="";
+	
+	if((localStorage.getItem("role"))=="PM")
+	role="PM";
+	else
+	role="SI";
 
 if(NotAllowedNullVal("#reportErr","From date ",$('#dateFrm')))
 		if(NotAllowedNullVal("#reportErr","To date ",$('#dateTo'))){
@@ -47,7 +53,7 @@ $('#progressBarFull').show();
 
 	
 
-		 $.get(url+"getInOutTasks/"+localStorage.getItem("userId")+"/"+dateTo+"/"+dateFrm, function( data ) {
+		 $.get(url+"getInOutTasks/"+localStorage.getItem("userId")+"/"+dateTo+"/"+dateFrm+"/"+role, function( data ) {
 		
 			tableData.destroy();
 		       
