@@ -10,9 +10,8 @@ var PFlag1 = "";
 //var url="http://125.99.153.126:8085/Eci/Eci/";
 //var url1="http://125.99.153.126:8085/Eci/Eci/";
 
-
-var url = "http://192.168.0.100:8081/Eci/Eci/";
-var url1 = "http://192.168.0.100:8081/Eci/Eci/";
+var url = "http://192.168.0.101:8082/Eci/Eci/";
+var url1 = "http://192.168.0.101:8082/Eci/Eci/";
 
 
 // Test Server URL
@@ -126,9 +125,9 @@ $(document).ready(function() {
 								}
 								if(data.role=="SI Co-Ordinator")
 								{									
-									url="SITaskStatus";								
+									url="SITaskStatus";							
 								}
-								if(data.role=="HPM")
+								if(data.role=="HPM")  
 								{
 									url="ApproveHPM";
 								}
