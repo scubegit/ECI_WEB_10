@@ -115,6 +115,10 @@
 				
 					dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
+					scrollY:500,
+					scrollX: true,
+				//	scrollCollapse: true,
+					fixedHeader: true,
 				 	 destroy: true,
     				 data: $.parseJSON(data.data),
     				 "initComplete": function(settings, json) {
@@ -126,12 +130,24 @@
     				 columns: [
     				    { "data": "JobId" },
     				    { "data": "CustName" },
+						{ "data": "RegionId" },						
+						{ "data": "pmname" },
+						{ "data": "Company" },
+
+						
     		            { "data": "SI" },
     		            { "data": "TE" },
     		            { "data": "Product" },
     		            { "data": "Site" },
     		            { "data": "Location" },
+						{ "data": "Purpose" },
     		            { "data": "Status" },
+						
+						{ "data": "Stages" },
+						{ "data": "AllocDt" },
+						{ "data": "CompleteDt" },
+						
+						
     		          /*  { "data": "Stages" },*/
     		            /*{ "data": editIcon },*/
     		            { "data": deleteIcon },

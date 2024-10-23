@@ -6,10 +6,20 @@
   <title>ProApp | Task Reports</title>
   
     <div th:replace="~{fragments/headerJS}"></div> 
+	
+	
+	    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" /> <!-- prev -->
+	<script type="text/javascript" th:src="@{//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js}"></script><!-- prev -->
+	    
+	<script type="text/javascript" th:src="@{https://cdn.datatables.net/plug-ins/2.1.8/sorting/datetime-moment.js}"></script><!-- prev -->
+
+	
+	<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+	 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+
+	
     <script type="text/javascript" th:src="@{/js/pagejs/SIInstallation.js}"></script>
-    
-    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" /> <!-- prev -->
-<script type="text/javascript" th:src="@{//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js}"></script><!-- prev -->
     
 
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -247,6 +257,9 @@ display:inline-block !important;
 				  <th>TE Name</th>
 				  <th>Job Status</th>
 				  <th>Stages</th>
+				  <th>Allocation On</th>
+				  <th>Remark</th>
+				  <th>at</th>
                  <!-- <th>Site_To</th>
 				  <th>Location_To</th>
                   <th>Status</th>
@@ -575,6 +588,15 @@ $(".dropdown dt a").on('click', function() {
 </div>
 <!-- wrapper --> 
 <!-- sidenav--> 
+
+<style type="text/css">
+	
+	
+	.dataTables_scrollBody thead tr[role="row"]{
+	    visibility: collapse !important;
+	}
+	</style>
+
 <script>
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";

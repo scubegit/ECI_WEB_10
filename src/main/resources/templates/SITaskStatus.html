@@ -51,7 +51,15 @@
       <script type="text/javascript" th:src="@{/js/adminJs/validatePage.js"></script>
    -->    
    
+   
+ 
+   
          <div th:replace="~{fragments/headerJS}"></div> 
+		 
+		 <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+		  <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+		  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+
          
   <script type="text/javascript" th:src="@{/js/adminJs/validatePage.js}"></script>
 <!--     <script type="text/javascript" th:src="@{/js/pagejs/ApprovalHPM.js"></script> -->
@@ -234,12 +242,20 @@ display:inline-block !important;
                 <tr class="orange">
                   <th>Job ID</th>
                   <th>Customer</th>
+				  <th>Region</th>
+				  <th>PM</th>
+				  <th>SI Company</th>
                   <th>SI Co-ordinator</th>
 				  <th>TE</th>
                   <th>Product</th>
                   <th>Site</th>
                   <th>Location</th> 
+				  <th>ManDay Visit-Purpose</th> 
                   <th>Status</th>
+				 <th> Stages</th>
+  				<th>Allocation On</th>
+				  <th>Completed On</th>
+  				<!--<th>Upadated date</th>-->
                 <!--   <th>Stages</th>  -->
                  <!--  <th class="table_cust_col">Remark</th> -->
                   <th>Action</th>
@@ -247,6 +263,7 @@ display:inline-block !important;
               </thead>
               <tbody>
        
+					
 		<!-- 
 	
             
@@ -512,7 +529,22 @@ $(".dropdown dt a").on('click', function() {
 </div>
 <!-- wrapper --> 
 <!-- sidenav--> 
+
+
+<style type="text/css">
+	
+	
+	.dataTables_scrollBody thead tr[role="row"]{
+	    visibility: collapse !important;
+	}
+	</style>
+
+
+
 <script>
+	
+	
+	
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
 }

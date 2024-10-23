@@ -35,8 +35,15 @@
 
 					tableData = $('#taskStatusTable').DataTable( {
 				
+					
 					dom: 'Blfrtip',   
 					buttons: ['excel', 'print'],
+					
+					scrollY:500,
+					scrollX: true,
+									//	scrollCollapse: true,
+					fixedHeader: true,	
+					
 				 	 destroy: true,
     				 data: $.parseJSON(data.data),
     				 rowId:"id",
@@ -48,8 +55,11 @@
     					 { "data": function ( data, type, row ) {
 							
 								var downDiv = "";
+								//var formating=moment(new Date(data.actiondate).toString()).format('YYYY');
 							
 							console.log("========data==data=====",data);
+							
+
 							
 							
 							// all action done by only owner SI  
@@ -60,12 +70,12 @@
 									}
 									
 									if((data.StatusId == 2)||(data.StatusId == 10)){
-										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
+										downDiv ='<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="Assign TE"  incid='+data.IncId+'  > ' +
 										 ' <input type="button" class="btn btn-warning rounded-pill px-3 updateTask" value="Update Task"  incid='+data.IncId+'  JobId='+data.JobId+'  >  </td>';
 									}
 									
 									if((data.StatusId == 5)||(data.StatusId == 16)){
-										downDiv = '<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="ReAssign TE"  incid='+data.IncId+'  > </td>' ;
+										downDiv ='<td><input type="button" class="btn btn-secondary rounded-pill px-3 assignTE" value="ReAssign TE"  incid='+data.IncId+'  > </td>' ;
 										  
 									}
 								}
@@ -82,6 +92,14 @@
     		            { "data": "TE" },
     		            { "data": "Status" },
     		            { "data": "Stages" },
+						{ "data": "AllocDt" },
+						{ "data": "Remark" },
+						{ "data": "actiondate",
+							render: function (data, type, row) {
+								        return moment(new Date(data).toString()).format('YYYYMMDDHHmmSS');
+							}
+						 },
+						
     		         /*   { "data": "ProductName" },
     		            { "data": "Site" },
     		            { "data": "RegionName" },
@@ -108,10 +126,14 @@
 	    			             	}
     						 	}
 					         },*/
+							 
 					         {
 							    "targets": '_all',
 							    "defaultContent": ""
-							}
+							},
+							{ 'visible': false, 'targets': [12] }
+							
+							
     		            ],
     		     /*       
     		            'deferRender': true,
@@ -130,10 +152,13 @@
 		                    "orderable": false
 		                }
 		            ],*/
-    				 "order": [[0, 'desc']],
+    				 "order": [[12, 'desc']],
+					 
 		    } );
-		    $('#progressBarFull').hide();
+		 //   $('#progressBarFull').hide();
 	});
+	$('#progressBarFull').hide();
+	
 	}
 		
 		
