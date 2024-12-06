@@ -5,9 +5,6 @@ var tableData = $('#custMasterTable').DataTable();
 
 $(document).ready(function() 
 			{
-
-					
-					
 					getCustomersList(); //function call for get customer list
 
 					changeState(); //function call for active/ inactive
@@ -18,6 +15,7 @@ $(document).ready(function()
 				console.log("customer add button clicked .");	
 				emptyAllFieldofAdd();
 				$("#addErr").empty();
+ 				getAllRegionList("Add");
 										
 	});	
 //function Add modal	
@@ -30,7 +28,14 @@ $(document).ready(function()
 				
 				CustomerID = $(this).parent().attr("CustomerID");
 				
-				$.ajax({
+				getAllRegionList("Edit");
+				
+				setTimeout(toSetEditValue, 1000);
+				
+	});
+	
+	function toSetEditValue(){
+						$.ajax({
 
 						type: 'GET',
 						url: url+"getCustomerDetail/"+CustomerID,  //from API on click of edit icon
@@ -41,10 +46,12 @@ $(document).ready(function()
 						
 						console.log("getCustomerDetail--Information result===",result);
 						var CtrObj = $.parseJSON(result.data);
-						console.log("getRegionDetail--Information result=CtrObj==",CtrObj[0]);
-						console.log("getRegionDetail--Information result=CtrObj RegionName==",CtrObj[0].CustName);
-						
+					
 						$("#nameedit").val(CtrObj[0].CustName);
+						
+						console.log("getCustomerDetail--Information result===",CtrObj[0].RegionStr.split(","));
+						
+						$('#regionListQREdit').chosen('destroy').val(CtrObj[0].RegionStr.split(",")).chosen();
 						
 						}
 					});
@@ -54,8 +61,8 @@ $(document).ready(function()
 				$("#editErr").empty();
 				
 				$("#editPopupScreen").modal('show');
-				 
-	});
+	}
+	
 //function on click Edit modal
 
 //function update data
@@ -63,42 +70,50 @@ $(document).ready(function()
 			  		
 					console.log("current CustomerID---"+CustomerID);
 
-					if(NotAllowedNullVal("#editErr","Customer Name",$('#nameedit')))
-					//	if(AllowedOnlyAlphabetsVal("#editErr","Customer Name",$('#nameedit')))
-					{
+			var ar = [];
+
+			$("#regionListQREdit").val().forEach((item) => {
+			    ar.push({region_Id:item});
+			}); 
+
+			if(NotAllowedNullVal("#editErr","Customer Name",$('#nameedit')))
+			if(ValidationForSelectBoxSize("#editErr","Region Name",ar))
+			//	if(AllowedOnlyAlphabetsVal("#editErr","Customer Name",$('#nameedit')))
+			{
+			
+			var dataVal = { 
+	    	
+				"customerId":CustomerID,
+		    	"customerName":$("#nameedit").val(),
+		    	"authKey":localStorage.getItem("authkey"),
+		    	"reg" 		: ar
+			}
+			$.ajax({
+				
+					type: 'PUT',
+				    url: url+"updateCustomer",  //from API add new data
+				    data : JSON.stringify(dataVal),
+				    contentType: "application/json",
+				    
+				    success: function(result) {
+				    	
+					console.log("update--Customer result==="+result);
 					
-					var dataVal = { 
-			    	
-					"customerId":CustomerID,
-			    	"customerName":$("#nameedit").val(),
-			    	"authKey":localStorage.getItem("authkey")
-			    					}
-					$.ajax({
+					if(result.result==true){
 						
-							type: 'PUT',
-						    url: url+"updateCustomer",  //from API add new data
-						    data : JSON.stringify(dataVal),
-						    contentType: "application/json",
-						    
-						    success: function(result) {
-						    	
-							console.log("update--Customer result==="+result);
-							
-							if(result.result==true){
-								
-								getCustomersList();
-								$("#editPopupScreen").modal('hide');
-								
-							}else if(result.result==false){
-								
-								window.location.href = "sessionOut";
-								
-							}
-							
-						    }
-					});
+						getCustomersList();
+						$("#editPopupScreen").modal('hide');
+						
+					}else if(result.result==false){
+						
+						window.location.href = "sessionOut";
+						
+					}
+					
+				    }
+			});
 			     
-		   }
+	   }
 	});
 //function update data
 	
@@ -115,18 +130,30 @@ $(document).ready(function()
 	
 //function Add click
 		$("#AddCustomerMaster").bind("click",function() {
+				
+				var ar = [];
+	
+					$("#regionListQRAdd").val().forEach((item) => {
+					    ar.push({region_Id:item});
+					}); 
+		
 	
 					if(NotAllowedNullVal("#addErr","Customer Name",$('#nameadd')))
+					if(ValidationForSelectBoxSize("#addErr","Region Name",ar))
 					//if(AllowedOnlyAlphabetsVal("#addErr","Customer Name",$('#nameadd')))
 					{
+					
+					
 					
 					var dataVal = {
 		    		
 					"customerName":$("#nameadd").val(),
-					"authKey":localStorage.getItem("authkey")
+					"authKey":localStorage.getItem("authkey"),
+					"reg" 		: ar
 					}	
 					
 					console.log("AddCustomerMaster==========dataVal=====",dataVal);
+					console.log("regionListQR==========regionListQR=====",ar);
 			
 					$.ajax({
 				
@@ -436,3 +463,28 @@ function getCustomersList(){
 	}
 //function for active/ inactive			
 
+function getAllRegionList(div) {
+	$('#regionListQR'+div).empty();
+	
+	$.ajax({
+		type: 'GET',
+		url:  url + "getRegions",
+		success: function(data) {
+			if(data.result == null || data.result == "") {
+				return "";
+			}
+			$('#regionListQR'+div).append('<option value=' + 0 +'> -- Select Region -- </option>');
+		
+			$.each(data.result, function(key,val) {
+				$('#regionListQR'+div).append('<option value="'+val.RegionId+'">'+val.RegionName+'</option>');
+			//	console.table("Region ID :--" + val.RegionId);
+			//	console.table("Region Name :--" + val.RegionName);
+				
+				regionName = val.RegionName;
+			});
+			
+			$(".regionListQR_select").chosen();
+
+		}
+	});
+}

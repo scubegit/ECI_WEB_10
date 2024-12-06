@@ -19,6 +19,7 @@
 					$("#add_prd").modal("show");
 					
 					getCustomersList("#customerListadd","");
+					gettaskList("Add");
 					
 					callAddRemoveClassFunction($("#productPartNoAdd"));
 					callAddRemoveClassFunction($("#productDescAdd"));
@@ -33,6 +34,12 @@
 
 //function add save
 		$(document).on("click", "#saveProductAdd", function(e) {
+			
+			var ar = [];
+					
+					$("#taskListAdd").val().forEach((item) => {
+					    ar.push({id:item});
+					});
 					
 					console.table("Check Product Type", $('#productTypeAdd').val());
 	
@@ -43,7 +50,8 @@
 					if(NotAllowedNullVal("#productErrAdd","Product Description",$('#productDescAdd')))
 					if(ValidationForSelectBox("#productErrAdd","Customer Name",$('#customerListadd')))
 					if(NotAllowedNullVal("#productErrAdd","Category Code",$('#productHsCodeAdd')))
-					if(ValidationForSelectBox("#productErrAdd","Product Type",$('#productTypeAdd')))	
+					if(ValidationForSelectBox("#productErrAdd","Product Type",$('#productTypeAdd')))
+					if(ValidationForSelectBoxSize("#productErrAdd","task Name",ar))
 					{
 			
 	
@@ -54,7 +62,8 @@
 				    "customerId" 	: $('#customerListadd').val(),
 				    "desc"			: $("#productDescAdd").val(),
 				    "productType"   : $('#productTypeAdd').val(),
-				    "authKey"		:localStorage.getItem("authkey")
+				    "authKey"		: localStorage.getItem("authkey"),
+				    "task"			: ar
 					};
 		
 		
@@ -96,19 +105,27 @@
 	
 					console.log("-----sordrEdit----------Pid----------",id);
 	
+				var ar = [];
+					
+					$("#taskListEdit").val().forEach((item) => {
+					    ar.push({id:item});
+					});
+	
 					if(NotAllowedNullVal("#productErrEdit","Product Name",$('#productPartNoEdit')))
 					//if(AllowedOnlyAlphabetsVal("#productErrEdit","Product Name",$('#productPartNoEdit')))
 					if(NotAllowedNullVal("#productErrEdit","Description",$('#productDescEdit')))
 					if(NotAllowedNullVal("#productErrEdit","Catagary Code",$('#productCatEdit')))
+					if(ValidationForSelectBoxSize("#productErrEdit","task Name",ar))
 					{
 	
 					var dataVal = {
-					"id":id,
-					"product":$("#productPartNoEdit").val(),                              
-					"desc":$("#productDescEdit").val(), 
-					"catCode":$("#productCatEdit").val(), 
-					"authKey":localStorage.getItem("authkey")
-	    	   			}
+						"id":id,
+						"product":$("#productPartNoEdit").val(),                              
+						"desc":$("#productDescEdit").val(), 
+						"catCode":$("#productCatEdit").val(), 
+						"authKey":localStorage.getItem("authkey"),
+						"task"			: ar
+    	   			}
 					console.log("Update--Information saveProductEdit== ",dataVal);
 		
 					$.ajax({
@@ -310,7 +327,7 @@
 			
 					$("#customerListEdt").attr("disabled", true);
 			
-					
+					gettaskList("Edit");
 					
 					console.log("-----sordrEdit----------Pid----------", $(this).parent().parent());
 					console.log("-----sordrEdit----------Pid----------", $(this).parent().parent().attr("id"));
@@ -321,33 +338,44 @@
 					id = $(this).attr("Pid");
 					console.log("-----sordrEdit----------Pid----------",id);
 			
-					$.ajax({
+					setTimeout(function() {
+					    toSetEditValue(id);
+					}, 1000);
+			
 
-								type: 'get',
-								url: url+"getProductDetail/"+id,  //from API on click of edit icon
-								data : JSON.stringify(id),
-								contentType: "application/json",
-				
-								success: function(result) {
-									
-								console.log("getProductDetail--Information result===",result);
-								
-								var CtrObj = $.parseJSON(result.data);
-								console.log("getProductDetail--Information result=CtrObj==",CtrObj[0]);
-								console.log("getProductDetail--Information result=CtrObj ==",CtrObj[0].Name);
-								
-								$("#productPartNoEdit").val(CtrObj[0].Name);
-								$("#productDescEdit").val(CtrObj[0].Desc);
-								$("#productCatEdit").val(CtrObj[0].CatCode);
-								$("#productTypeEdt").val(CtrObj[0].ProductType);
-								//$("#customerListedt").val(CtrObj[0].CustomerId);
-								getCustomersList("#customerListEdt",CtrObj[0].CustomerId);
-					
-								}
-				});
 				
 				
 		}); 
+		
+		
+		function toSetEditValue(id){
+			$.ajax({
+
+				type: 'get',
+				url: url+"getProductDetail/"+id,  //from API on click of edit icon
+				data : JSON.stringify(id),
+				contentType: "application/json",
+
+				success: function(result) {
+					
+				console.log("getProductDetail--Information result===",result);
+				
+				var CtrObj = $.parseJSON(result.data);
+				console.log("getProductDetail--Information result=CtrObj==",CtrObj[0]);
+				console.log("getProductDetail--Information result=CtrObj ==",CtrObj[0].Name);
+				
+				$("#productPartNoEdit").val(CtrObj[0].Name);
+				$("#productDescEdit").val(CtrObj[0].Desc);
+				$("#productCatEdit").val(CtrObj[0].CatCode);
+				$("#productTypeEdt").val(CtrObj[0].ProductType);
+				//$("#customerListedt").val(CtrObj[0].CustomerId);
+				getCustomersList("#customerListEdt",CtrObj[0].CustomerId);
+				
+				$('#taskListEdit').chosen('destroy').val(CtrObj[0].TaskStr.split(",")).chosen();
+	
+				}
+			});
+		}
 
 //function on edit click
 
@@ -411,3 +439,26 @@
 }
 	//function for active/ inactive		
 		
+		function gettaskList(div){	
+		
+		$('#taskList'+div).empty();
+			
+					console.log("-----gettaskList------");
+			
+			
+					$.get(url+"getAllTaskListByIsDeletedN/"+localStorage.getItem("userId"), function( data ) { //from API list
+				
+					console.log("------------getTasks--------------",data.result);
+				
+					$('#taskList'+div).append('<option value=' + 0 +'> -- Select Task -- </option>');
+				
+					//$('#taskListadd').append('<option value=' + 0+ '>  - Select Task - </option>');
+		
+					$.each(data.result, function( index, val ){
+				
+					$('#taskList'+div).append('<option value="'+val.TaskId+'">'+val.TaskName+'</option>');
+				});
+				
+				$(".regionListQR_select").chosen();
+		});
+}

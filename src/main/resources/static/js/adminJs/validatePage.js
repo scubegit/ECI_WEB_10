@@ -72,6 +72,8 @@ var ChaReq    		= "characters required."
 	
  	}
 
+
+
 function validationSIandCustEdt(ErrDivName,value){
 	
 	console.log("validationSIandCust--value---- ",ErrDivName);
@@ -260,6 +262,25 @@ function validationSIandCustEdt(ErrDivName,value){
 			addErrorClass(value);
 			return false;
 		}
+	}
+	
+	function ValidationForSelectBoxSize(ErrDivName,FieldName,value){
+	
+		console.log("ValidationForRadio value---",value);	
+		if( value.length > 0 ){
+			$(ErrDivName).empty();
+			removeErrorClass(value);
+			addSuccessClass(value);
+			return true;	
+		}else{
+			$(ErrDivName).empty();
+			$(ErrDivName).append(FieldName+" "+ mandatory);
+			removeSuccessClass(value);
+			addErrorClass(value);
+			return false;
+		}
+			
+	
 	}
 
 	function ValidationForRadio(ErrDivName,FieldName,value){

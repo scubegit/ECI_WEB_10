@@ -23,6 +23,23 @@ body {
 #regionListQR_chosen {
 	    width: 320px !important;
 }
+
+#regionListQREdit_chosen {
+	    width: 320px !important;
+}
+
+#regionListQRAdd_chosen {
+	    width: 320px !important;
+}
+
+#taskListEdit_chosen {
+	    width: 320px !important;
+}
+
+#taskListAdd_chosen {
+	    width: 320px !important;
+}
+
 #vendorSICompanyListQR_chosen {
 	    width: 320px !important;
 }
